@@ -8,9 +8,9 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 @Data
-@TableName("city")
+@TableName("commodity_stocks")
 @EqualsAndHashCode(callSuper = false)
-public class City extends Model<City> {
+public class CommodityStock extends Model<CommodityStock> {
     private Integer id;
 
     private Byte isDeleted;
@@ -19,7 +19,9 @@ public class City extends Model<City> {
 
     private Date updateAt;
 
-    private String cityName;
+    private Integer storeId;
 
-    private Integer provinceId;
+    private Integer itemId;
+
+    private Integer amount;
 }

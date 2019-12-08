@@ -1,8 +1,16 @@
 package com.zjxu97.costume.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.Date;
 
-public class Store {
+@Data
+@TableName("stores")
+@EqualsAndHashCode(callSuper = false)
+public class Store extends Model<Store> {
     private Integer id;
 
     private Byte isDeleted;
@@ -17,59 +25,4 @@ public class Store {
 
     private String storeAddress;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Byte getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Byte isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public Date getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
-    }
-
-    public Date getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public Integer getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(Integer districtId) {
-        this.districtId = districtId;
-    }
-
-    public String getStoreName() {
-        return storeName;
-    }
-
-    public void setStoreName(String storeName) {
-        this.storeName = storeName == null ? null : storeName.trim();
-    }
-
-    public String getStoreAddress() {
-        return storeAddress;
-    }
-
-    public void setStoreAddress(String storeAddress) {
-        this.storeAddress = storeAddress == null ? null : storeAddress.trim();
-    }
 }

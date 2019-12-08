@@ -1,8 +1,16 @@
 package com.zjxu97.costume.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.Date;
 
-public class Province {
+@Data
+@TableName("province")
+@EqualsAndHashCode(callSuper = false)
+public class Province extends Model<Province> {
     private Integer id;
 
     private Byte isDeleted;
@@ -15,51 +23,4 @@ public class Province {
 
     private Integer areaId;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Byte getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Byte isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public Date getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
-    }
-
-    public Date getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public String getProvinceName() {
-        return provinceName;
-    }
-
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName == null ? null : provinceName.trim();
-    }
-
-    public Integer getAreaId() {
-        return areaId;
-    }
-
-    public void setAreaId(Integer areaId) {
-        this.areaId = areaId;
-    }
 }

@@ -1,8 +1,16 @@
 package com.zjxu97.costume.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.Date;
 
-public class District {
+@Data
+@TableName("district")
+@EqualsAndHashCode(callSuper = false)
+public class District extends Model<District> {
     private Integer id;
 
     private Byte isDeleted;
@@ -14,52 +22,4 @@ public class District {
     private String districtName;
 
     private Integer cityId;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Byte getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Byte isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public Date getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
-    }
-
-    public Date getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(Date updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public String getDistrictName() {
-        return districtName;
-    }
-
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName == null ? null : districtName.trim();
-    }
-
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
 }
