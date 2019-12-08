@@ -1,8 +1,9 @@
 package com.zjxu97.costume.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zjxu97.costume.entity.CommodityStock;
 
-public interface CommodityStocksMapper {
+public interface CommodityStocksMapper extends BaseMapper<CommodityStock> {
     int deleteByPrimaryKey(Integer id);
 
     int insert(CommodityStock record);

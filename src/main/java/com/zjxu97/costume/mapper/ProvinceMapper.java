@@ -1,8 +1,9 @@
 package com.zjxu97.costume.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zjxu97.costume.entity.Province;
 
-public interface ProvinceMapper {
+public interface ProvinceMapper extends BaseMapper<Province> {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Province record);

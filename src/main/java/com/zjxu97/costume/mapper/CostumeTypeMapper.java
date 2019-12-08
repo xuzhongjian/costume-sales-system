@@ -1,8 +1,9 @@
 package com.zjxu97.costume.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zjxu97.costume.entity.CostumeType;
 
-public interface CostumeTypeMapper {
+public interface CostumeTypeMapper extends BaseMapper<CostumeType> {
     int deleteByPrimaryKey(Integer id);
 
     int insert(CostumeType record);

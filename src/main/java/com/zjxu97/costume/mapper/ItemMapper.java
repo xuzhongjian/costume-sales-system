@@ -1,8 +1,9 @@
 package com.zjxu97.costume.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zjxu97.costume.entity.Item;
 
-public interface ItemMapper {
+public interface ItemMapper extends BaseMapper<Item> {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Item record);
