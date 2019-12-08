@@ -1,6 +1,3 @@
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
-
 CREATE TABLE `area`
 (
     `id`         int(11) unsigned NOT NULL COMMENT '自增id',
@@ -23,7 +20,7 @@ CREATE TABLE `city`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='市级单位';
 
-CREATE TABLE `commodity_stocks`
+CREATE TABLE `commodity_stock`
 (
     `id`         int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
     `is_deleted` tinyint(4)       NOT NULL DEFAULT '0' COMMENT '是否删除,1删除，0未删除',
@@ -59,7 +56,7 @@ CREATE TABLE `district`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='区县单位';
 
-CREATE TABLE `items`
+CREATE TABLE `item`
 (
     `id`         int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
     `is_deleted` tinyint(4)       NOT NULL DEFAULT '0' COMMENT '是否删除,1删除，0未删除',
@@ -67,34 +64,11 @@ CREATE TABLE `items`
     `update_at`  datetime         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     `item_name`  varchar(64)      NOT NULL COMMENT '名称',
     `costume_id` int(11) unsigned NOT NULL COMMENT '服装类别的id',
+    `sex`        tinyint(4)                DEFAULT NULL COMMENT '性别:男1|女0|null无性别',
+    `item_size`  tinyint(4)                DEFAULT NULL COMMENT '服装大小:SML|etc',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='服装列表';
-
-CREATE TABLE `location`
-(
-    `id`         int(11)     DEFAULT NULL,
-    `parent_id`  int(11)     DEFAULT NULL,
-    `level_type` int(11)     DEFAULT NULL,
-    `item_name`  varchar(64) DEFAULT NULL,
-    `province`   varchar(64) DEFAULT NULL,
-    `city`       varchar(64) DEFAULT NULL,
-    `district`   varchar(64) DEFAULT NULL
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8 COMMENT ='行政区划';
-
-CREATE TABLE `location_test`
-(
-    `id`     int(11) NOT NULL AUTO_INCREMENT,
-    `shen`   varchar(64)  DEFAULT NULL,
-    `shi`    varchar(64)  DEFAULT NULL,
-    `qu`     varchar(64)  DEFAULT NULL,
-    `dianpu` varchar(256) DEFAULT NULL,
-    `dizhi`  varchar(64)  DEFAULT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 8622
-  DEFAULT CHARSET = utf8 COMMENT ='店铺信息';
 
 CREATE TABLE `province`
 (
@@ -108,7 +82,7 @@ CREATE TABLE `province`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='省级单位';
 
-CREATE TABLE `sales_record`
+CREATE TABLE `sale_record`
 (
     `id`         int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
     `is_deleted` tinyint(4)       NOT NULL DEFAULT '0' COMMENT '是否删除,1删除，0未删除',
@@ -120,7 +94,7 @@ CREATE TABLE `sales_record`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='销售记录';
 
-CREATE TABLE `stores`
+CREATE TABLE `store`
 (
     `id`            int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
     `is_deleted`    tinyint(4)       NOT NULL DEFAULT '0' COMMENT '是否删除,1删除，0未删除',

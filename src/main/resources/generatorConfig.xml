@@ -65,7 +65,7 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>
 
-        <table tableName="commodity_stocks"
+        <table tableName="commodity_stock"
                domainObjectName="CommodityStock"
                enableCountByExample="false"
                enableUpdateByExample="false"
@@ -90,7 +90,7 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>
 
-        <table tableName="items"
+        <table tableName="item"
                domainObjectName="Item"
                enableCountByExample="false"
                enableUpdateByExample="false"
@@ -106,7 +106,7 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>
 
-        <table tableName="sales_record"
+        <table tableName="sale_record"
                domainObjectName="SalesRecord"
                enableCountByExample="false"
                enableUpdateByExample="false"
@@ -114,7 +114,7 @@
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>
 
-        <table tableName="stores"
+        <table tableName="store"
                domainObjectName="Store"
                enableCountByExample="false"
                enableUpdateByExample="false"

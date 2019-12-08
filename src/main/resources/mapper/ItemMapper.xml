@@ -15,15 +15,15 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from items
+    from item
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from items
+    delete from item
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zjxu97.costume.entity.Item" >
-    insert into items (id, is_deleted, create_at, 
+    insert into item (id, is_deleted, create_at,
       update_at, item_name, costume_id
       )
     values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createAt,jdbcType=TIMESTAMP}, 
@@ -31,7 +31,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zjxu97.costume.entity.Item" >
-    insert into items
+    insert into item
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -74,7 +74,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zjxu97.costume.entity.Item" >
-    update items
+    update item
     <set >
       <if test="isDeleted != null" >
         is_deleted = #{isDeleted,jdbcType=TINYINT},
@@ -95,7 +95,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zjxu97.costume.entity.Item" >
-    update items
+    update item
     set is_deleted = #{isDeleted,jdbcType=TINYINT},
       create_at = #{createAt,jdbcType=TIMESTAMP},
       update_at = #{updateAt,jdbcType=TIMESTAMP},

@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @TableName("sales_record")
 @EqualsAndHashCode(callSuper = false)
-public class SalesRecord extends Model<SalesRecord> {
+public class SaleRecord extends Model<SaleRecord> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 

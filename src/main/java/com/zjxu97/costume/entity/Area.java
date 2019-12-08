@@ -18,7 +18,6 @@ public class Area extends Model<Area> {
     @TableField(value = "is_deleted")
     private Byte isDeleted;
 
-
     @TableField(value = "create_at")
     private Date createAt;
 
