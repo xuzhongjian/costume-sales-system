@@ -1,4 +1,4 @@
-package com.zjxu97.costume.Utils;
+package com.zjxu97.costume.utils;
 
 public class Location {
     private String id;
