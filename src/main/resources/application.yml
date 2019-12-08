@@ -1,8 +1,7 @@
 # DataSource Config
 spring:
   datasource:
-    schema: classpath:sql/course.sql
-    data: classpath:sql/course.sql
+    schema: classpath:sql/costume.sql
     url: jdbc:mysql://localhost/costume?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
     username: root
     password: 19970701
