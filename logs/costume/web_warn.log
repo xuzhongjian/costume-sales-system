@@ -1,0 +1,8 @@
+2019-12-08 17:04:48.569 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.course.mapper]' package. Please check your configuration.
+2019-12-08 17:04:48.668 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.costume]' package. Please check your configuration.
+2019-12-08 17:07:15.528 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.course.mapper]' package. Please check your configuration.
+2019-12-08 17:07:15.615 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.costume]' package. Please check your configuration.
+2019-12-08 17:08:46.748 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.course.mapper]' package. Please check your configuration.
+2019-12-08 17:08:46.868 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.costume]' package. Please check your configuration.
+2019-12-08 17:09:33.346 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.course.mapper]' package. Please check your configuration.
+2019-12-08 17:09:33.432 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.costume]' package. Please check your configuration.
