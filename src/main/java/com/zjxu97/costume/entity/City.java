@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @TableName("city")
 @EqualsAndHashCode(callSuper = false)
-public class City extends Model<City> {
+public class City {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 

@@ -2,7 +2,9 @@ package com.zjxu97.costume.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zjxu97.costume.entity.Item;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface ItemMapper extends BaseMapper<Item> {
     int deleteByPrimaryKey(Integer id);
 
