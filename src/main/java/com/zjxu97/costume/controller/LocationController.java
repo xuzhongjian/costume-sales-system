@@ -113,22 +113,3 @@ public class LocationController {
         return RetFunc.success(areaVo);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
