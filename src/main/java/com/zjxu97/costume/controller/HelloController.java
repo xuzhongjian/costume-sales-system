@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-@Api(tags = "课程相关")
+@Api(tags = "服装相关")
 @RequestMapping(Constants.API_PREFIX + "/costume-test")
 public class HelloController {
     private final static Logger log = LoggerFactory.getLogger(HelloController.class);
@@ -31,6 +31,5 @@ public class HelloController {
         log.info("" + integer);
         return RetFunc.success(integer);
     }
-
 
 }
