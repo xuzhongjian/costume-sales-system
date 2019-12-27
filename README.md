@@ -29,14 +29,16 @@ costume-sales-system ---- my final case
 
 ## items
 
-| **字段名**     | **类型**    | **默认** | **意义**   | **关联**           |
-| -------------- | ----------- | -------- | ---------- | ------------------ |
-| **id**         | int(11)     | 自增     | id         |                    |
-| **is_deleted** | tinyint(4)  | 非       | is_deleted |                    |
-| **create_at**  | datetime    | now      | create_at  |                    |
-| **update_at**  | datetime    | now      | update_at  |                    |
-| **item_name**  | varchar(64) | 无       | 服装名称   |                    |
-| **costume_id** | int(11)     | 无       | 服装类别   | costume_type -> id |
+| **字段名**     | **类型**    | **默认** | **意义**   | **关联**             |
+| -------------- | ----------- | -------- | ---------- | -------------------- |
+| **id**         | int(11)     | 自增     | id         |                      |
+| **is_deleted** | tinyint(4)  | 非       | is_deleted |                      |
+| **create_at**  | datetime    | now      | create_at  |                      |
+| **update_at**  | datetime    | now      | update_at  |                      |
+| **item_name**  | varchar(64) | 无       | 服装名称   |                      |
+| **costume_id** | int(11)     | 无       | 服装类别   | costume_type -> id   |
+| **sex**        | tinyint(4)  | 无       | 性别       | 男1\|女0\|null无性别 |
+| **item_size**  | tinyint(4)  | 无       | 服装大小   | SML\|etc             |
 
 ## stores
 
@@ -127,9 +129,20 @@ costume-sales-system ---- my final case
 | 按照地区列出所有省份 |      |
 | 按照省份列出所有城市 |      |
 | 按照城市列出所有县区 |      |
-|                      |      |
-|                      |      |
-|                      |      |
-|                      |      |
-|                      |      |
+| 获取县区所属的城市   |      |
+| 获取城市所属的省份   |      |
+| 获取省份所属的区域   |      |
+
+## 店铺相关
+
+| 描述               | 名称 |
+| ------------------ | ---- |
+| 列出地区的所有店铺 |      |
+| 列出省份的所有店铺 |      |
+| 列出城市的所有店铺 |      |
+| 列出区县的所有店铺 |      |
+| 获取店铺所属的县区 |      |
+| 获取店铺所属的城市 |      |
+| 获取店铺所属的省份 |      |
+| 获取店铺所属的区域 |      |
 
