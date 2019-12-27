@@ -1,7 +1,7 @@
 package com.zjxu97.costume.service.area.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zjxu97.costume.entity.Area;
+import com.zjxu97.costume.model.Area;
 import com.zjxu97.costume.mapper.AreaMapper;
 import com.zjxu97.costume.service.area.AreaService;
 import org.springframework.stereotype.Service;

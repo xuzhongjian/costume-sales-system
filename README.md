@@ -143,3 +143,22 @@ costume-sales-system ---- my final case
 | 列出区县的所有店铺 | list-stores-by-dist   |
 | 获取店铺所属的位置 | get-location-by-store |
 
+## 销售相关
+
+**com is commodity**
+
+| 描述                      | 名称                |
+| ------------------------- | ------------------- |
+| 获取某件商品的库存        | list-coms-by-item   |
+| 列出某商店所有商品的库存  | list-coms-by-stores |
+| 库存添加 <进货>           |                     |
+| 库存减少 <售出之一>       |                     |
+| 销售记录添加 <售出之一>   |                     |
+| 查询销售记录 <按照年月日> |                     |
+|                           |                     |
+|                           |                     |
+|                           |                     |
+|                           |                     |
+
+## 统计部分
+

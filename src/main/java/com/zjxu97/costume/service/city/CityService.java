@@ -1,7 +1,8 @@
 package com.zjxu97.costume.service.city;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zjxu97.costume.entity.City;
+import com.zjxu97.costume.model.City;
+import com.zjxu97.costume.vo.CityVo;
 
 import java.util.List;
 
@@ -13,5 +14,5 @@ import java.util.List;
  */
 
 public interface CityService extends IService<City> {
-
+    public List<CityVo> listCitysByProv(Integer provId);
 }

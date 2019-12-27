@@ -1,4 +1,4 @@
-package com.zjxu97.costume.entity;
+package com.zjxu97.costume.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;

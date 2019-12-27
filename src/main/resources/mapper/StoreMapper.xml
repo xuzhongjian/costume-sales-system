@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zjxu97.costume.mapper.StoreMapper" >
-  <resultMap id="BaseResultMap" type="com.zjxu97.costume.entity.Store" >
+  <resultMap id="BaseResultMap" type="com.zjxu97.costume.model.Store" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
     <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
@@ -23,7 +23,7 @@
     delete from store
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zjxu97.costume.entity.Store" >
+  <insert id="insert" parameterType="com.zjxu97.costume.model.Store" >
     insert into store (id, is_deleted, create_at,
       update_at, district_id, store_name, 
       store_address)
@@ -31,7 +31,7 @@
       #{updateAt,jdbcType=TIMESTAMP}, #{districtId,jdbcType=INTEGER}, #{storeName,jdbcType=VARCHAR}, 
       #{storeAddress,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zjxu97.costume.entity.Store" >
+  <insert id="insertSelective" parameterType="com.zjxu97.costume.model.Store" >
     insert into store
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,7 +80,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zjxu97.costume.entity.Store" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zjxu97.costume.model.Store" >
     update store
     <set >
       <if test="isDeleted != null" >
@@ -104,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zjxu97.costume.entity.Store" >
+  <update id="updateByPrimaryKey" parameterType="com.zjxu97.costume.model.Store" >
     update store
     set is_deleted = #{isDeleted,jdbcType=TINYINT},
       create_at = #{createAt,jdbcType=TIMESTAMP},

@@ -1,7 +1,7 @@
 package com.zjxu97.costume.service.area;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zjxu97.costume.entity.Area;
+import com.zjxu97.costume.model.Area;
 
 /**
  * date    2019-08-22
