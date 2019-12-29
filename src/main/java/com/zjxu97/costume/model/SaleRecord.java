@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 @Data
-@TableName("sales_record")
+@TableName("sale_record")
 @EqualsAndHashCode(callSuper = false)
 public class SaleRecord extends Model<SaleRecord> {
     @TableId(value = "id", type = IdType.AUTO)

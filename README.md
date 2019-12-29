@@ -40,7 +40,7 @@ costume-sales-system ---- my final case：
 | **item_name**  | varchar(64) | 无       | 服装名称   |                      |
 | **costume_id** | int(11)     | 无       | 服装类别   | costume_type -> id   |
 | **sex**        | tinyint(4)  | 无       | 性别       | 男1\|女0\|null无性别 |
-| **item_size**  | tinyint(4)  | 无       | 服装大小   | SML\|etc             |
+| **item_size**  | int(11)     | 无       | 服装大小   | SML\|etc             |
 
 ## stores
 
@@ -112,14 +112,14 @@ costume-sales-system ---- my final case：
 
 ## sales_record
 
-| **字段名**     | **类型**   | **默认** | **意义**   | **关联** |
-| -------------- | ---------- | -------- | ---------- | -------- |
-| **id**         | int(11)    | 自增     | id         |          |
-| **is_deleted** | tinyint(4) | 非       | is_deleted |          |
-| **create_at**  | datetime   | now      | create_at  |          |
-| **update_at**  | datetime   | now      | update_at  |          |
-| **store_id**   | int(11)    | 无       | 商店id     |          |
-| **item_id**    | int(11)    | 无       | 商品id     |          |
+| **字段名**     | **类型**   | **默认** | **意义**   | **关联**    |
+| -------------- | ---------- | -------- | ---------- | ----------- |
+| **id**         | int(11)    | 自增     | id         |             |
+| **is_deleted** | tinyint(4) | 非       | is_deleted |             |
+| **create_at**  | datetime   | now      | create_at  |             |
+| **update_at**  | datetime   | now      | update_at  |             |
+| **store_id**   | int(11)    | 无       | 商店id     | store -> id |
+| **item_id**    | int(11)    | 无       | 商品id     | item -> id  |
 
 # API
 
@@ -144,10 +144,37 @@ costume-sales-system ---- my final case：
 | 列出城市的所有店铺 | list-stores-by-city   |
 | 列出区县的所有店铺 | list-stores-by-dist   |
 | 获取店铺所属的位置 | get-location-by-store |
+| 添加店铺           | add-store             |
+| 删除店铺           | del-store             |
+| 修改店铺信息       | upd-store             |
+| 搜索店铺           | search-stores         |
+
+搜索店铺：
+
+1. 店铺名称
+2. 店铺位置
 
 ## 服装相关
 
+| 描述               | 名称                   |
+| ------------------ | ---------------------- |
+| 列出品类           | list-costumes          |
+| 查询单品           | query-items            |
+| 搜索单品         | search-items    |
+| 获取店铺的单品库存 | get-item-com-by-store  |
+| 列出区县的单品库存 | list-item-coms-by-dist |
+| 列出店铺的所有库存 | list-coms-by-store     |
+| 列出区县的所有库存 | list-coms-by-dist      |
 
+查询单品：
+
+1. 品类
+2. 性别
+3. 大小
+
+搜索单品：
+
+1. 
 
 ## 销售相关
 

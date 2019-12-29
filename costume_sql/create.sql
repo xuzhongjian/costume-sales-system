@@ -107,3 +107,5 @@ CREATE TABLE `store`
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 8192
   DEFAULT CHARSET = utf8 COMMENT ='商店列表';
+ALTER TABLE `costume`.`item`
+    CHANGE COLUMN `item_size` `item_size` INT(11) NULL DEFAULT NULL COMMENT '服装大小:SML|etc';

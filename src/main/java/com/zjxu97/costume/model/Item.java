@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 @Data
-@TableName("items")
+@TableName("item")
 @EqualsAndHashCode(callSuper = false)
 public class Item extends Model<Item> {
     @TableId(value = "id", type = IdType.AUTO)
@@ -36,6 +36,6 @@ public class Item extends Model<Item> {
     private Byte Sex;
 
     @TableField(value = "item_size")
-    private Byte itemSize;
+    private Integer itemSize;
 
 }

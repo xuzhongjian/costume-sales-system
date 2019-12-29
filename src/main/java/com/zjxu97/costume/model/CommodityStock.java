@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 @Data
-@TableName("commodity_stocks")
+@TableName("commodity_stock")
 @EqualsAndHashCode(callSuper = false)
 public class CommodityStock extends Model<CommodityStock> {
     @TableId(value = "id", type = IdType.AUTO)
