@@ -29,7 +29,7 @@ costume-sales-system ---- my final case：
 | **update_at**  | datetime    | now      | update_at  |          |
 | **type_name**  | varchar(32) | 无       | 服装类型   |          |
 
-## items
+## item
 
 | **字段名**     | **类型**    | **默认** | **意义**   | **关联**             |
 | -------------- | ----------- | -------- | ---------- | -------------------- |
@@ -42,7 +42,7 @@ costume-sales-system ---- my final case：
 | **sex**        | tinyint(4)  | 无       | 性别       | 男1\|女0\|null无性别 |
 | **item_size**  | int(11)     | 无       | 服装大小   | SML\|etc             |
 
-## stores
+## store
 
 | **字段名**        | **类型**    | **默认** | **意义**   | **关联**       |
 | ----------------- | ----------- | -------- | ---------- | -------------- |
@@ -55,7 +55,7 @@ costume-sales-system ---- my final case：
 | **store_address** | varchar(64) | 无       | 店铺地址   |                |
 | **store_size**    | int(11)     | 0        | 店铺面积   |                |
 
-## commodity_stocks
+## commodity_stock
 
 | **字段名**     | **类型**   | **默认** | **意义**   | **关联** |
 | -------------- | ---------- | -------- | ---------- | -------- |
@@ -110,7 +110,7 @@ costume-sales-system ---- my final case：
 | **district_name** | varchar(32) | 无       | 县区名称   |            |
 | **city_id**       | int(11)     | 无       | 市的名称   | city -> id |
 
-## sales_record
+## sale_record
 
 | **字段名**     | **类型**   | **默认** | **意义**   | **关联**    |
 | -------------- | ---------- | -------- | ---------- | ----------- |
