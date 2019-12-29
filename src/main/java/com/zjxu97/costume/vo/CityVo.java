@@ -11,4 +11,5 @@ public class CityVo {
     private Integer id;
     private String cityName;
     private Integer provinceId;
+    private String areaName;
 }

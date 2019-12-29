@@ -143,7 +143,6 @@ costume-sales-system ---- my final case：
 | 列出省份的所有店铺 | list-stores-by-prov   |
 | 列出城市的所有店铺 | list-stores-by-city   |
 | 列出区县的所有店铺 | list-stores-by-dist   |
-| 获取店铺所属的位置 | get-location-by-store |
 | 添加店铺           | add-store             |
 | 删除店铺           | del-store             |
 | 修改店铺信息       | upd-store             |
@@ -174,7 +173,7 @@ costume-sales-system ---- my final case：
 
 搜索单品：
 
-1. 
+1. 服装名称
 
 ## 销售相关
 

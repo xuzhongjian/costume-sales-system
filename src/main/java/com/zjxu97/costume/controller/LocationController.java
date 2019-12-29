@@ -64,28 +64,28 @@ public class LocationController {
 
     @ApiOperation(value = "按照地区列出所有省份")
     @GetMapping(value = "list-provs-by-area")
-    public R<List<ProvinceVo>> listProvsByArea(@RequestParam(value = "area_id") Integer areaId) {
+    public R<List<ProvinceVo>> listProvsByArea(@RequestParam Integer areaId) {
         List<ProvinceVo> provinceVos = provinceService.listProvsByArea(areaId);
         return RetFunc.success(provinceVos);
     }
 
     @ApiOperation(value = "按照省份列出所有城市")
     @GetMapping(value = "list-citys-by-prov")
-    public R<List<CityVo>> listCitysByProv(@RequestParam(value = "prov_id") Integer provId) {
+    public R<List<CityVo>> listCitysByProv(@RequestParam Integer provId) {
         List<CityVo> cityVos = cityService.listCitysByProv(provId);
         return RetFunc.success(cityVos);
     }
 
     @ApiOperation(value = "按照城市列出所有区县")
     @GetMapping(value = "list-dists-by-city")
-    public R<List<DistrictVo>> listDistsByCity(@RequestParam(value = "city_id") Integer cityId) {
+    public R<List<DistrictVo>> listDistsByCity(@RequestParam Integer cityId) {
         List<DistrictVo> districtVos = districtService.listDistsByCity(cityId);
         return RetFunc.success(districtVos);
     }
 
     @ApiOperation(value = "获取县区所属的城市")
     @GetMapping(value = "get-city-by-dist")
-    public R<CityVo> getCityByDist(@RequestParam(value = "dist_id") Integer distId) {
+    public R<CityVo> getCityByDist(@RequestParam Integer distId) {
         Integer cityId = districtService.getById(distId).getCityId();
         City city = cityService.getById(cityId);
         CityVo cityVo = new CityVo();
@@ -95,7 +95,7 @@ public class LocationController {
 
     @ApiOperation(value = "获取城市所属的省份")
     @GetMapping(value = "get-prov-by-city")
-    public R<ProvinceVo> getProvByCity(@RequestParam(value = "city_id") Integer cityId) {
+    public R<ProvinceVo> getProvByCity(@RequestParam Integer cityId) {
         Integer provinceId = cityService.getById(cityId).getProvinceId();
         Province province = provinceService.getById(provinceId);
         ProvinceVo provinceVo = new ProvinceVo();
@@ -105,7 +105,7 @@ public class LocationController {
 
     @ApiOperation(value = "获取省份所属的区域")
     @GetMapping(value = "get-area-by-prov")
-    public R<AreaVo> getAreaByProv(@RequestParam(value = "prov_id") Integer provId) {
+    public R<AreaVo> getAreaByProv(@RequestParam Integer provId) {
         Integer areaId = provinceService.getById(provId).getAreaId();
         Area area = areaService.getById(areaId);
         AreaVo areaVo = new AreaVo();
