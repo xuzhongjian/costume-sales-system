@@ -1,5 +1,7 @@
 # costume-sales-system
-costume-sales-system ---- my final case
+costume-sales-system ---- my final case：
+
+基于web的鞋服行业数据可视化系统
 
 # 表结构
 
@@ -142,6 +144,10 @@ costume-sales-system ---- my final case
 | 列出城市的所有店铺 | list-stores-by-city   |
 | 列出区县的所有店铺 | list-stores-by-dist   |
 | 获取店铺所属的位置 | get-location-by-store |
+
+## 服装相关
+
+
 
 ## 销售相关
 
