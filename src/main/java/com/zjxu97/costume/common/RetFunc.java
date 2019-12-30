@@ -25,12 +25,12 @@ public class RetFunc {
     /**
      * 执行成功
      */
-    private static final Long SUCCESS_CODE = 1000L;
+    private static final Long SUCCESS_CODE = 200L;
 
     /**
      * 执行失败
      */
-    private static final Long FAILURE_CODE = 2000L;
+    private static final Long FAILURE_CODE = 500L;
 
 
     public static <T> R<T> success(T data) {

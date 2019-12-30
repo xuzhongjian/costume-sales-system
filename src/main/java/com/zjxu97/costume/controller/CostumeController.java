@@ -5,8 +5,10 @@ import com.zjxu97.costume.common.Constants;
 import com.zjxu97.costume.common.RetFunc;
 import com.zjxu97.costume.model.CostumeType;
 import com.zjxu97.costume.model.Item;
+import com.zjxu97.costume.service.commodity.CommodityStockService;
 import com.zjxu97.costume.service.costume.CostumeTypeService;
 import com.zjxu97.costume.service.item.ItemService;
+import com.zjxu97.costume.vo.CommodityStockVo;
 import com.zjxu97.costume.vo.CostumeTypeVo;
 import com.zjxu97.costume.vo.ItemVo;
 import io.swagger.annotations.Api;
@@ -35,6 +37,9 @@ public class CostumeController {
 
     @Resource
     CostumeTypeService costumeTypeService;
+
+    @Resource
+    CommodityStockService commodityStockService;
 
     @Resource
     ItemService itemService;
@@ -68,7 +73,14 @@ public class CostumeController {
     public R<List<ItemVo>> searchItems(@RequestParam String keyWord) {
         List<ItemVo> itemVos = itemService.searchItems(keyWord);
         return RetFunc.success(itemVos);
-
     }
+
+    @ApiOperation(value = "获取店铺的单品库存")
+    @GetMapping(value = "get-item-com-by-store")
+    public R<CommodityStockVo> getItemComByStore(@RequestParam Integer storeId, @RequestParam Integer itemId) {
+        CommodityStockVo itemComByStore = commodityStockService.getItemComByStore(storeId, itemId);
+        return RetFunc.success(itemComByStore);
+    }
+
 
 }
