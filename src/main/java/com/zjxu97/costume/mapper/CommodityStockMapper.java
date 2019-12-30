@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CommodityStockMapper extends BaseMapper<CommodityStock> {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(CommodityStock record);
-
     int insertSelective(CommodityStock record);
 
     CommodityStock selectByPrimaryKey(Integer id);

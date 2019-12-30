@@ -23,14 +23,6 @@
     delete from store
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zjxu97.costume.model.Store" >
-    insert into store (id, is_deleted, create_at,
-      update_at, district_id, store_name, 
-      store_address)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP}, #{districtId,jdbcType=INTEGER}, #{storeName,jdbcType=VARCHAR}, 
-      #{storeAddress,jdbcType=VARCHAR})
-  </insert>
   <insert id="insertSelective" parameterType="com.zjxu97.costume.model.Store" >
     insert into store
     <trim prefix="(" suffix=")" suffixOverrides="," >

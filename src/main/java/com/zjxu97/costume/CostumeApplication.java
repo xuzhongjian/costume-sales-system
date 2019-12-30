@@ -12,7 +12,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @MapperScan("com.zjxu97.course.mapper")
 public class CostumeApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(CostumeApplication.class, args);
     }

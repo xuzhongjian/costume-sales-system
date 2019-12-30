@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ItemMapper extends BaseMapper<Item> {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Item record);
-
     int insertSelective(Item record);
 
     Item selectByPrimaryKey(Integer id);

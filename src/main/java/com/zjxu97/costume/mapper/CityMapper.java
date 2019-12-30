@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CityMapper extends BaseMapper<City> {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(City record);
-
     int insertSelective(City record);
 
     City selectByPrimaryKey(Integer id);

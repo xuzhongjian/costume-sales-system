@@ -22,14 +22,6 @@
     delete from province
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zjxu97.costume.model.Province" >
-    insert into province (id, is_deleted, create_at, 
-      update_at, province_name, area_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP}, #{provinceName,jdbcType=VARCHAR}, #{areaId,jdbcType=INTEGER}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="com.zjxu97.costume.model.Province" >
     insert into province
     <trim prefix="(" suffix=")" suffixOverrides="," >

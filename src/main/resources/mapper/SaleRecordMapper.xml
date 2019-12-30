@@ -22,14 +22,6 @@
     delete from sale_record
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zjxu97.costume.model.SaleRecord" >
-    insert into sale_record (id, is_deleted, create_at,
-      update_at, store_id, item_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP}, #{storeId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="com.zjxu97.costume.model.SaleRecord" >
     insert into sale_record
     <trim prefix="(" suffix=")" suffixOverrides="," >

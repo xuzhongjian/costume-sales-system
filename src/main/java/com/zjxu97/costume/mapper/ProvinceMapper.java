@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ProvinceMapper extends BaseMapper<Province> {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Province record);
-
     int insertSelective(Province record);
 
     Province selectByPrimaryKey(Integer id);

@@ -63,8 +63,8 @@ public class StoreController {
     public R<String> addStore(@RequestBody StoreParam storeParam) {
         Store store = new Store();
         BeanUtils.copyProperties(storeParam, store);
-        boolean isSave = storeService.save(store);
-        return isSave ? RetFunc.success("添加成功") : RetFunc.failure(new Exception("添加失败！"));
+        boolean b = storeService.saveOrUpdate(store);
+        return b ? RetFunc.success("添加成功") : RetFunc.failure(new Exception("添加失败！"));
     }
 
     @ApiOperation(value = "删除店铺")

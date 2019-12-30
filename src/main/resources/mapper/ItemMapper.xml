@@ -22,14 +22,6 @@
     delete from item
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zjxu97.costume.model.Item" >
-    insert into item (id, is_deleted, create_at,
-      update_at, item_name, costume_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP}, #{itemName,jdbcType=VARCHAR}, #{costumeId,jdbcType=INTEGER}
-      )
-  </insert>
   <insert id="insertSelective" parameterType="com.zjxu97.costume.model.Item" >
     insert into item
     <trim prefix="(" suffix=")" suffixOverrides="," >

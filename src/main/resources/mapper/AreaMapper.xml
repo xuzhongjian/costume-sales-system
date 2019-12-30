@@ -8,12 +8,6 @@
     <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
     <result column="area_name" property="areaName" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="insert" parameterType="com.zjxu97.costume.model.Area" >
-    insert into area (id, is_deleted, create_at, 
-      update_at, area_name)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP}, #{areaName,jdbcType=VARCHAR})
-  </insert>
   <insert id="insertSelective" parameterType="com.zjxu97.costume.model.Area" >
     insert into area
     <trim prefix="(" suffix=")" suffixOverrides="," >

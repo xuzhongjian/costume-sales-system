@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DistrictMapper extends BaseMapper<District> {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(District record);
-
     int insertSelective(District record);
 
     District selectByPrimaryKey(Integer id);

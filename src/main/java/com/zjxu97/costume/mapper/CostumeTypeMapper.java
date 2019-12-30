@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CostumeTypeMapper extends BaseMapper<CostumeType> {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(CostumeType record);
-
     int insertSelective(CostumeType record);
 
     CostumeType selectByPrimaryKey(Integer id);

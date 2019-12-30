@@ -23,14 +23,6 @@
     delete from commodity_stock
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zjxu97.costume.model.CommodityStock" >
-    insert into commodity_stock (id, is_deleted, create_at,
-      update_at, store_id, item_id, 
-      amount)
-    values (#{id,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{updateAt,jdbcType=TIMESTAMP}, #{storeId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
-      #{amount,jdbcType=INTEGER})
-  </insert>
   <insert id="insertSelective" parameterType="com.zjxu97.costume.model.CommodityStock" >
     insert into commodity_stock
     <trim prefix="(" suffix=")" suffixOverrides="," >
