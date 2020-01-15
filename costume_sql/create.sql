@@ -109,3 +109,16 @@ CREATE TABLE `store`
   DEFAULT CHARSET = utf8 COMMENT ='商店列表';
 ALTER TABLE `costume`.`item`
     CHANGE COLUMN `item_size` `item_size` INT(11) NULL DEFAULT NULL COMMENT '服装大小:SML|etc';
+
+CREATE TABLE `users`
+(
+    `id`         int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
+    `is_deleted` tinyint(4)       NOT NULL DEFAULT '0' COMMENT '是否删除,1删除，0未删除',
+    `create_at`  datetime                  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_at`  datetime         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    `user_name`  varchar(32)      NOT NULL DEFAULT '新员工' COMMENT '用户名称',
+    `password`   varchar(64)      NOT NULL DEFAULT '25d55ad283aa400af464c76d713c07ad' COMMENT '12345678的32位md5',
+    `store_id`   int(11) unsigned NOT NULL DEFAULT '0' COMMENT '所属的店铺id',
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT ='用户表';
