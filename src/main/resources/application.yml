@@ -4,7 +4,7 @@ spring:
     schema: classpath:sql/costume.sql
     url: jdbc:mysql://localhost/costume?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
     username: root
-    password: 19970701
+    password: 19970701Xzj.
   thymeleaf:
     check-template-location: false
 mybatis-plus:
