@@ -18,9 +18,6 @@ import java.util.stream.Stream;
 
 @Service
 public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements StoreService {
-    public final int MAX_CITY_DIST_NUM = 99;
-    public final int MAX_PROV_DIST_NUM = 9999;
-    public final int MAX_AREA_DIST_NUM = 99999;
 
     @Override
     public List<StoreVo> listStoresByDist(Integer districtId) {
@@ -35,17 +32,20 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements
 
     @Override
     public List<StoreVo> listStoresByCity(Integer cityId) {
+        int MAX_CITY_DIST_NUM = 99;
         return getStoreVos(cityId, MAX_CITY_DIST_NUM);
     }
 
     @Override
     public List<StoreVo> listStoresByProv(Integer provId) {
+        int MAX_PROV_DIST_NUM = 9999;
         return getStoreVos(provId, MAX_PROV_DIST_NUM);
     }
 
     @Override
     public List<StoreVo> listStoresByArea(Integer areaId) {
         areaId *= 100000;
+        int MAX_AREA_DIST_NUM = 99999;
         return getStoreVos(areaId, MAX_AREA_DIST_NUM);
     }
 

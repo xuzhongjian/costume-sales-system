@@ -13,7 +13,7 @@ public interface StoreService extends IService<Store> {
 
     List<StoreVo> listStoresByProv(Integer provId);
 
-    public List<StoreVo> listStoresByArea(Integer areaId);
+    List<StoreVo> listStoresByArea(Integer areaId);
 
-    public List<StoreVo> searchStores(String keyWord);
+    List<StoreVo> searchStores(String keyWord);
 }
