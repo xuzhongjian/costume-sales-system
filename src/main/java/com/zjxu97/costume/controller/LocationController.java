@@ -53,7 +53,7 @@ public class LocationController {
     @ApiOperation(value = "列出所有地区")
     @GetMapping(value = "list-areas")
     public R<List<AreaVo>> listArea() {
-        List<Area> areas = areaService.getBaseMapper().selectList(null);
+        List<Area> areas = areaService.list(null);
         List<AreaVo> areaVos = areas.stream().map(area -> {
             AreaVo areaVo = new AreaVo();
             BeanUtils.copyProperties(area, areaVo);

@@ -21,7 +21,7 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements
 
     @Override
     public List<StoreVo> listStoresByDist(Integer districtId) {
-        List<Store> stores = this.getBaseMapper().selectList(qw().eq("district_id", districtId));
+        List<Store> stores = this.list(qw().eq("district_id", districtId));
         return stores.stream().map(store -> {
             StoreVo storeVo = new StoreVo();
             BeanUtils.copyProperties(store, storeVo);
@@ -50,7 +50,7 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements
     }
 
     private List<StoreVo> getStoreVos(Integer areaId, int max_area_dist_num) {
-        List<Store> stores = this.getBaseMapper().selectList(qw().between("district_id", areaId, areaId + max_area_dist_num));
+        List<Store> stores = this.list(qw().between("district_id", areaId, areaId + max_area_dist_num));
         return stores.stream().map(store -> {
             StoreVo storeVo = new StoreVo();
             BeanUtils.copyProperties(store, storeVo);
@@ -60,8 +60,8 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements
 
     @Override
     public List<StoreVo> searchStores(String keyWord) {
-        List<Store> storesByName = this.getBaseMapper().selectList(qw().like("store_name", keyWord));
-        List<Store> storesByAddress = this.getBaseMapper().selectList(qw().like("store_address", keyWord));
+        List<Store> storesByName = this.list(qw().like("store_name", keyWord));
+        List<Store> storesByAddress = this.list(qw().like("store_address", keyWord));
         //滤重
         HashSet<Store> ansStores = new HashSet<>();
         ansStores.addAll(storesByName);

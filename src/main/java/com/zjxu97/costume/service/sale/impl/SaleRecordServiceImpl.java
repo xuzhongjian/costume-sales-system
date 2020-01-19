@@ -35,7 +35,7 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
 
         //计算涉及到的总价格
         int ans = 0;
-        List<Integer> priceList = itemService.getBaseMapper().selectBatchIds(itemIds).stream().map(Item::getPrice).collect(Collectors.toList());
+        List<Integer> priceList = itemService.listByIds(itemIds).stream().map(Item::getPrice).collect(Collectors.toList());
         for (Integer price : priceList) {
             ans += price;
         }

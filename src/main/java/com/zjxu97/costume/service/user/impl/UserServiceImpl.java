@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Override
     public User getUserForSecurity(String userName) {
-        return this.getBaseMapper().selectOne(qw().eq("user_name", userName));
+        return this.getOne(qw().eq("user_name", userName));
     }
 
     private QueryWrapper<User> qw() {
