@@ -12,7 +12,6 @@ import org.springframework.web.filter.CorsFilter;
 /**
  * @author thisxzj
  */
-@EnableSwagger2
 @SpringBootApplication
 @MapperScan("com.zjxu97.course.mapper")
 public class CostumeApplication {
