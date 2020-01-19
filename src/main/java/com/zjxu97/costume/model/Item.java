@@ -37,4 +37,7 @@ public class Item extends Model<Item> {
     @TableField(value = "item_size")
     private Integer itemSize;
 
+    @TableField(value = "price")
+    private Integer price;
+
 }

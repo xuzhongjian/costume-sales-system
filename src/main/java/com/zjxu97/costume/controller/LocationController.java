@@ -39,16 +39,16 @@ public class LocationController {
     private final static Logger log = LoggerFactory.getLogger(LocationController.class);
 
     @Resource
-    AreaService areaService;
+    private AreaService areaService;
 
     @Resource
-    ProvinceService provinceService;
+    private ProvinceService provinceService;
 
     @Resource
-    CityService cityService;
+    private CityService cityService;
 
     @Resource
-    DistrictService districtService;
+    private DistrictService districtService;
 
     @ApiOperation(value = "列出所有地区")
     @GetMapping(value = "list-areas")

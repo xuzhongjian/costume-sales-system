@@ -28,7 +28,7 @@ public class StoreController {
     private final static Logger log = LoggerFactory.getLogger(StoreController.class);
 
     @Resource
-    StoreService storeService;
+    private StoreService storeService;
 
     @ApiOperation(value = "列出区县的所有店铺")
     @GetMapping(value = "list-stores-by-district")
@@ -75,7 +75,7 @@ public class StoreController {
     }
 
     @ApiOperation(value = "更新店铺", notes = "需要填id")
-    @PostMapping(value = "-store")
+    @PostMapping(value = "update-store")
     public R<String> updStore(@RequestBody StoreParam storeParam) {
         Store store = new Store();
         BeanUtils.copyProperties(storeParam, store);

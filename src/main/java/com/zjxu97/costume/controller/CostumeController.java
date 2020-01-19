@@ -36,13 +36,13 @@ public class CostumeController {
     private final static Logger log = LoggerFactory.getLogger(CostumeController.class);
 
     @Resource
-    CostumeTypeService costumeTypeService;
+    private  CostumeTypeService costumeTypeService;
 
     @Resource
-    CommodityStockService commodityStockService;
+    private  CommodityStockService commodityStockService;
 
     @Resource
-    ItemService itemService;
+    private  ItemService itemService;
 
     @ApiOperation(value = "列出品类")
     @GetMapping(value = "list-costumes")

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+
 @Data
 @TableName("sale_record")
 @EqualsAndHashCode(callSuper = false)
@@ -30,4 +31,7 @@ public class SaleRecord extends Model<SaleRecord> {
 
     @TableField(value = "item_id")
     private Integer itemId;
+
+    @TableField(value = "sale_type")
+    private Byte saleType;
 }
