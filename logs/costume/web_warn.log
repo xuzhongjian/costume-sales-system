@@ -1,2 +1,5 @@
 2020-01-19 16:57:04.578 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.course.mapper]' package. Please check your configuration.
 2020-01-19 16:58:02.756 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.course.mapper]' package. Please check your configuration.
+2020-01-19 17:05:50.283 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.course.mapper]' package. Please check your configuration.
+2020-01-19 17:21:37.577 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.course.mapper]' package. Please check your configuration.
+2020-01-19 17:22:15.644 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.zjxu97.course.mapper]' package. Please check your configuration.

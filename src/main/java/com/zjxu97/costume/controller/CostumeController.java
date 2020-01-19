@@ -57,15 +57,12 @@ public class CostumeController {
     }
 
     @ApiOperation(value = "查询单品")
-    @GetMapping(value = "query-items")
-    public R<List<ItemVo>> queryItems() {
-        List<Item> items = itemService.getBaseMapper().selectList(null);
-        List<ItemVo> itemVos = items.stream().map(item -> {
-            ItemVo itemVo = new ItemVo();
-            BeanUtils.copyProperties(item, itemVo);
-            return itemVo;
-        }).collect(Collectors.toList());
-        return RetFunc.success(itemVos);
+    @GetMapping(value = "query-item")
+    public R<ItemVo> queryItems(@RequestParam Integer itemId) {
+        Item item = itemService.getBaseMapper().selectById(itemId);
+        ItemVo itemVo = new ItemVo();
+        BeanUtils.copyProperties(item, itemVo);
+        return RetFunc.success(itemVo);
     }
 
     @ApiOperation(value = "搜索单品")

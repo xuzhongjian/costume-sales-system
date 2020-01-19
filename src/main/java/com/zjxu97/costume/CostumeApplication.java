@@ -13,7 +13,7 @@ import org.springframework.web.filter.CorsFilter;
  * @author thisxzj
  */
 @SpringBootApplication
-@MapperScan("com.zjxu97.course.mapper")
+@MapperScan("com.zjxu97.costume.mapper")
 public class CostumeApplication {
     public static void main(String[] args) {
         SpringApplication.run(CostumeApplication.class, args);
