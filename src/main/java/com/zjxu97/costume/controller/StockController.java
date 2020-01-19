@@ -34,7 +34,7 @@ public class StockController {
         return RetFunc.success(isSuccess);
     }
 
-    @ApiOperation(value = "入库")
+    @ApiOperation(value = "出库")
     @PostMapping(value = "out")
     public R<Boolean> out(@RequestBody List<StockInOutParam> stockInOuts) {
         Boolean isSuccess = commodityStockService.inOutStock(stockInOuts, InOutEnum.In.getValue());
