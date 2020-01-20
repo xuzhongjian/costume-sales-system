@@ -30,10 +30,12 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
         Integer costumeId = queryItemsParam.getCostumeId();
         Integer itemSize = queryItemsParam.getItemSize();
         Byte sex = queryItemsParam.getSex();
+        String itemKeyWords = queryItemsParam.getItemKeyWords();
         return this.list(qw()
                 .eq(Common.isUsefulNum(costumeId), "costume_id", costumeId)
                 .eq(Common.isUsefulNum(itemSize), "item_size", itemSize)
                 .eq(Common.isUsefulNum(sex), "sex", sex)
+                .like(Common.isUsefulString(itemKeyWords), "item_name", itemKeyWords)
         );
     }
 

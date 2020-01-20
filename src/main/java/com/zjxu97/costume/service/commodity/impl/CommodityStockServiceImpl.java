@@ -2,6 +2,7 @@ package com.zjxu97.costume.service.commodity.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.commons.InOutEnum;
 import com.zjxu97.costume.commons.SaleTypeEnum;
 import com.zjxu97.costume.model.CommodityStock;
@@ -21,11 +22,8 @@ import java.util.stream.Collectors;
 public class CommodityStockServiceImpl extends ServiceImpl<CommodityStockMapper, CommodityStock> implements CommodityStockService {
 
     @Override
-    public CommodityStockVo getItemComByStore(Integer storeId, Integer itemId) {
-        CommodityStock commodityStock = this.getOne(qw().eq("store_id", storeId).eq("item_id", itemId));
-        CommodityStockVo commodityStockVo = new CommodityStockVo();
-        BeanUtils.copyProperties(commodityStock, commodityStockVo);
-        return commodityStockVo;
+    public CommodityStock getItemComByStore(Integer storeId, Integer itemId) {
+        return this.getOne(qw().eq("store_id", storeId).eq("item_id", itemId));
     }
 
     @Override
@@ -64,6 +62,12 @@ public class CommodityStockServiceImpl extends ServiceImpl<CommodityStockMapper,
         }
 
         return this.saveOrUpdateBatch(commodityStocks);
+    }
+
+    public List<CommodityStock> getStoreStocks(List<Integer> itemIds, Integer storeId) {
+
+        return this.list(qw().in(Common.isUsefulList(itemIds), "item_id", itemIds)
+                .eq(Common.isUsefulNum(storeId), "store_id", storeId));
     }
 
     private QueryWrapper<CommodityStock> qw() {

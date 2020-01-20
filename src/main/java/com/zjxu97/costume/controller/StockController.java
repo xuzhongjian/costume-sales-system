@@ -4,17 +4,22 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.InOutEnum;
 import com.zjxu97.costume.commons.Rx;
+import com.zjxu97.costume.model.CommodityStock;
+import com.zjxu97.costume.model.Item;
+import com.zjxu97.costume.param.QueryItemsParam;
 import com.zjxu97.costume.param.QueryStockParam;
 import com.zjxu97.costume.param.StockInOutParam;
-import com.zjxu97.costume.param.StoreParam;
 import com.zjxu97.costume.service.commodity.CommodityStockService;
+import com.zjxu97.costume.service.item.ItemService;
 import com.zjxu97.costume.vo.CommodityStockVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author zjxu97
@@ -28,6 +33,9 @@ public class StockController {
 
     @Resource
     private CommodityStockService commodityStockService;
+
+    @Resource
+    private ItemService itemService;
 
     @ApiOperation(value = "入库")
     @PostMapping(value = "in")
@@ -46,15 +54,27 @@ public class StockController {
     @ApiOperation(value = "库存查询", notes = "按照店铺查询商品存量")
     @PostMapping(value = "query-stock")
     public R<List<CommodityStockVo>> queryStock(@RequestBody QueryStockParam queryStockParam) {
+        QueryItemsParam queryItemsParam = new QueryItemsParam();
+        BeanUtils.copyProperties(queryStockParam, queryItemsParam);
+        List<Integer> ids = itemService.queryItems(queryItemsParam).stream().map(Item::getId).collect(Collectors.toList());
 
-        return Rx.success(null);
+        Integer storeId = queryStockParam.getStoreId();
+        List<CommodityStockVo> vos = commodityStockService.getStoreStocks(ids, storeId).stream().map(commodityStock -> {
+            CommodityStockVo commodityStockVo = new CommodityStockVo();
+            BeanUtils.copyProperties(commodityStock, commodityStockVo);
+            return commodityStockVo;
+        }).collect(Collectors.toList());
+
+        return Rx.success(vos);
     }
 
 
     @ApiOperation(value = "店铺库存", notes = "给出店铺的id、商品的id，查询这个商品的库存状况")
     @GetMapping(value = "com-by-store")
     public R<CommodityStockVo> getItemComByStore(@RequestParam Integer storeId, @RequestParam Integer itemId) {
-        CommodityStockVo itemComByStore = commodityStockService.getItemComByStore(storeId, itemId);
-        return Rx.success(itemComByStore);
+        CommodityStock itemComByStore = commodityStockService.getItemComByStore(storeId, itemId);
+        CommodityStockVo commodityStockVo = new CommodityStockVo();
+        BeanUtils.copyProperties(itemComByStore, commodityStockVo);
+        return Rx.success(commodityStockVo);
     }
 }

@@ -9,10 +9,11 @@ import com.zjxu97.costume.vo.CommodityStockVo;
 import java.util.List;
 
 public interface CommodityStockService extends IService<CommodityStock> {
-    CommodityStockVo getItemComByStore(Integer storeId, Integer itemId);
+    CommodityStock getItemComByStore(Integer storeId, Integer itemId);
 
     void changeCommodityStock(GoodsParam goodsParam, Byte saleType);
 
     Boolean inOutStock(List<StockInOutParam> stockInOuts, Byte inOutType);
 
+    List<CommodityStock> getStoreStocks(List<Integer> itemIds, Integer storeId);
 }

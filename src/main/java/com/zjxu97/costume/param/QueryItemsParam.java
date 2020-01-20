@@ -8,6 +8,7 @@ import lombok.Data;
  */
 @Data
 public class QueryItemsParam {
+    private String itemKeyWords;
     private Integer costumeId;
     private Byte Sex;
     private Integer itemSize;
