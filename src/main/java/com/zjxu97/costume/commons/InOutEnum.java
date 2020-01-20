@@ -1,4 +1,4 @@
-package com.zjxu97.costume.common;
+package com.zjxu97.costume.commons;
 
 /**
  * @author zjxu97

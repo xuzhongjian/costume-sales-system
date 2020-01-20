@@ -1,4 +1,4 @@
-package com.zjxu97.costume.common;
+package com.zjxu97.costume.commons;
 
 import com.baomidou.mybatisplus.extension.api.R;
 
@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.api.R;
  */
 
 
-public class RetFunc {
+public class Rx {
 
     /**
      * 执行成功

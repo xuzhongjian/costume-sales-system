@@ -1,9 +1,9 @@
 package com.zjxu97.costume.controller;
 
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.common.Constants;
-import com.zjxu97.costume.common.RetFunc;
-import com.zjxu97.costume.common.SaleTypeEnum;
+import com.zjxu97.costume.commons.Constants;
+import com.zjxu97.costume.commons.Rx;
+import com.zjxu97.costume.commons.SaleTypeEnum;
 import com.zjxu97.costume.param.GoodsParam;
 import com.zjxu97.costume.service.commodity.CommodityStockService;
 import com.zjxu97.costume.service.sale.SaleRecordService;
@@ -37,7 +37,7 @@ public class SaleController {
         Integer total = saleRecordService.recordSales(goodsParam, SaleTypeEnum.SALE.getValue());
         commodityStockService.changeCommodityStock(goodsParam, SaleTypeEnum.SALE.getValue());
 
-        return RetFunc.success(total);
+        return Rx.success(total);
     }
 
     @ApiOperation(value = "退货", notes = "参数是所退货商品的list 返回值是退货的总价")
@@ -46,6 +46,6 @@ public class SaleController {
         Integer total = saleRecordService.recordSales(goodsParam, SaleTypeEnum.RETURN.getValue());
         commodityStockService.changeCommodityStock(goodsParam, SaleTypeEnum.RETURN.getValue());
 
-        return RetFunc.success(total);
+        return Rx.success(total);
     }
 }

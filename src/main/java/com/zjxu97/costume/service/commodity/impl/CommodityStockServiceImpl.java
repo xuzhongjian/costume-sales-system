@@ -2,11 +2,10 @@ package com.zjxu97.costume.service.commodity.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zjxu97.costume.common.InOutEnum;
-import com.zjxu97.costume.common.SaleTypeEnum;
+import com.zjxu97.costume.commons.InOutEnum;
+import com.zjxu97.costume.commons.SaleTypeEnum;
 import com.zjxu97.costume.model.CommodityStock;
 import com.zjxu97.costume.mapper.CommodityStockMapper;
-import com.zjxu97.costume.model.Item;
 import com.zjxu97.costume.param.GoodsParam;
 import com.zjxu97.costume.param.StockInOutParam;
 import com.zjxu97.costume.service.commodity.CommodityStockService;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class CommodityStockServiceImpl extends ServiceImpl<CommodityStockMapper, CommodityStock> implements CommodityStockService {

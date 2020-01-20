@@ -2,15 +2,13 @@ package com.zjxu97.costume.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.common.Constants;
-import com.zjxu97.costume.common.RetFunc;
+import com.zjxu97.costume.commons.Constants;
+import com.zjxu97.costume.commons.Rx;
 import com.zjxu97.costume.model.CostumeType;
 import com.zjxu97.costume.model.Item;
 import com.zjxu97.costume.param.QueryItemsParam;
-import com.zjxu97.costume.service.commodity.CommodityStockService;
 import com.zjxu97.costume.service.costume.CostumeTypeService;
 import com.zjxu97.costume.service.item.ItemService;
-import com.zjxu97.costume.vo.CommodityStockVo;
 import com.zjxu97.costume.vo.CostumeTypeVo;
 import com.zjxu97.costume.vo.ItemVo;
 import io.swagger.annotations.Api;
@@ -49,7 +47,7 @@ public class CostumeController {
             BeanUtils.copyProperties(costumeType, costumeTypeVo);
             return costumeTypeVo;
         }).collect(Collectors.toList());
-        return RetFunc.success(costumeTypeVos);
+        return Rx.success(costumeTypeVos);
     }
 
     @ApiOperation(value = "查询商品")
@@ -63,7 +61,7 @@ public class CostumeController {
             return itemVo;
         }).collect(Collectors.toList());
 
-        return RetFunc.success(collect);
+        return Rx.success(collect);
     }
 
     @ApiOperation(value = "查询品类商品")
@@ -76,13 +74,13 @@ public class CostumeController {
             return itemVo;
         }).collect(Collectors.toList());
 
-        return RetFunc.success(collect);
+        return Rx.success(collect);
     }
 
     @ApiOperation(value = "搜索商品")
     @GetMapping(value = "search-items")
     public R<List<ItemVo>> searchItems(@RequestParam String keyWord) {
         List<ItemVo> itemVos = itemService.searchItems(keyWord);
-        return RetFunc.success(itemVos);
+        return Rx.success(itemVos);
     }
 }

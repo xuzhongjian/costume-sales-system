@@ -1,8 +1,8 @@
 package com.zjxu97.costume.controller;
 
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.common.Constants;
-import com.zjxu97.costume.common.RetFunc;
+import com.zjxu97.costume.commons.Constants;
+import com.zjxu97.costume.commons.Rx;
 import com.zjxu97.costume.model.Area;
 import com.zjxu97.costume.model.City;
 import com.zjxu97.costume.model.Province;
@@ -59,28 +59,28 @@ public class LocationController {
             BeanUtils.copyProperties(area, areaVo);
             return areaVo;
         }).collect(Collectors.toList());
-        return RetFunc.success(areaVos);
+        return Rx.success(areaVos);
     }
 
     @ApiOperation(value = "按照地区列出所有省份")
     @GetMapping(value = "list-provs-by-area")
     public R<List<ProvinceVo>> listProvsByArea(@RequestParam Integer areaId) {
         List<ProvinceVo> provinceVos = provinceService.listProvsByArea(areaId);
-        return RetFunc.success(provinceVos);
+        return Rx.success(provinceVos);
     }
 
     @ApiOperation(value = "按照省份列出所有城市")
     @GetMapping(value = "list-citys-by-prov")
     public R<List<CityVo>> listCitysByProv(@RequestParam Integer provId) {
         List<CityVo> cityVos = cityService.listCitysByProv(provId);
-        return RetFunc.success(cityVos);
+        return Rx.success(cityVos);
     }
 
     @ApiOperation(value = "按照城市列出所有区县")
     @GetMapping(value = "list-dists-by-city")
     public R<List<DistrictVo>> listDistsByCity(@RequestParam Integer cityId) {
         List<DistrictVo> districtVos = districtService.listDistsByCity(cityId);
-        return RetFunc.success(districtVos);
+        return Rx.success(districtVos);
     }
 
     @ApiOperation(value = "获取县区所属的城市")
@@ -90,7 +90,7 @@ public class LocationController {
         City city = cityService.getById(cityId);
         CityVo cityVo = new CityVo();
         BeanUtils.copyProperties(city, cityVo);
-        return RetFunc.success(cityVo);
+        return Rx.success(cityVo);
     }
 
     @ApiOperation(value = "获取城市所属的省份")
@@ -100,7 +100,7 @@ public class LocationController {
         Province province = provinceService.getById(provinceId);
         ProvinceVo provinceVo = new ProvinceVo();
         BeanUtils.copyProperties(province, provinceVo);
-        return RetFunc.success(provinceVo);
+        return Rx.success(provinceVo);
     }
 
     @ApiOperation(value = "获取省份所属的区域")
@@ -110,6 +110,6 @@ public class LocationController {
         Area area = areaService.getById(areaId);
         AreaVo areaVo = new AreaVo();
         BeanUtils.copyProperties(area, areaVo);
-        return RetFunc.success(areaVo);
+        return Rx.success(areaVo);
     }
 }

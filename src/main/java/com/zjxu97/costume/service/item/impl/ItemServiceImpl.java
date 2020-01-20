@@ -2,18 +2,16 @@ package com.zjxu97.costume.service.item.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.model.Item;
 import com.zjxu97.costume.mapper.ItemMapper;
-import com.zjxu97.costume.model.Store;
 import com.zjxu97.costume.param.QueryItemsParam;
 import com.zjxu97.costume.service.item.ItemService;
 import com.zjxu97.costume.vo.ItemVo;
-import com.zjxu97.costume.vo.StoreVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,12 +31,12 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
         Integer itemSize = queryItemsParam.getItemSize();
         Byte sex = queryItemsParam.getSex();
         return this.list(qw()
-                .eq(Objects.nonNull(costumeId), "costume_id", costumeId)
-                .eq(Objects.nonNull(itemSize), "item_size", itemSize)
-                .eq(Objects.nonNull(sex), "sex", sex)
-
+                .eq(Common.isUsefulNum(costumeId), "costume_id", costumeId)
+                .eq(Common.isUsefulNum(itemSize), "item_size", itemSize)
+                .eq(Common.isUsefulNum(sex), "sex", sex)
         );
     }
+
 
     private QueryWrapper<Item> qw() {
         return new QueryWrapper<>();
