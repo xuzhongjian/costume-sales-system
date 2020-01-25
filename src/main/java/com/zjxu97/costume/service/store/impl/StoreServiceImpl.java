@@ -1,9 +1,7 @@
 package com.zjxu97.costume.service.store.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zjxu97.costume.model.District;
 import com.zjxu97.costume.model.Store;
 import com.zjxu97.costume.mapper.StoreMapper;
 import com.zjxu97.costume.service.store.StoreService;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements StoreService {

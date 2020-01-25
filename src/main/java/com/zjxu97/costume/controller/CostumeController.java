@@ -4,11 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.Rx;
-import com.zjxu97.costume.model.ItemType;
-import com.zjxu97.costume.model.Item;
+import com.zjxu97.costume.model.item.*;
 import com.zjxu97.costume.param.QueryItemsParam;
-import com.zjxu97.costume.service.costume.CostumeTypeService;
 import com.zjxu97.costume.service.item.ItemService;
+import com.zjxu97.costume.service.item.ItemTypeService;
 import com.zjxu97.costume.vo.CostumeTypeVo;
 import com.zjxu97.costume.vo.ItemVo;
 import io.swagger.annotations.Api;
@@ -33,7 +32,7 @@ public class CostumeController {
     private final static Logger log = LoggerFactory.getLogger(CostumeController.class);
 
     @Resource
-    private CostumeTypeService costumeTypeService;
+    private ItemTypeService itemTypeService;
 
     @Resource
     private ItemService itemService;
@@ -41,7 +40,7 @@ public class CostumeController {
     @ApiOperation(value = "列出品类")
     @GetMapping(value = "list-costumes")
     public R<List<CostumeTypeVo>> listCostumes() {
-        List<ItemType> itemTypes = costumeTypeService.list(null);
+        List<ItemType> itemTypes = itemTypeService.list(null);
         List<CostumeTypeVo> costumeTypeVos = itemTypes.stream().map(costumeType -> {
             CostumeTypeVo costumeTypeVo = new CostumeTypeVo();
             BeanUtils.copyProperties(costumeType, costumeTypeVo);

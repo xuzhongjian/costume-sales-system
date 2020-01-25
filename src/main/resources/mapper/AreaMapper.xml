@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zjxu97.costume.mapper.AreaMapper" >
-  <resultMap id="BaseResultMap" type="com.zjxu97.costume.model.Area" >
+<mapper namespace="com.zjxu97.costume.mapper.location.AreaMapper" >
+  <resultMap id="BaseResultMap" type="com.zjxu97.costume.model.location.Area" >
     <result column="id" property="id" jdbcType="INTEGER" />
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
     <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
     <result column="update_at" property="updateAt" jdbcType="TIMESTAMP" />
     <result column="area_name" property="areaName" jdbcType="VARCHAR" />
   </resultMap>
-  <insert id="insertSelective" parameterType="com.zjxu97.costume.model.Area" >
+  <insert id="insertSelective" parameterType="com.zjxu97.costume.model.location.Area" >
     insert into area
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

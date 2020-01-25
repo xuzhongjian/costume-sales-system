@@ -3,13 +3,13 @@ package com.zjxu97.costume.controller;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.Rx;
-import com.zjxu97.costume.model.Area;
-import com.zjxu97.costume.model.City;
-import com.zjxu97.costume.model.Province;
-import com.zjxu97.costume.service.area.AreaService;
-import com.zjxu97.costume.service.city.CityService;
-import com.zjxu97.costume.service.district.DistrictService;
-import com.zjxu97.costume.service.province.ProvinceService;
+import com.zjxu97.costume.model.location.Area;
+import com.zjxu97.costume.model.location.City;
+import com.zjxu97.costume.model.location.Province;
+import com.zjxu97.costume.service.location.AreaService;
+import com.zjxu97.costume.service.location.CityService;
+import com.zjxu97.costume.service.location.DistrictService;
+import com.zjxu97.costume.service.location.ProvinceService;
 import com.zjxu97.costume.vo.AreaVo;
 import com.zjxu97.costume.vo.CityVo;
 import com.zjxu97.costume.vo.DistrictVo;
@@ -72,7 +72,7 @@ public class LocationController {
     @ApiOperation(value = "按照省份列出所有城市")
     @GetMapping(value = "list-citys-by-prov")
     public R<List<CityVo>> listCitysByProv(@RequestParam Integer provId) {
-        List<CityVo> cityVos = cityService.listCitysByProv(provId);
+        List<CityVo> cityVos = cityService.listCityByProv(provId);
         return Rx.success(cityVos);
     }
 

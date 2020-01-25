@@ -5,8 +5,8 @@ import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.Rx;
 import com.zjxu97.costume.commons.SaleTypeEnum;
 import com.zjxu97.costume.param.GoodsParam;
-import com.zjxu97.costume.service.commodity.CommodityStockService;
 import com.zjxu97.costume.service.sale.SaleRecordService;
+import com.zjxu97.costume.service.sale.StockService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,13 +29,14 @@ public class SaleController {
     SaleRecordService saleRecordService;
 
     @Resource
-    CommodityStockService commodityStockService;
+    StockService stockService;
+
 
     @ApiOperation(value = "购买", notes = "参数是所购买商品的list 返回值是购买的总价")
     @PostMapping(value = "sale")
     public R<Integer> sale(@RequestBody GoodsParam goodsParam) {
         Integer total = saleRecordService.recordSales(goodsParam, SaleTypeEnum.SALE.getValue());
-        commodityStockService.changeCommodityStock(goodsParam, SaleTypeEnum.SALE.getValue());
+
 
         return Rx.success(total);
     }
@@ -44,7 +45,7 @@ public class SaleController {
     @PostMapping(value = "return")
     public R<Integer> returnGoods(@RequestBody GoodsParam goodsParam) {
         Integer total = saleRecordService.recordSales(goodsParam, SaleTypeEnum.RETURN.getValue());
-        commodityStockService.changeCommodityStock(goodsParam, SaleTypeEnum.RETURN.getValue());
+
 
         return Rx.success(total);
     }
