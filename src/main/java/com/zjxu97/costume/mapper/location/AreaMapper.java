@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AreaMapper extends BaseMapper<Area> {
-    int insertSelective(Area record);
+
 }

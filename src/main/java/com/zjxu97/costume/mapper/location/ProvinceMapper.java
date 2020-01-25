@@ -6,13 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ProvinceMapper extends BaseMapper<Province> {
-    int deleteByPrimaryKey(Integer id);
 
-    int insertSelective(Province record);
-
-    Province selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Province record);
-
-    int updateByPrimaryKey(Province record);
 }

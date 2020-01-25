@@ -6,13 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface StoreMapper extends BaseMapper<Store> {
-    int deleteByPrimaryKey(Integer id);
 
-    int insertSelective(Store record);
-
-    Store selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Store record);
-
-    int updateByPrimaryKey(Store record);
 }
