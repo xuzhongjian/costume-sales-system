@@ -1,18 +1,18 @@
 package com.zjxu97.costume.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zjxu97.costume.model.CostumeType;
+import com.zjxu97.costume.model.ItemType;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface CostumeTypeMapper extends BaseMapper<CostumeType> {
+public interface CostumeTypeMapper extends BaseMapper<ItemType> {
     int deleteByPrimaryKey(Integer id);
 
-    int insertSelective(CostumeType record);
+    int insertSelective(ItemType record);
 
-    CostumeType selectByPrimaryKey(Integer id);
+    ItemType selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(CostumeType record);
+    int updateByPrimaryKeySelective(ItemType record);
 
-    int updateByPrimaryKey(CostumeType record);
+    int updateByPrimaryKey(ItemType record);
 }

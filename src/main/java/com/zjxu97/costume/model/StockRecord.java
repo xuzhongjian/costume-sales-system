@@ -8,17 +8,15 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 @Data
-@TableName("commodity_stock")
+@TableName("stock_record")
 @EqualsAndHashCode(callSuper = false)
-public class CommodityStock extends Model<CommodityStock> {
+public class StockRecord extends Model<StockRecord> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-
 
     @TableLogic(value = "0", delval = "1")
     @TableField(value = "is_deleted")
     private Byte isDeleted;
-
 
     @TableField(value = "create_at")
     private Date createAt;
@@ -31,6 +29,9 @@ public class CommodityStock extends Model<CommodityStock> {
 
     @TableField(value = "item_id")
     private Integer itemId;
+
+    @TableField(value = "inout_type")
+    private Byte saleType;
 
     @TableField(value = "amount")
     private Integer amount;

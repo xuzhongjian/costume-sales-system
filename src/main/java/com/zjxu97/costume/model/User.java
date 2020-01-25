@@ -28,8 +28,8 @@ public class User extends Model<User> {
     @TableField(value = "update_at")
     private Date updateAt;
 
-    @TableField(value = "user_name")
-    private String userName;
+    @TableField(value = "user_id")
+    private String userId;
 
     @TableField(value = "nick_name")
     private String nickName;

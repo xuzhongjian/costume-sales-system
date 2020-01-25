@@ -13,11 +13,9 @@ public class City {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-
     @TableLogic(value = "0", delval = "1")
     @TableField(value = "is_deleted")
     private Byte isDeleted;
-
 
     @TableField(value = "create_at")
     private Date createAt;

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.Rx;
-import com.zjxu97.costume.model.CostumeType;
+import com.zjxu97.costume.model.ItemType;
 import com.zjxu97.costume.model.Item;
 import com.zjxu97.costume.param.QueryItemsParam;
 import com.zjxu97.costume.service.costume.CostumeTypeService;
@@ -41,8 +41,8 @@ public class CostumeController {
     @ApiOperation(value = "列出品类")
     @GetMapping(value = "list-costumes")
     public R<List<CostumeTypeVo>> listCostumes() {
-        List<CostumeType> costumeTypes = costumeTypeService.list(null);
-        List<CostumeTypeVo> costumeTypeVos = costumeTypes.stream().map(costumeType -> {
+        List<ItemType> itemTypes = costumeTypeService.list(null);
+        List<CostumeTypeVo> costumeTypeVos = itemTypes.stream().map(costumeType -> {
             CostumeTypeVo costumeTypeVo = new CostumeTypeVo();
             BeanUtils.copyProperties(costumeType, costumeTypeVo);
             return costumeTypeVo;

@@ -5,13 +5,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.commons.InOutEnum;
 import com.zjxu97.costume.commons.SaleTypeEnum;
-import com.zjxu97.costume.model.CommodityStock;
+import com.zjxu97.costume.model.Stock;
 import com.zjxu97.costume.mapper.CommodityStockMapper;
 import com.zjxu97.costume.param.GoodsParam;
 import com.zjxu97.costume.param.StockInOutParam;
 import com.zjxu97.costume.service.commodity.CommodityStockService;
-import com.zjxu97.costume.vo.CommodityStockVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,10 +17,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CommodityStockServiceImpl extends ServiceImpl<CommodityStockMapper, CommodityStock> implements CommodityStockService {
+public class CommodityStockServiceImpl extends ServiceImpl<CommodityStockMapper, Stock> implements CommodityStockService {
 
     @Override
-    public CommodityStock getItemComByStore(Integer storeId, Integer itemId) {
+    public Stock getItemComByStore(Integer storeId, Integer itemId) {
         return this.getOne(qw().eq("store_id", storeId).eq("item_id", itemId));
     }
 
@@ -30,47 +28,47 @@ public class CommodityStockServiceImpl extends ServiceImpl<CommodityStockMapper,
     public void changeCommodityStock(GoodsParam goodsParam, Byte saleType) {
         List<Integer> itemIds = goodsParam.getItemIds();
         Integer storeId = goodsParam.getStoreId();
-        List<CommodityStock> commodityStocks = new ArrayList<>();
+        List<Stock> stocks = new ArrayList<>();
         for (Integer itemId : itemIds) {
-            CommodityStock commodityStock =
+            Stock stock =
                     this.getOne(qw().eq("store_id", storeId).eq("item_id", itemId));
-            commodityStocks.add(commodityStock);
+            stocks.add(stock);
         }
         if (saleType.equals(SaleTypeEnum.SALE.getValue())) {
-            commodityStocks = commodityStocks.stream().peek(commodityStock -> commodityStock.setAmount(commodityStock.getAmount() - 1)).collect(Collectors.toList());
+            stocks = stocks.stream().peek(commodityStock -> commodityStock.setAmount(commodityStock.getAmount() - 1)).collect(Collectors.toList());
         } else if (saleType.equals(SaleTypeEnum.RETURN.getValue())) {
-            commodityStocks = commodityStocks.stream().peek(commodityStock -> commodityStock.setAmount(commodityStock.getAmount() + 1)).collect(Collectors.toList());
+            stocks = stocks.stream().peek(commodityStock -> commodityStock.setAmount(commodityStock.getAmount() + 1)).collect(Collectors.toList());
         }
-        this.saveOrUpdateBatch(commodityStocks);
+        this.saveOrUpdateBatch(stocks);
     }
 
     @Override
     public Boolean inOutStock(List<StockInOutParam> stockInOuts, Byte inOutType) {
-        List<CommodityStock> commodityStocks = new ArrayList<>();
+        List<Stock> stocks = new ArrayList<>();
         for (StockInOutParam stockInOut : stockInOuts) {
             Integer itemId = stockInOut.getItemId();
             Integer storeId = stockInOut.getStoreId();
             Integer amount = stockInOut.getAmount();
-            CommodityStock commodityStock =
+            Stock stock =
                     this.getOne(qw().eq("store_id", storeId).eq("item_id", itemId));
             if (inOutType.equals(InOutEnum.In.getValue())) {
-                commodityStock.setAmount(commodityStock.getAmount() + amount);
+                stock.setAmount(stock.getAmount() + amount);
             } else {
-                commodityStock.setAmount(commodityStock.getAmount() - amount);
+                stock.setAmount(stock.getAmount() - amount);
             }
-            commodityStocks.add(commodityStock);
+            stocks.add(stock);
         }
 
-        return this.saveOrUpdateBatch(commodityStocks);
+        return this.saveOrUpdateBatch(stocks);
     }
 
-    public List<CommodityStock> getStoreStocks(List<Integer> itemIds, Integer storeId) {
+    public List<Stock> getStoreStocks(List<Integer> itemIds, Integer storeId) {
 
         return this.list(qw().in(Common.isUsefulList(itemIds), "item_id", itemIds)
                 .eq(Common.isUsefulNum(storeId), "store_id", storeId));
     }
 
-    private QueryWrapper<CommodityStock> qw() {
+    private QueryWrapper<Stock> qw() {
         return new QueryWrapper<>();
     }
 }

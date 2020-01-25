@@ -14,7 +14,6 @@ public class Item extends Model<Item> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-
     @TableLogic(value = "0", delval = "1")
     @TableField(value = "is_deleted")
     private Byte isDeleted;
@@ -28,16 +27,12 @@ public class Item extends Model<Item> {
     @TableField(value = "item_name")
     private String itemName;
 
-    @TableField(value = "costume_id")
-    private Integer costumeId;
+    @TableField(value = "item_type_id")
+    private Integer itemTypeId;
 
-    @TableField(value = "sex")
-    private Byte Sex;
-
-    @TableField(value = "item_size")
-    private Integer itemSize;
+    @TableField(value = "item_size_id")
+    private Integer itemSizeId;
 
     @TableField(value = "price")
     private Integer price;
-
 }

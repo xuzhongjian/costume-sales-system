@@ -7,10 +7,11 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
+
 @Data
-@TableName("district")
+@TableName("costume_type")
 @EqualsAndHashCode(callSuper = false)
-public class District extends Model<District> {
+public class ItemSize extends Model<ItemSize> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -24,9 +25,9 @@ public class District extends Model<District> {
     @TableField(value = "update_at")
     private Date updateAt;
 
-    @TableField(value = "district_name")
-    private String districtName;
-
-    @TableField(value = "city_id")
-    private Integer cityId;
+    /**
+     *
+     */
+    @TableField(value = "display_name")
+    private String displayName;
 }

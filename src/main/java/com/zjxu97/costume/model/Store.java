@@ -18,7 +18,6 @@ public class Store extends Model<Store> {
     @TableField(value = "is_deleted")
     private Byte isDeleted;
 
-
     @TableField(value = "create_at")
     private Date createAt;
 

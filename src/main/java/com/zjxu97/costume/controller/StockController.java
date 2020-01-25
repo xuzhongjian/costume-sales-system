@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.InOutEnum;
 import com.zjxu97.costume.commons.Rx;
-import com.zjxu97.costume.model.CommodityStock;
+import com.zjxu97.costume.model.Stock;
 import com.zjxu97.costume.model.Item;
 import com.zjxu97.costume.param.QueryItemsParam;
 import com.zjxu97.costume.param.QueryStockParam;
@@ -72,7 +72,7 @@ public class StockController {
     @ApiOperation(value = "店铺库存", notes = "给出店铺的id、商品的id，查询这个商品的库存状况")
     @GetMapping(value = "com-by-store")
     public R<CommodityStockVo> getItemComByStore(@RequestParam Integer storeId, @RequestParam Integer itemId) {
-        CommodityStock itemComByStore = commodityStockService.getItemComByStore(storeId, itemId);
+        Stock itemComByStore = commodityStockService.getItemComByStore(storeId, itemId);
         CommodityStockVo commodityStockVo = new CommodityStockVo();
         BeanUtils.copyProperties(itemComByStore, commodityStockVo);
         return Rx.success(commodityStockVo);

@@ -14,11 +14,9 @@ public class SaleRecord extends Model<SaleRecord> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-
     @TableLogic(value = "0", delval = "1")
     @TableField(value = "is_deleted")
     private Byte isDeleted;
-
 
     @TableField(value = "create_at")
     private Date createAt;
@@ -34,4 +32,7 @@ public class SaleRecord extends Model<SaleRecord> {
 
     @TableField(value = "sale_type")
     private Byte saleType;
+
+    @TableField(value = "age")
+    private Integer age;
 }
