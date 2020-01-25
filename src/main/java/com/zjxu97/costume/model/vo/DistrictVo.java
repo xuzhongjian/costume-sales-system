@@ -1,4 +1,4 @@
-package com.zjxu97.costume.vo;
+package com.zjxu97.costume.model.vo;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.zjxu97.costume.model.location;
+package com.zjxu97.costume.model.entity.sale;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -8,9 +8,9 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 @Data
-@TableName("district")
+@TableName("stock")
 @EqualsAndHashCode(callSuper = false)
-public class District extends Model<District> {
+public class Stock extends Model<Stock> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -24,9 +24,12 @@ public class District extends Model<District> {
     @TableField(value = "update_at")
     private Date updateAt;
 
-    @TableField(value = "district_name")
-    private String districtName;
+    @TableField(value = "store_id")
+    private Integer storeId;
 
-    @TableField(value = "city_id")
-    private Integer cityId;
+    @TableField(value = "item_id")
+    private Integer itemId;
+
+    @TableField(value = "amount")
+    private Integer amount;
 }

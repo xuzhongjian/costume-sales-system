@@ -2,10 +2,10 @@ package com.zjxu97.costume.service.sale.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zjxu97.costume.model.item.Item;
-import com.zjxu97.costume.model.sale.SaleRecord;
+import com.zjxu97.costume.model.entity.item.Item;
+import com.zjxu97.costume.model.entity.sale.SaleRecord;
 import com.zjxu97.costume.mapper.sale.SaleRecordMapper;
-import com.zjxu97.costume.param.GoodsParam;
+import com.zjxu97.costume.model.param.GoodsParam;
 import com.zjxu97.costume.service.item.ItemService;
 import com.zjxu97.costume.service.sale.SaleRecordService;
 import org.springframework.stereotype.Service;

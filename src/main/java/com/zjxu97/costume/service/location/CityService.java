@@ -1,8 +1,8 @@
 package com.zjxu97.costume.service.location;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zjxu97.costume.model.location.City;
-import com.zjxu97.costume.vo.CityVo;
+import com.zjxu97.costume.model.entity.location.City;
+import com.zjxu97.costume.model.vo.CityVo;
 
 import java.util.List;
 

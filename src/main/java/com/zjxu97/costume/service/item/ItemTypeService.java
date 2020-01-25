@@ -1,8 +1,7 @@
 package com.zjxu97.costume.service.item;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zjxu97.costume.model.item.Item;
-import com.zjxu97.costume.model.item.ItemType;
+import com.zjxu97.costume.model.entity.item.ItemType;
 
 /**
  * @author zjxu97

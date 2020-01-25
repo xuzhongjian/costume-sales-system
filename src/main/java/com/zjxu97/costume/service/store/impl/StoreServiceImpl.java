@@ -2,10 +2,10 @@ package com.zjxu97.costume.service.store.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zjxu97.costume.model.Store;
+import com.zjxu97.costume.model.entity.Store;
 import com.zjxu97.costume.mapper.StoreMapper;
 import com.zjxu97.costume.service.store.StoreService;
-import com.zjxu97.costume.vo.StoreVo;
+import com.zjxu97.costume.model.vo.StoreVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.zjxu97.costume.mapper.sale;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zjxu97.costume.model.sale.Stock;
+import com.zjxu97.costume.model.entity.sale.Stock;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

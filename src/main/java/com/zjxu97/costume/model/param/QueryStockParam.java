@@ -1,4 +1,4 @@
-package com.zjxu97.costume.param;
+package com.zjxu97.costume.model.param;
 
 import lombok.Data;
 

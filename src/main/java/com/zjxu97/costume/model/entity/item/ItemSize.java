@@ -1,4 +1,4 @@
-package com.zjxu97.costume.model;
+package com.zjxu97.costume.model.entity.item;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
@@ -7,10 +7,11 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
+
 @Data
-@TableName("store")
+@TableName("costume_type")
 @EqualsAndHashCode(callSuper = false)
-public class Store extends Model<Store> {
+public class ItemSize extends Model<ItemSize> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -24,13 +25,9 @@ public class Store extends Model<Store> {
     @TableField(value = "update_at")
     private Date updateAt;
 
-    @TableField(value = "district_id")
-    private Integer districtId;
-
-    @TableField(value = "store_name")
-    private String storeName;
-
-    @TableField(value = "store_address")
-    private String storeAddress;
-
+    /**
+     *
+     */
+    @TableField(value = "display_name")
+    private String displayName;
 }

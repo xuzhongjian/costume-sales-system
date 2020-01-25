@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.Rx;
 import com.zjxu97.costume.commons.SaleTypeEnum;
-import com.zjxu97.costume.param.GoodsParam;
+import com.zjxu97.costume.model.param.GoodsParam;
 import com.zjxu97.costume.service.sale.SaleRecordService;
 import com.zjxu97.costume.service.sale.StockService;
 import io.swagger.annotations.Api;

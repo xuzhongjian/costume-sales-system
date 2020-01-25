@@ -2,10 +2,10 @@ package com.zjxu97.costume.service.location.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zjxu97.costume.model.location.District;
+import com.zjxu97.costume.model.entity.location.District;
 import com.zjxu97.costume.mapper.location.DistrictMapper;
 import com.zjxu97.costume.service.location.DistrictService;
-import com.zjxu97.costume.vo.DistrictVo;
+import com.zjxu97.costume.model.vo.DistrictVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

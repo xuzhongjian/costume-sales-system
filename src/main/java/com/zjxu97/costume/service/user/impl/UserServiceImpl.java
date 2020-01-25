@@ -3,7 +3,7 @@ package com.zjxu97.costume.service.user.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.mapper.UserMapper;
-import com.zjxu97.costume.model.User;
+import com.zjxu97.costume.model.entity.User;
 import com.zjxu97.costume.service.user.UserService;
 import org.springframework.stereotype.Service;
 

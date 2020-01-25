@@ -1,7 +1,7 @@
 package com.zjxu97.costume.service.user;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zjxu97.costume.model.User;
+import com.zjxu97.costume.model.entity.User;
 
 /**
  * @author zjxu97
