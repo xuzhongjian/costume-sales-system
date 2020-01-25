@@ -31,7 +31,7 @@ public class StockRecord extends Model<StockRecord> {
     private Integer itemId;
 
     @TableField(value = "inout_type")
-    private Byte saleType;
+    private Byte inoutType;
 
     @TableField(value = "amount")
     private Integer amount;
