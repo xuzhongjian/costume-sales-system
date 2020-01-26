@@ -2,7 +2,7 @@ package com.zjxu97.costume.controller;
 
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
-import com.zjxu97.costume.commons.Rx;
+import com.zjxu97.costume.commons.Return;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class DataController {
     @ApiOperation(value = "测试")
     @GetMapping(value = "test")
     public R<String> out() {
-        return Rx.success("hello world");
+        return Return.success("hello world");
     }
 
 }

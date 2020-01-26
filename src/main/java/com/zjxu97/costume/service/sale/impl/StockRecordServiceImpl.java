@@ -3,7 +3,7 @@ package com.zjxu97.costume.service.sale.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.mapper.sale.StockRecordMapper;
-import com.zjxu97.costume.model.dto.StockDTO;
+import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.entity.sale.StockRecord;
 import com.zjxu97.costume.service.sale.StockRecordService;
 import org.springframework.beans.BeanUtils;
@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class StockRecordServiceImpl extends ServiceImpl<StockRecordMapper, StockRecord> implements StockRecordService {
 
-    public void stockRecord(List<StockDTO> stockDTOList) {
-        List<StockRecord> stockRecordList = stockDTOList.stream().map(stockRecordDTO -> {
+    public void stockRecord(List<StockInOutDTO> stockInOutDTOList) {
+        List<StockRecord> stockRecordList = stockInOutDTOList.stream().map(stockRecordDTO -> {
             StockRecord stockRecord = new StockRecord();
             BeanUtils.copyProperties(stockRecordDTO,stockRecord);
             return stockRecord;

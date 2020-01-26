@@ -1,11 +1,18 @@
-package com.zjxu97.costume.model.vo;
+package com.zjxu97.costume.model.dto;
 
 import lombok.Data;
 
+/**
+ * @author zjxu97
+ * @date 2020/1/25 19:34
+ */
 @Data
-public class CommodityStockVo {
+public class StockDisplayDTO {
     private Integer id;
+
     private Integer storeId;
+
     private Integer itemId;
+
     private Integer amount;
 }

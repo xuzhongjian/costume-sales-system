@@ -5,25 +5,47 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.commons.InOutEnum;
 import com.zjxu97.costume.mapper.sale.StockMapper;
-import com.zjxu97.costume.model.dto.StockDTO;
+import com.zjxu97.costume.model.dto.StockDisplayDTO;
+import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.dto.StockIdentifyDTO;
 import com.zjxu97.costume.model.entity.sale.Stock;
 import com.zjxu97.costume.service.sale.StockService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements StockService {
-    public void updateStockAmount(List<StockDTO> stockDTOList) {
+
+    @Override
+    public List<StockDisplayDTO> getStockByStore(Integer storeId) {
+        return this.list(qw().eq(Common.isUsefulNum(storeId), "store_id", storeId)).stream()
+                .sorted(Comparator.comparing(Stock::getItemId)).map(stock -> {
+                    StockDisplayDTO stockDisplayDTO = new StockDisplayDTO();
+                    BeanUtils.copyProperties(stock, stockDisplayDTO);
+                    return stockDisplayDTO;
+                }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StockDisplayDTO> getStockByItemList(List<Integer> itemList, Integer storeId) {
+        return this.list(qw().eq(Common.isUsefulNum(storeId), "store_id", storeId)
+                .in(Common.isUsefulList(itemList), "item_id", itemList)
+        ).stream().map(stock -> {
+            StockDisplayDTO stockDisplayDTO = new StockDisplayDTO();
+            BeanUtils.copyProperties(stock, stockDisplayDTO);
+            return stockDisplayDTO;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateStockAmount(List<StockInOutDTO> stockInOutDTOList) {
         List<StockIdentifyDTO> stockIdentifyDTOList = new ArrayList<>();
-        HashMap<StockIdentifyDTO, StockDTO> identifyMap = new HashMap<>();
-        stockDTOList.forEach(stockDTO -> {
+        HashMap<StockIdentifyDTO, StockInOutDTO> identifyMap = new HashMap<>();
+        stockInOutDTOList.forEach(stockDTO -> {
             StockIdentifyDTO stockIdentifyDTO = new StockIdentifyDTO();
             BeanUtils.copyProperties(stockDTO, stockIdentifyDTO);
             stockIdentifyDTOList.add(stockIdentifyDTO);
@@ -41,14 +63,14 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
         needUpdateList.forEach(stock -> {
             StockIdentifyDTO identify = new StockIdentifyDTO();
             BeanUtils.copyProperties(stock, identify);
-            StockDTO stockDTO = identifyMap.get(identify);
-            if (Objects.nonNull(stockDTO)) {
+            StockInOutDTO stockInOutDTO = identifyMap.get(identify);
+            if (Objects.nonNull(stockInOutDTO)) {
                 Integer amount = stock.getAmount();
-                Byte inoutType = stockDTO.getInoutType();
+                Byte inoutType = stockInOutDTO.getInoutType();
                 if (inoutType.equals(InOutEnum.IN.getValue())) {
-                    amount += stockDTO.getAmount();
+                    amount += stockInOutDTO.getAmount();
                 } else if (inoutType.equals(InOutEnum.OUT.getValue())) {
-                    amount -= stockDTO.getAmount();
+                    amount -= stockInOutDTO.getAmount();
                 }
                 stock.setAmount(amount);
             }

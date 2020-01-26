@@ -7,8 +7,7 @@ import lombok.Data;
  * @date 2020/1/25 19:34
  */
 @Data
-public class StockDTO {
-
+public class StockInOutDTO {
     private Integer storeId;
 
     private Integer itemId;

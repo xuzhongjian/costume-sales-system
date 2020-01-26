@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.api.R;
  */
 
 
-public class Rx {
+public class Return {
 
     /**
      * 执行成功

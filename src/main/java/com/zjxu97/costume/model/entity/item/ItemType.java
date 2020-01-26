@@ -9,7 +9,7 @@ import java.util.Date;
 
 
 @Data
-@TableName("costume_type")
+@TableName("item_type")
 @EqualsAndHashCode(callSuper = false)
 public class ItemType extends Model<ItemType> {
     @TableId(value = "id", type = IdType.AUTO)
@@ -27,9 +27,6 @@ public class ItemType extends Model<ItemType> {
     @TableField(value = "update_at")
     private Date updateAt;
 
-    /**
-     *
-     */
     @TableField(value = "sex")
     private Byte sex;
 

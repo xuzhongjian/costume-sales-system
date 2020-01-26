@@ -3,8 +3,8 @@ package com.zjxu97.costume.controller;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.InOutEnum;
-import com.zjxu97.costume.commons.Rx;
-import com.zjxu97.costume.model.dto.StockDTO;
+import com.zjxu97.costume.commons.Return;
+import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.param.GoodParam;
 import com.zjxu97.costume.service.sale.SaleRecordService;
 import com.zjxu97.costume.service.sale.StockRecordService;
@@ -39,41 +39,46 @@ public class SaleController {
     @Resource
     StockRecordService stockRecordService;
 
-
+    /**
+     * OK
+     */
     @ApiOperation(value = "购买", notes = "参数是所购买商品的list 返回值是购买的总价")
     @PostMapping(value = "sale")
     public R<Integer> sale(@RequestBody List<GoodParam> saleItemParamList) {
         Integer total = saleRecordService.recordSales(saleItemParamList);
 
         //转换成记录的对象
-        List<StockDTO> stockDTOList = saleItemParamList.stream().map(goodParam -> {
-            StockDTO dto = new StockDTO();
+        List<StockInOutDTO> stockInOutDTOList = saleItemParamList.stream().map(goodParam -> {
+            StockInOutDTO dto = new StockInOutDTO();
             BeanUtils.copyProperties(goodParam, dto);
             dto.setAmount(1);
             dto.setInoutType(InOutEnum.OUT.getValue());
             return dto;
         }).collect(Collectors.toList());
 
-        stockRecordService.stockRecord(stockDTOList);
-        stockService.updateStockAmount(stockDTOList);
-        return Rx.success(total);
+        stockRecordService.stockRecord(stockInOutDTOList);
+        stockService.updateStockAmount(stockInOutDTOList);
+        return Return.success(total);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "退货", notes = "参数是所退货商品的list 返回值是退货的总价")
     @PostMapping(value = "return")
-    public R<Integer> returnGoods(@RequestBody List<GoodParam> saleItemParamList) {
+    public R<Integer> returnGood(@RequestBody List<GoodParam> saleItemParamList) {
         Integer total = saleRecordService.recordSales(saleItemParamList);
         //转换成记录的对象
-        List<StockDTO> stockDTOList = saleItemParamList.stream().map(goodParam -> {
-            StockDTO dto = new StockDTO();
+        List<StockInOutDTO> stockInOutDTOList = saleItemParamList.stream().map(goodParam -> {
+            StockInOutDTO dto = new StockInOutDTO();
             BeanUtils.copyProperties(goodParam, dto);
             dto.setAmount(1);
             dto.setInoutType(InOutEnum.IN.getValue());
             return dto;
         }).collect(Collectors.toList());
 
-        stockRecordService.stockRecord(stockDTOList);
-        stockService.updateStockAmount(stockDTOList);
-        return Rx.success(total);
+        stockRecordService.stockRecord(stockInOutDTOList);
+        stockService.updateStockAmount(stockInOutDTOList);
+        return Return.success(total);
     }
 }

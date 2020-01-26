@@ -9,9 +9,7 @@ import lombok.Data;
 @Data
 public class QueryStockParam {
     private Integer storeId;
-
     private String itemKeyWords;
-    private Integer costumeId;
-    private Byte sex;
-    private Integer itemSize;
+    private Integer ItemTypeId;
+    private Integer itemSizeId;
 }

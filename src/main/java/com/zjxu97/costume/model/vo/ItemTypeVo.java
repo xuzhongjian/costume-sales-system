@@ -7,7 +7,8 @@ import lombok.Data;
  * @date 2019/12/29 23:54
  */
 @Data
-public class CostumeTypeVo {
+public class ItemTypeVo {
     private Integer id;
     private String typeName;
+    private Byte sex;
 }

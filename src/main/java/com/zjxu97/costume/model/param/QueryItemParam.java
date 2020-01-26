@@ -7,9 +7,8 @@ import lombok.Data;
  * @date 2019/12/29 23:58
  */
 @Data
-public class QueryItemsParam {
+public class QueryItemParam {
     private String itemKeyWords;
-    private Integer costumeId;
-    private Byte Sex;
-    private Integer itemSize;
+    private Integer itemTypeId;
+    private Integer itemSizeId;
 }
