@@ -50,6 +50,9 @@ public class LocationController {
     @Resource
     private DistrictService districtService;
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "列出所有地区")
     @GetMapping(value = "list-areas")
     public R<List<AreaVo>> listArea() {
@@ -62,6 +65,9 @@ public class LocationController {
         return Return.success(areaVos);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "按照地区列出所有省份")
     @GetMapping(value = "list-provs-by-area")
     public R<List<ProvinceVo>> listProvsByArea(@RequestParam Integer areaId) {
@@ -69,6 +75,9 @@ public class LocationController {
         return Return.success(provinceVos);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "按照省份列出所有城市")
     @GetMapping(value = "list-citys-by-prov")
     public R<List<CityVo>> listCitysByProv(@RequestParam Integer provId) {
@@ -76,6 +85,9 @@ public class LocationController {
         return Return.success(cityVos);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "按照城市列出所有区县")
     @GetMapping(value = "list-dists-by-city")
     public R<List<DistrictVo>> listDistsByCity(@RequestParam Integer cityId) {
@@ -83,6 +95,9 @@ public class LocationController {
         return Return.success(districtVos);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "获取县区所属的城市")
     @GetMapping(value = "get-city-by-dist")
     public R<CityVo> getCityByDist(@RequestParam Integer distId) {
@@ -93,6 +108,9 @@ public class LocationController {
         return Return.success(cityVo);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "获取城市所属的省份")
     @GetMapping(value = "get-prov-by-city")
     public R<ProvinceVo> getProvByCity(@RequestParam Integer cityId) {
@@ -103,6 +121,9 @@ public class LocationController {
         return Return.success(provinceVo);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "获取省份所属的区域")
     @GetMapping(value = "get-area-by-prov")
     public R<AreaVo> getAreaByProv(@RequestParam Integer provId) {

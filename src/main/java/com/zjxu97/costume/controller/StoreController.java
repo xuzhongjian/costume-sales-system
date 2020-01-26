@@ -30,6 +30,9 @@ public class StoreController {
     @Resource
     private StoreService storeService;
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "列出区县的所有店铺")
     @GetMapping(value = "list-stores-by-district")
     public R<List<StoreVo>> listStoresByDist(@RequestParam Integer districtId) {
@@ -37,6 +40,9 @@ public class StoreController {
         return Return.success(storeVos);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "列出城市的所有店铺")
     @GetMapping(value = "list-stores-by-city")
     public R<List<StoreVo>> listStoresByCity(@RequestParam Integer cityId) {
@@ -44,6 +50,9 @@ public class StoreController {
         return Return.success(storeVos);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "列出省份的所有店铺")
     @GetMapping(value = "list-stores-by-prov")
     public R<List<StoreVo>> listStoresByProv(@RequestParam Integer provId) {
@@ -51,6 +60,9 @@ public class StoreController {
         return Return.success(storeVos);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "列出大区的所有店铺")
     @GetMapping(value = "list-stores-by-area")
     public R<List<StoreVo>> listStoresByArea(@RequestParam Integer area) {
@@ -58,6 +70,9 @@ public class StoreController {
         return Return.success(storeVos);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "添加店铺", notes = "不要填id")
     @PostMapping(value = "add-store")
     public R<String> addStore(@RequestBody StoreParam storeParam) {
@@ -67,6 +82,9 @@ public class StoreController {
         return b ? Return.success("添加成功") : Return.failure(new Exception("添加失败！"));
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "删除店铺")
     @GetMapping(value = "del-store")
     public R<String> delStore(@RequestParam Integer storeId) {
@@ -74,6 +92,9 @@ public class StoreController {
         return isRemove ? Return.success("删除成功") : Return.failure(new Exception("删除失败！"));
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "更新店铺", notes = "需要填id")
     @PostMapping(value = "update-store")
     public R<String> updStore(@RequestBody StoreParam storeParam) {
@@ -83,6 +104,9 @@ public class StoreController {
         return isSave ? Return.success("更新成功") : Return.failure(new Exception("更新失败！"));
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "搜索店铺")
     @GetMapping(value = "search-stores")
     public R<List<StoreVo>> searchStores(@RequestParam String keyWord) {

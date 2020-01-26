@@ -39,6 +39,9 @@ public class StockController {
     @Resource
     StockService stockService;
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "入库")
     @PostMapping(value = "in")
     public R<Boolean> in(@RequestBody List<StockInOutParam> stockInOutParamList) {
@@ -52,6 +55,9 @@ public class StockController {
         return Return.success(true);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "出库")
     @PostMapping(value = "out")
     public R<Boolean> out(@RequestBody List<StockInOutParam> stockInOutParamList) {
@@ -65,6 +71,9 @@ public class StockController {
         return Return.success(true);
     }
 
+    /**
+     * OK
+     */
     @ApiOperation(value = "库存查询", notes = "按照店铺查询商品存量")
     @PostMapping(value = "query")
     public R<List<StockVo>> queryStock(@RequestBody QueryStockParam queryStockParam) {
@@ -82,7 +91,9 @@ public class StockController {
         return Return.success(stockVoList);
     }
 
-
+    /**
+     * OK
+     */
     @ApiOperation(value = "店铺库存", notes = "店铺的库存状况")
     @GetMapping(value = "store-stock")
     public R<List<StockVo>> getItemComByStore(@RequestParam Integer storeId) {
