@@ -61,10 +61,19 @@ public class SaleController {
 
     @ApiOperation(value = "退货", notes = "参数是所退货商品的list 返回值是退货的总价")
     @PostMapping(value = "return")
-    public R<Integer> returnGoods(@RequestBody List<GoodParam> goodParam) {
-        Integer total = saleRecordService.recordSales(goodParam);
+    public R<Integer> returnGoods(@RequestBody List<GoodParam> saleItemParamList) {
+        Integer total = saleRecordService.recordSales(saleItemParamList);
+        //转换成记录的对象
+        List<StockDTO> stockDTOList = saleItemParamList.stream().map(goodParam -> {
+            StockDTO dto = new StockDTO();
+            BeanUtils.copyProperties(goodParam, dto);
+            dto.setAmount(1);
+            dto.setInoutType(InOutEnum.IN.getValue());
+            return dto;
+        }).collect(Collectors.toList());
 
-
+        stockRecordService.stockRecord(stockDTOList);
+        stockService.updateStockAmount(stockDTOList);
         return Rx.success(total);
     }
 }

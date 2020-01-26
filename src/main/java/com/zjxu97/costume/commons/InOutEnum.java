@@ -6,7 +6,7 @@ package com.zjxu97.costume.commons;
  */
 
 public enum InOutEnum {
-    In((byte) 1),
+    IN((byte) 1),
     OUT((byte) 2);
 
     private Byte value;
