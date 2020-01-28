@@ -101,9 +101,9 @@ public class StockController {
     public R<List<StockVo>> getItemComByStore(@RequestParam Integer storeId) {
         List<StockDisplayDTO> stockDisplayDTOList = stockService.getStockByStore(storeId);
         List<StockVo> stockVoList = stockDisplayDTOList.stream().map(stockDisplayDTO -> {
-            StockVo commodityStockVo = new StockVo();
-            BeanUtils.copyProperties(stockDisplayDTO, commodityStockVo);
-            return commodityStockVo;
+            StockVo stockVo = new StockVo();
+            BeanUtils.copyProperties(stockDisplayDTO, stockVo);
+            return stockVo;
         }).collect(Collectors.toList());
         return Return.success(stockVoList);
     }

@@ -57,7 +57,7 @@ public class ItemController {
      * OK
      */
     @ApiOperation(value = "查询商品的详细", notes = "关键词、类型、大小")
-    @GetMapping(value = "type-detail")
+    @GetMapping(value = "query-detail")
     public R<List<ItemDetailVo>> itemTypeDetail(QueryItemDetailParam queryItemDetailParam) {
         List<ItemDetailVo> itemDetailVoList = itemDetailService.queryItemDetail(queryItemDetailParam);
         return Return.success(itemDetailVoList);
