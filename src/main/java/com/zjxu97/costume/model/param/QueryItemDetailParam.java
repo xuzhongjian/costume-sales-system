@@ -4,10 +4,10 @@ import lombok.Data;
 
 /**
  * @author zjxu97
- * @date 2019/12/29 23:58
+ * @date 2020/1/27 12:09
  */
 @Data
-public class QueryItemParam {
+public class QueryItemDetailParam {
     private String itemKeyWords;
     private Integer itemTypeId;
     private Integer itemSizeId;

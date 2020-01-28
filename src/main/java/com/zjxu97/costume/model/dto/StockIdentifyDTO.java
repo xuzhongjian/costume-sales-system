@@ -10,5 +10,5 @@ import lombok.Data;
 public class StockIdentifyDTO {
     private Integer storeId;
 
-    private Integer itemId;
+    private Integer itemDetailId;
 }

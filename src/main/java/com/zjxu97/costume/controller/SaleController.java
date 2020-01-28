@@ -68,6 +68,7 @@ public class SaleController {
     @PostMapping(value = "return")
     public R<Integer> returnGood(@RequestBody List<GoodParam> saleItemParamList) {
         Integer total = saleRecordService.recordSales(saleItemParamList);
+
         //转换成记录的对象
         List<StockInOutDTO> stockInOutDTOList = saleItemParamList.stream().map(goodParam -> {
             StockInOutDTO dto = new StockInOutDTO();

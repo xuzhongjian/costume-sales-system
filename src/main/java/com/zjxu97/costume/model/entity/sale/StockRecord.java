@@ -27,8 +27,8 @@ public class StockRecord extends Model<StockRecord> {
     @TableField(value = "store_id")
     private Integer storeId;
 
-    @TableField(value = "item_id")
-    private Integer itemId;
+    @TableField(value = "item_detail_id")
+    private Integer itemDetailId;
 
     @TableField(value = "inout_type")
     private Byte inoutType;

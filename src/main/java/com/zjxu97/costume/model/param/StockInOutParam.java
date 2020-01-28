@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 public class StockInOutParam {
     private Integer storeId;
-    private Integer itemId;
+    private Integer itemDetailId;
     private Integer amount;
 }

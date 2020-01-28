@@ -10,6 +10,6 @@ import lombok.Data;
 public class QueryStockParam {
     private Integer storeId;
     private String itemKeyWords;
-    private Integer ItemTypeId;
+    private Integer itemTypeId;
     private Integer itemSizeId;
 }

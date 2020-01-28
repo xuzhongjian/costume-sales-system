@@ -10,7 +10,7 @@ import lombok.Data;
 public class GoodParam {
     private Integer storeId;
 
-    private Integer itemId;
+    private Integer itemDetailId;
 
     private Byte saleType;
 

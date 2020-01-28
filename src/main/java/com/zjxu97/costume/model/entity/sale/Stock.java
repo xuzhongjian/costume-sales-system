@@ -27,8 +27,8 @@ public class Stock extends Model<Stock> {
     @TableField(value = "store_id")
     private Integer storeId;
 
-    @TableField(value = "item_id")
-    private Integer itemId;
+    @TableField(value = "item_detail_id")
+    private Integer itemDetailId;
 
     @TableField(value = "amount")
     private Integer amount;

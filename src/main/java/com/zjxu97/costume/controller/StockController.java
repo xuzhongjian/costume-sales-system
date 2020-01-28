@@ -7,11 +7,13 @@ import com.zjxu97.costume.commons.Return;
 import com.zjxu97.costume.model.dto.StockDisplayDTO;
 import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.entity.item.Item;
-import com.zjxu97.costume.model.entity.sale.Stock;
-import com.zjxu97.costume.model.param.QueryItemParam;
+import com.zjxu97.costume.model.entity.item.ItemDetail;
+import com.zjxu97.costume.model.param.QueryItemDetailParam;
 import com.zjxu97.costume.model.param.QueryStockParam;
 import com.zjxu97.costume.model.param.StockInOutParam;
+import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.StockVo;
+import com.zjxu97.costume.service.item.ItemDetailService;
 import com.zjxu97.costume.service.item.ItemService;
 import com.zjxu97.costume.service.sale.StockService;
 import io.swagger.annotations.Api;
@@ -34,10 +36,10 @@ import java.util.stream.Collectors;
 public class StockController {
 
     @Resource
-    private ItemService itemService;
+    private ItemDetailService itemDetailService;
 
     @Resource
-    StockService stockService;
+    private StockService stockService;
 
     /**
      * OK
@@ -74,13 +76,13 @@ public class StockController {
     /**
      * OK
      */
-    @ApiOperation(value = "库存查询", notes = "按照店铺查询商品存量")
+    @ApiOperation(value = "库存查询", notes = "店铺、关键字、类别、大小")
     @PostMapping(value = "query")
     public R<List<StockVo>> queryStock(@RequestBody QueryStockParam queryStockParam) {
-        QueryItemParam queryItemParam = new QueryItemParam();
-        BeanUtils.copyProperties(queryStockParam, queryItemParam);
-        List<Integer> itemIdList = itemService.queryItem(queryItemParam).stream().map(Item::getId).collect(Collectors.toList());
 
+        QueryItemDetailParam queryItemDetailParam = new QueryItemDetailParam();
+        BeanUtils.copyProperties(queryStockParam, queryItemDetailParam);
+        List<Integer> itemIdList = itemDetailService.queryItemDetail(queryItemDetailParam).stream().map(ItemDetailVo::getId).collect(Collectors.toList());
         Integer storeId = queryStockParam.getStoreId();
         List<StockVo> stockVoList = stockService.getStockByItemList(itemIdList, storeId).stream().map(stockDisplayDTO -> {
             StockVo stockVo = new StockVo();
@@ -94,7 +96,7 @@ public class StockController {
     /**
      * OK
      */
-    @ApiOperation(value = "店铺库存", notes = "店铺的库存状况")
+    @ApiOperation(value = "店铺库存", notes = "店铺")
     @GetMapping(value = "store-stock")
     public R<List<StockVo>> getItemComByStore(@RequestParam Integer storeId) {
         List<StockDisplayDTO> stockDisplayDTOList = stockService.getStockByStore(storeId);

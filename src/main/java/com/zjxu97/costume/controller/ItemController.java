@@ -1,17 +1,17 @@
 package com.zjxu97.costume.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.Return;
-import com.zjxu97.costume.model.entity.item.*;
-import com.zjxu97.costume.model.param.QueryItemParam;
+import com.zjxu97.costume.model.entity.item.ItemSize;
+import com.zjxu97.costume.model.entity.item.ItemType;
+import com.zjxu97.costume.model.param.QueryItemDetailParam;
+import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.ItemSizeVo;
-import com.zjxu97.costume.service.item.ItemService;
+import com.zjxu97.costume.model.vo.ItemTypeVo;
+import com.zjxu97.costume.service.item.ItemDetailService;
 import com.zjxu97.costume.service.item.ItemSizeService;
 import com.zjxu97.costume.service.item.ItemTypeService;
-import com.zjxu97.costume.model.vo.ItemTypeVo;
-import com.zjxu97.costume.model.vo.ItemVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -31,8 +31,8 @@ import java.util.stream.Collectors;
 @RestController
 @Api(tags = "商品相关")
 @RequestMapping(Constants.API_PREFIX + "/items")
-public class ItemsController {
-    private final static Logger log = LoggerFactory.getLogger(ItemsController.class);
+public class ItemController {
+    private final static Logger log = LoggerFactory.getLogger(ItemController.class);
 
     @Resource
     private ItemTypeService itemTypeService;
@@ -41,23 +41,36 @@ public class ItemsController {
     private ItemSizeService itemSizeService;
 
     @Resource
-    private ItemService itemService;
+    private ItemDetailService itemDetailService;
 
     /**
      * OK
      */
-    @ApiOperation(value = "查询商品")
-    @PostMapping(value = "query")
-    public R<List<ItemVo>> queryItems(@RequestBody QueryItemParam queryItemParam) {
-        List<Item> items = itemService.queryItem(queryItemParam);
+    @ApiOperation(value = "列出某一类商品的详细", notes = "类别的id")
+    @GetMapping(value = "type-detail")
+    public R<List<ItemDetailVo>> itemTypeDetail(Integer itemTypeId) {
+        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailByTypeId(itemTypeId);
+        return Return.success(itemDetailVoList);
+    }
 
-        List<ItemVo> collect = items.stream().map(item -> {
-            ItemVo itemVo = new ItemVo();
-            BeanUtils.copyProperties(item, itemVo);
-            return itemVo;
-        }).collect(Collectors.toList());
+    /**
+     * OK
+     */
+    @ApiOperation(value = "查询商品的详细", notes = "关键词、类型、大小")
+    @GetMapping(value = "type-detail")
+    public R<List<ItemDetailVo>> itemTypeDetail(QueryItemDetailParam queryItemDetailParam) {
+        List<ItemDetailVo> itemDetailVoList = itemDetailService.queryItemDetail(queryItemDetailParam);
+        return Return.success(itemDetailVoList);
+    }
 
-        return Return.success(collect);
+    /**
+     * OK
+     */
+    @ApiOperation(value = "列出商品详细", notes = "使用商品的模糊id")
+    @GetMapping(value = "item-detail")
+    public R<List<ItemDetailVo>> itemDetail(Integer itemId) {
+        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailByItemId(itemId);
+        return Return.success(itemDetailVoList);
     }
 
     /**
@@ -93,6 +106,5 @@ public class ItemsController {
                 }).collect(Collectors.toList());
         return Return.success(itemTypeVoList);
     }
-
 
 }

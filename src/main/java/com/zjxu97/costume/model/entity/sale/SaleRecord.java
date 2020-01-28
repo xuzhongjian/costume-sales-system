@@ -27,8 +27,8 @@ public class SaleRecord extends Model<SaleRecord> {
     @TableField(value = "store_id")
     private Integer storeId;
 
-    @TableField(value = "item_id")
-    private Integer itemId;
+    @TableField(value = "item_detail_id")
+    private Integer itemDetailId;
 
     @TableField(value = "sale_type")
     private Byte saleType;

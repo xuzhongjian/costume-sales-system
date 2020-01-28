@@ -6,12 +6,11 @@ import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.commons.InOutEnum;
 import com.zjxu97.costume.mapper.sale.StockMapper;
 import com.zjxu97.costume.model.dto.StockDisplayDTO;
-import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.dto.StockIdentifyDTO;
+import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.entity.sale.Stock;
 import com.zjxu97.costume.service.sale.StockService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,7 +22,7 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     @Override
     public List<StockDisplayDTO> getStockByStore(Integer storeId) {
         return this.list(qw().eq(Common.isUsefulNum(storeId), "store_id", storeId)).stream()
-                .sorted(Comparator.comparing(Stock::getItemId)).map(stock -> {
+                .sorted(Comparator.comparing(Stock::getItemDetailId)).map(stock -> {
                     StockDisplayDTO stockDisplayDTO = new StockDisplayDTO();
                     BeanUtils.copyProperties(stock, stockDisplayDTO);
                     return stockDisplayDTO;
@@ -53,10 +52,10 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
         });
 
         List<Stock> needUpdateList = stockIdentifyDTOList.stream().map(identify ->
-                this.getOne(
-                        qw().eq(Common.isUsefulNum(identify.getItemId()), "item_id", identify.getItemId())
-                                .eq(Common.isUsefulNum(identify.getStoreId()), "store_id", identify.getStoreId())
-                                .orderByDesc("update_at")
+                this.getOne(qw()
+                        .eq(Common.isUsefulNum(identify.getItemDetailId()), "item_detail_id", identify.getItemDetailId())
+                        .eq(Common.isUsefulNum(identify.getStoreId()), "store_id", identify.getStoreId())
+                        .orderByDesc("update_at")
                 )
         ).collect(Collectors.toList());
 
