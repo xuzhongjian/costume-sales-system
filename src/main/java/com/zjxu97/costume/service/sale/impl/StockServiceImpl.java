@@ -20,19 +20,21 @@ import java.util.stream.Collectors;
 public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements StockService {
 
     @Override
-    public List<StockDisplayDTO> getStockByStore(Integer storeId) {
-        return this.list(qw().eq(Common.isUsefulNum(storeId), "store_id", storeId)).stream()
-                .sorted(Comparator.comparing(Stock::getItemDetailId)).map(stock -> {
-                    StockDisplayDTO stockDisplayDTO = new StockDisplayDTO();
-                    BeanUtils.copyProperties(stock, stockDisplayDTO);
-                    return stockDisplayDTO;
-                }).collect(Collectors.toList());
+    public List<StockDisplayDTO> getStockByStore(Integer storeId, Integer pageNo, Integer pageSize) {
+        return this.list(qw().eq(Common.isUsefulNum(storeId), "store_id", storeId)
+                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize)
+        ).stream().sorted(Comparator.comparing(Stock::getItemDetailId)).map(stock -> {
+            StockDisplayDTO stockDisplayDTO = new StockDisplayDTO();
+            BeanUtils.copyProperties(stock, stockDisplayDTO);
+            return stockDisplayDTO;
+        }).collect(Collectors.toList());
     }
 
     @Override
-    public List<StockDisplayDTO> getStockByItemList(List<Integer> itemList, Integer storeId) {
+    public List<StockDisplayDTO> getStockByItemList(List<Integer> itemList, Integer storeId, Integer pageNo, Integer pageSize) {
         return this.list(qw().eq(Common.isUsefulNum(storeId), "store_id", storeId)
                 .in(Common.isUsefulList(itemList), "item_id", itemList)
+                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize)
         ).stream().map(stock -> {
             StockDisplayDTO stockDisplayDTO = new StockDisplayDTO();
             BeanUtils.copyProperties(stock, stockDisplayDTO);

@@ -11,4 +11,6 @@ public class QueryItemDetailParam {
     private String itemKeyWords;
     private Integer itemTypeId;
     private Integer itemSizeId;
+    private Integer pageNo;
+    private Integer pageSize;
 }

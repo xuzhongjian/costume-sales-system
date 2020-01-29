@@ -6,6 +6,6 @@ import lombok.Data;
 public class StockVo {
     private Integer id;
     private Integer storeId;
-    private Integer itemId;
+    private Integer itemDetailId;
     private Integer amount;
 }

@@ -7,13 +7,13 @@ import com.zjxu97.costume.model.vo.StoreVo;
 import java.util.List;
 
 public interface StoreService extends IService<Store> {
-    List<StoreVo> listStoresByDist(Integer districtId);
+    List<StoreVo> listStoresByDist(Integer districtId, Integer pageNo, Integer pageSize);
 
-    List<StoreVo> listStoresByCity(Integer cityId);
+    List<StoreVo> listStoresByCity(Integer cityId, Integer pageNo, Integer pageSize);
 
-    List<StoreVo> listStoresByProv(Integer provId);
+    List<StoreVo> listStoresByProv(Integer provId, Integer pageNo, Integer pageSize);
 
-    List<StoreVo> listStoresByArea(Integer areaId);
+    List<StoreVo> listStoresByArea(Integer areaId, Integer pageNo, Integer pageSize);
 
-    List<StoreVo> searchStores(String keyWord);
+    List<StoreVo> searchStores(String keyWord, Integer pageNo, Integer pageSize);
 }

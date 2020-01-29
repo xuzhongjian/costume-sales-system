@@ -10,7 +10,7 @@ import java.util.List;
 public interface StockService extends IService<Stock> {
     void updateStockAmount(List<StockInOutDTO> stockInOutDTOList);
 
-    List<StockDisplayDTO> getStockByItemList(List<Integer> itemList, Integer storeId);
+    List<StockDisplayDTO> getStockByItemList(List<Integer> itemList, Integer storeId, Integer pageNo, Integer pageSize);
 
-    List<StockDisplayDTO> getStockByStore(Integer storeId);
+    List<StockDisplayDTO> getStockByStore(Integer storeId, Integer pageNo, Integer pageSize);
 }

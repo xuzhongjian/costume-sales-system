@@ -12,7 +12,7 @@ public class StockDisplayDTO {
 
     private Integer storeId;
 
-    private Integer itemId;
+    private Integer itemDetailId;
 
     private Integer amount;
 }

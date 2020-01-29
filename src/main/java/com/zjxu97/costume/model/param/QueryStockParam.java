@@ -12,4 +12,6 @@ public class QueryStockParam {
     private String itemKeyWords;
     private Integer itemTypeId;
     private Integer itemSizeId;
+    private Integer pageNo;
+    private Integer pageSize;
 }

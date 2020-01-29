@@ -35,8 +35,10 @@ public class StoreController {
      */
     @ApiOperation(value = "列出区县的所有店铺")
     @GetMapping(value = "list-stores-by-district")
-    public R<List<StoreVo>> listStoresByDist(@RequestParam Integer districtId) {
-        List<StoreVo> storeVos = storeService.listStoresByDist(districtId);
+    public R<List<StoreVo>> listStoresByDist(@RequestParam Integer districtId,
+                                             @RequestParam Integer pageNo,
+                                             @RequestParam Integer pageSize) {
+        List<StoreVo> storeVos = storeService.listStoresByDist(districtId, pageNo, pageSize);
         return Return.success(storeVos);
     }
 
@@ -45,8 +47,10 @@ public class StoreController {
      */
     @ApiOperation(value = "列出城市的所有店铺")
     @GetMapping(value = "list-stores-by-city")
-    public R<List<StoreVo>> listStoresByCity(@RequestParam Integer cityId) {
-        List<StoreVo> storeVos = storeService.listStoresByCity(cityId);
+    public R<List<StoreVo>> listStoresByCity(@RequestParam Integer cityId,
+                                             @RequestParam Integer pageNo,
+                                             @RequestParam Integer pageSize) {
+        List<StoreVo> storeVos = storeService.listStoresByCity(cityId, pageNo, pageSize);
         return Return.success(storeVos);
     }
 
@@ -55,8 +59,10 @@ public class StoreController {
      */
     @ApiOperation(value = "列出省份的所有店铺")
     @GetMapping(value = "list-stores-by-prov")
-    public R<List<StoreVo>> listStoresByProv(@RequestParam Integer provId) {
-        List<StoreVo> storeVos = storeService.listStoresByProv(provId);
+    public R<List<StoreVo>> listStoresByProv(@RequestParam Integer provId,
+                                             @RequestParam Integer pageNo,
+                                             @RequestParam Integer pageSize) {
+        List<StoreVo> storeVos = storeService.listStoresByProv(provId, pageNo, pageSize);
         return Return.success(storeVos);
     }
 
@@ -65,8 +71,10 @@ public class StoreController {
      */
     @ApiOperation(value = "列出大区的所有店铺")
     @GetMapping(value = "list-stores-by-area")
-    public R<List<StoreVo>> listStoresByArea(@RequestParam Integer area) {
-        List<StoreVo> storeVos = storeService.listStoresByArea(area);
+    public R<List<StoreVo>> listStoresByArea(@RequestParam Integer area,
+                                             @RequestParam Integer pageNo,
+                                             @RequestParam Integer pageSize) {
+        List<StoreVo> storeVos = storeService.listStoresByArea(area, pageNo, pageSize);
         return Return.success(storeVos);
     }
 
@@ -106,11 +114,14 @@ public class StoreController {
 
     /**
      * OK
+     * TODO
      */
     @ApiOperation(value = "搜索店铺")
     @GetMapping(value = "search-stores")
-    public R<List<StoreVo>> searchStores(@RequestParam String keyWord) {
-        List<StoreVo> storeVos = storeService.searchStores(keyWord);
+    public R<List<StoreVo>> searchStores(@RequestParam String keyWord,
+                                         @RequestParam Integer pageNo,
+                                         @RequestParam Integer pageSize) {
+        List<StoreVo> storeVos = storeService.searchStores(keyWord, pageNo, pageSize);
         return Return.success(storeVos);
     }
 

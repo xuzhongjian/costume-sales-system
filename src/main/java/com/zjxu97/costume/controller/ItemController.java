@@ -1,5 +1,6 @@
 package com.zjxu97.costume.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
 import com.zjxu97.costume.commons.Return;
@@ -48,8 +49,10 @@ public class ItemController {
      */
     @ApiOperation(value = "列出某一类商品的详细", notes = "类别的id")
     @GetMapping(value = "type-detail")
-    public R<List<ItemDetailVo>> itemTypeDetail(Integer itemTypeId) {
-        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailByTypeId(itemTypeId);
+    public R<List<ItemDetailVo>> itemTypeDetail(@RequestParam(name = "类别的id") Integer itemTypeId,
+                                                @RequestParam(name = "页号", defaultValue = "1") Integer pageNo,
+                                                @RequestParam(name = "页容", defaultValue = "10") Integer pageSize) {
+        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailByTypeId(itemTypeId, pageNo, pageSize);
         return Return.success(itemDetailVoList);
     }
 
@@ -57,8 +60,8 @@ public class ItemController {
      * OK
      */
     @ApiOperation(value = "查询商品的详细", notes = "关键词、类型、大小")
-    @GetMapping(value = "query-detail")
-    public R<List<ItemDetailVo>> itemTypeDetail(QueryItemDetailParam queryItemDetailParam) {
+    @PostMapping(value = "query-detail")
+    public R<List<ItemDetailVo>> itemTypeDetail(@RequestBody QueryItemDetailParam queryItemDetailParam) {
         List<ItemDetailVo> itemDetailVoList = itemDetailService.queryItemDetail(queryItemDetailParam);
         return Return.success(itemDetailVoList);
     }
@@ -68,8 +71,10 @@ public class ItemController {
      */
     @ApiOperation(value = "列出商品详细", notes = "使用商品的模糊id")
     @GetMapping(value = "item-detail")
-    public R<List<ItemDetailVo>> itemDetail(Integer itemId) {
-        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailByItemId(itemId);
+    public R<List<ItemDetailVo>> itemDetail(@RequestParam(name = "商品的模糊id") Integer itemId,
+                                            @RequestParam(name = "页号", defaultValue = "1") Integer pageNo,
+                                            @RequestParam(name = "页容", defaultValue = "10") Integer pageSize) {
+        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailByItemId(itemId, pageNo, pageSize);
         return Return.success(itemDetailVoList);
     }
 
@@ -94,8 +99,11 @@ public class ItemController {
      */
     @ApiOperation(value = "列出大小")
     @GetMapping(value = "list-size")
-    public R<List<ItemSizeVo>> listSize() {
-        List<ItemSize> listSizeList = itemSizeService.list(null);
+    public R<List<ItemSizeVo>> listSize(
+            @RequestParam(name = "页号", defaultValue = "1") Integer pageNo,
+            @RequestParam(name = "页容", defaultValue = "10") Integer pageSize) {
+        List<ItemSize> listSizeList = itemSizeService.list(new QueryWrapper<ItemSize>()
+                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize));
 
         List<ItemSizeVo> itemTypeVoList = listSizeList.stream()
                 .map(itemSize -> {

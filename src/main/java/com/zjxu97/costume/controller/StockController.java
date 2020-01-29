@@ -75,16 +75,19 @@ public class StockController {
 
     /**
      * OK
+     * TODO
      */
     @ApiOperation(value = "库存查询", notes = "店铺、关键字、类别、大小")
     @PostMapping(value = "query")
     public R<List<StockVo>> queryStock(@RequestBody QueryStockParam queryStockParam) {
-
+        Integer pageNo = queryStockParam.getPageNo();
+        Integer pageSize = queryStockParam.getPageSize();
         QueryItemDetailParam queryItemDetailParam = new QueryItemDetailParam();
         BeanUtils.copyProperties(queryStockParam, queryItemDetailParam);
         List<Integer> itemIdList = itemDetailService.queryItemDetail(queryItemDetailParam).stream().map(ItemDetailVo::getId).collect(Collectors.toList());
         Integer storeId = queryStockParam.getStoreId();
-        List<StockVo> stockVoList = stockService.getStockByItemList(itemIdList, storeId).stream().map(stockDisplayDTO -> {
+        List<StockVo> stockVoList = stockService.getStockByItemList(itemIdList, storeId, pageNo, pageSize).
+                stream().map(stockDisplayDTO -> {
             StockVo stockVo = new StockVo();
             BeanUtils.copyProperties(stockDisplayDTO, stockVo);
             return stockVo;
@@ -97,9 +100,9 @@ public class StockController {
      * OK
      */
     @ApiOperation(value = "店铺库存", notes = "店铺")
-    @GetMapping(value = "store-stock")
-    public R<List<StockVo>> getItemComByStore(@RequestParam Integer storeId) {
-        List<StockDisplayDTO> stockDisplayDTOList = stockService.getStockByStore(storeId);
+    @GetMapping(value = "store")
+    public R<List<StockVo>> getItemComByStore(@RequestParam Integer storeId, Integer pageNo, Integer pageSize) {
+        List<StockDisplayDTO> stockDisplayDTOList = stockService.getStockByStore(storeId, pageNo, pageSize);
         List<StockVo> stockVoList = stockDisplayDTOList.stream().map(stockDisplayDTO -> {
             StockVo stockVo = new StockVo();
             BeanUtils.copyProperties(stockDisplayDTO, stockVo);

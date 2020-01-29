@@ -29,11 +29,14 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
         Integer itemTypeId = queryItemDetailParam.getItemTypeId();
         Integer itemSizeId = queryItemDetailParam.getItemSizeId();
         String itemKeyWords = queryItemDetailParam.getItemKeyWords();
+        Integer pageNo = queryItemDetailParam.getPageNo();
+        Integer pageSize = queryItemDetailParam.getPageSize();
 
         List<Integer> itemIdList = itemService.getItemList(itemTypeId, itemKeyWords).stream().map(Item::getId).collect(Collectors.toList());
         return this.list(qw()
                 .in(Common.isUsefulList(itemIdList), "item_id", itemIdList)
-                .eq(Common.isUsefulNum(itemSizeId), "item_size_id", itemSizeId))
+                .eq(Common.isUsefulNum(itemSizeId), "item_size_id", itemSizeId)
+                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize))
                 .stream().map(itemDetail -> {
                     ItemDetailVo itemDetailVo = new ItemDetailVo();
                     BeanUtils.copyProperties(itemDetail, itemDetailVo);
@@ -42,9 +45,10 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
     }
 
     @Override
-    public List<ItemDetailVo> getItemDetailByTypeId(Integer typeId) {
+    public List<ItemDetailVo> getItemDetailByTypeId(Integer typeId, Integer pageNo, Integer pageSize) {
         List<Integer> itemIdList = itemService.getItemListByTypeId(typeId).stream().map(Item::getId).collect(Collectors.toList());
-        return this.list(qw().in(Common.isUsefulList(itemIdList), "item_id", itemIdList)).stream().map(itemDetail -> {
+        return this.list(qw().in(Common.isUsefulList(itemIdList), "item_id", itemIdList)
+                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize)).stream().map(itemDetail -> {
             ItemDetailVo itemDetailVo = new ItemDetailVo();
             BeanUtils.copyProperties(itemDetail, itemDetailVo);
             return itemDetailVo;
@@ -52,8 +56,9 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
     }
 
     @Override
-    public List<ItemDetailVo> getItemDetailByItemId(Integer itemId) {
-        List<ItemDetail> itemDetailList = this.list(qw().eq(Common.isUsefulNum(itemId), "item_id", itemId));
+    public List<ItemDetailVo> getItemDetailByItemId(Integer itemId, Integer pageNo, Integer pageSize) {
+        List<ItemDetail> itemDetailList = this.list(qw().eq(Common.isUsefulNum(itemId), "item_id", itemId)
+                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize));
         return itemDetailList.stream().map(itemDetail -> {
             ItemDetailVo itemDetailVo = new ItemDetailVo();
             BeanUtils.copyProperties(itemDetail, itemDetailVo);
