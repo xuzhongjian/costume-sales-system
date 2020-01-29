@@ -1,6 +1,5 @@
 package com.zjxu97.costume.commons;
 
-import com.google.common.collect.Lists;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public class Common {
     }
 
     public static boolean isUsefulString(String string) {
-        return StringUtils.isEmpty(string);
+        return !StringUtils.isEmpty(string);
     }
 
     public static boolean isUsefulList(List list) {

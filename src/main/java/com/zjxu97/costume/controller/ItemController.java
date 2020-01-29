@@ -81,7 +81,6 @@ public class ItemController {
     public R<List<ItemTypeVo>> listType() {
         List<ItemType> itemTypeList = itemTypeService.list(null);
         List<ItemTypeVo> itemTypeVoList = itemTypeList.stream()
-                .sorted(Comparator.comparingInt(ItemType::getSex))
                 .map(itemType -> {
                     ItemTypeVo itemTypeVo = new ItemTypeVo();
                     BeanUtils.copyProperties(itemType, itemTypeVo);
