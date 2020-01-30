@@ -64,6 +64,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--    org.jetbrains.annotations    -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
+        </dependency>
+
     </dependencies>
     <modelVersion>4.0.0</modelVersion>
 
