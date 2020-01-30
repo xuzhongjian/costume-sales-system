@@ -1,9 +1,9 @@
 package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.commons.Constants;
+import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.InOutEnum;
-import com.zjxu97.costume.commons.Return;
+import com.zjxu97.costume.commons.Ans;
 import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.param.GoodParam;
 import com.zjxu97.costume.service.sale.SaleRecordService;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @Api(tags = "销售相关")
-@RequestMapping(Constants.API_PREFIX + "/sales")
+@RequestMapping(CostumeConstants.API_PREFIX + "/sales")
 public class SaleController {
 
     @Resource
@@ -60,7 +60,7 @@ public class SaleController {
 
         stockRecordService.stockRecord(stockInOutDTOList);
         stockService.updateStockAmount(stockInOutDTOList);
-        return Return.success(total);
+        return Ans.success(total);
     }
 
     /**
@@ -82,6 +82,6 @@ public class SaleController {
 
         stockRecordService.stockRecord(stockInOutDTOList);
         stockService.updateStockAmount(stockInOutDTOList);
-        return Return.success(total);
+        return Ans.success(total);
     }
 }

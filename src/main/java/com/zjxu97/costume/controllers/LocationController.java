@@ -1,8 +1,8 @@
 package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.commons.Constants;
-import com.zjxu97.costume.commons.Return;
+import com.zjxu97.costume.commons.CostumeConstants;
+import com.zjxu97.costume.commons.Ans;
 import com.zjxu97.costume.model.entity.location.Area;
 import com.zjxu97.costume.model.entity.location.City;
 import com.zjxu97.costume.model.entity.location.Province;
@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @Api(tags = "位置相关")
-@RequestMapping(Constants.API_PREFIX + "/location")
+@RequestMapping(CostumeConstants.API_PREFIX + "/location")
 public class LocationController {
     private final static Logger log = LoggerFactory.getLogger(LocationController.class);
 
@@ -64,7 +64,7 @@ public class LocationController {
             BeanUtils.copyProperties(area, areaVo);
             return areaVo;
         }).collect(Collectors.toList());
-        return Return.success(areaVos);
+        return Ans.success(areaVos);
     }
 
     /**
@@ -74,7 +74,7 @@ public class LocationController {
     @GetMapping(value = "list-provs-by-area")
     public R<List<ProvinceVo>> listProvsByArea(@RequestParam Integer areaId) {
         List<ProvinceVo> provinceVos = provinceService.listProvsByArea(areaId);
-        return Return.success(provinceVos);
+        return Ans.success(provinceVos);
     }
 
     /**
@@ -84,7 +84,7 @@ public class LocationController {
     @GetMapping(value = "list-citys-by-prov")
     public R<List<CityVo>> listCitysByProv(@RequestParam Integer provId) {
         List<CityVo> cityVos = cityService.listCityByProv(provId);
-        return Return.success(cityVos);
+        return Ans.success(cityVos);
     }
 
     /**
@@ -94,7 +94,7 @@ public class LocationController {
     @GetMapping(value = "list-dists-by-city")
     public R<List<DistrictVo>> listDistsByCity(@RequestParam Integer cityId) {
         List<DistrictVo> districtVos = districtService.listDistsByCity(cityId);
-        return Return.success(districtVos);
+        return Ans.success(districtVos);
     }
 
     /**
@@ -107,7 +107,7 @@ public class LocationController {
         City city = cityService.getById(cityId);
         CityVo cityVo = new CityVo();
         BeanUtils.copyProperties(city, cityVo);
-        return Return.success(cityVo);
+        return Ans.success(cityVo);
     }
 
     /**
@@ -120,7 +120,7 @@ public class LocationController {
         Province province = provinceService.getById(provinceId);
         ProvinceVo provinceVo = new ProvinceVo();
         BeanUtils.copyProperties(province, provinceVo);
-        return Return.success(provinceVo);
+        return Ans.success(provinceVo);
     }
 
     /**
@@ -133,6 +133,6 @@ public class LocationController {
         Area area = areaService.getById(areaId);
         AreaVo areaVo = new AreaVo();
         BeanUtils.copyProperties(area, areaVo);
-        return Return.success(areaVo);
+        return Ans.success(areaVo);
     }
 }

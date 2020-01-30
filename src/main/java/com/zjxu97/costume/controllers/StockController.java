@@ -1,9 +1,9 @@
 package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.commons.Constants;
+import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.InOutEnum;
-import com.zjxu97.costume.commons.Return;
+import com.zjxu97.costume.commons.Ans;
 import com.zjxu97.costume.model.dto.StockDisplayDTO;
 import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.param.QueryItemDetailParam;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Api(tags = "库存相关")
-@RequestMapping(Constants.API_PREFIX + "/stocks")
+@RequestMapping(CostumeConstants.API_PREFIX + "/stocks")
 public class StockController {
 
     @Resource
@@ -54,7 +54,7 @@ public class StockController {
             return stockInOutDTO;
         }).collect(Collectors.toList());
         stockService.updateStockAmount(stockInOutDTOList);
-        return Return.success(true);
+        return Ans.success(true);
     }
 
     /**
@@ -70,11 +70,11 @@ public class StockController {
             return stockInOutDTO;
         }).collect(Collectors.toList());
         stockService.updateStockAmount(stockInOutDTOList);
-        return Return.success(true);
+        return Ans.success(true);
     }
 
     /**
-     *
+     *TODO-分页
      */
     @ApiOperation(value = "库存查询", notes = "店铺、关键字、类别、大小")
     @PostMapping(value = "query")
@@ -92,11 +92,11 @@ public class StockController {
             return stockVo;
         }).collect(Collectors.toList());
 
-        return Return.success(stockVoList);
+        return Ans.success(stockVoList);
     }
 
     /**
-     *
+     *TODO-分页
      */
     @ApiOperation(value = "店铺库存", notes = "店铺")
     @GetMapping(value = "store")
@@ -107,6 +107,6 @@ public class StockController {
             BeanUtils.copyProperties(stockDisplayDTO, stockVo);
             return stockVo;
         }).collect(Collectors.toList());
-        return Return.success(stockVoList);
+        return Ans.success(stockVoList);
     }
 }

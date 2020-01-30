@@ -1,11 +1,15 @@
 package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.commons.Constants;
-import com.zjxu97.costume.commons.Return;
+import com.zjxu97.costume.commons.CostumeConstants;
+import com.zjxu97.costume.commons.PageList;
+import com.zjxu97.costume.commons.Ans;
+import com.zjxu97.costume.model.entity.item.ItemDetail;
 import com.zjxu97.costume.model.entity.item.ItemSize;
 import com.zjxu97.costume.model.entity.item.ItemType;
+import com.zjxu97.costume.model.param.ItemTypeDetailPageParam;
 import com.zjxu97.costume.model.param.QueryItemDetailParam;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.ItemSizeVo;
@@ -25,15 +29,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 需要分页
- * TODO
- *
  * @author zjxu97
  * @date 2019/12/29 23:47
  */
 @RestController
 @Api(tags = "商品相关")
-@RequestMapping(Constants.API_PREFIX + "/items")
+@RequestMapping(CostumeConstants.API_PREFIX + "/items")
 public class ItemController {
     private final static Logger log = LoggerFactory.getLogger(ItemController.class);
 
@@ -47,29 +48,33 @@ public class ItemController {
     private ItemDetailService itemDetailService;
 
     /**
-     *
+     * TODO-分页
      */
     @ApiOperation(value = "列出某一类商品的详细", notes = "类别的id")
-    @GetMapping(value = "type-detail")
-    public R<List<ItemDetailVo>> itemTypeDetail(@RequestParam(name = "类别的id") Integer itemTypeId,
-                                                @RequestParam(name = "页号", defaultValue = "1") Integer pageNo,
-                                                @RequestParam(name = "页容", defaultValue = "10") Integer pageSize) {
-        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailByTypeId(itemTypeId, pageNo, pageSize);
-        return Return.success(itemDetailVoList);
+    @PostMapping(value = "type-detail")
+    public R<PageList<ItemDetailVo>> itemTypeDetail(@RequestBody ItemTypeDetailPageParam itemTypeDetailPageParam) {
+        IPage<ItemDetail> itemDetailByTypeId = itemDetailService.getItemDetailByTypeId(itemTypeDetailPageParam);
+        List<ItemDetail> itemDetailList = itemDetailByTypeId.getRecords();
+
+        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailVoFromList(itemDetailList);
+        PageList<ItemDetailVo> ansData = new PageList<>();
+        BeanUtils.copyProperties(itemDetailByTypeId, ansData);
+        ansData.setRecords(itemDetailVoList);
+        return Ans.success(ansData);
     }
 
     /**
-     *
+     * TODO-分页
      */
     @ApiOperation(value = "查询商品的详细", notes = "关键词、类型、大小")
     @PostMapping(value = "query-detail")
     public R<List<ItemDetailVo>> itemTypeDetail(@RequestBody QueryItemDetailParam queryItemDetailParam) {
         List<ItemDetailVo> itemDetailVoList = itemDetailService.queryItemDetail(queryItemDetailParam);
-        return Return.success(itemDetailVoList);
+        return Ans.success(itemDetailVoList);
     }
 
     /**
-     *
+     * TODO-分页
      */
     @ApiOperation(value = "列出商品详细", notes = "使用商品的模糊id")
     @GetMapping(value = "item-detail")
@@ -77,7 +82,7 @@ public class ItemController {
                                             @RequestParam(name = "页号", defaultValue = "1") Integer pageNo,
                                             @RequestParam(name = "页容", defaultValue = "10") Integer pageSize) {
         List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailByItemId(itemId, pageNo, pageSize);
-        return Return.success(itemDetailVoList);
+        return Ans.success(itemDetailVoList);
     }
 
     /**
@@ -93,7 +98,7 @@ public class ItemController {
                     BeanUtils.copyProperties(itemType, itemTypeVo);
                     return itemTypeVo;
                 }).collect(Collectors.toList());
-        return Return.success(itemTypeVoList);
+        return Ans.success(itemTypeVoList);
     }
 
     /**
@@ -113,7 +118,7 @@ public class ItemController {
                     BeanUtils.copyProperties(itemSize, itemSizeVo);
                     return itemSizeVo;
                 }).collect(Collectors.toList());
-        return Return.success(itemTypeVoList);
+        return Ans.success(itemTypeVoList);
     }
 
 }
