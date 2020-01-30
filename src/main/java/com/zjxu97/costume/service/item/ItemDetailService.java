@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface ItemDetailService extends IService<ItemDetail> {
-    List<ItemDetailVo> getItemDetailByItemId(Integer itemId, Integer pageNo, Integer pageSize);
-
     List<ItemDetailVo> getItemDetailByTypeId(Integer typeId, Integer pageNo, Integer pageSize);
+
+    List<ItemDetailVo> getItemDetailByItemId(Integer itemId, Integer pageNo, Integer pageSize);
 
     List<ItemDetailVo> queryItemDetail(QueryItemDetailParam queryItemDetailParam);
 }

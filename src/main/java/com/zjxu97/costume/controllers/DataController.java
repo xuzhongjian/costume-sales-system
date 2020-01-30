@@ -1,4 +1,4 @@
-package com.zjxu97.costume.controller;
+package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * 无需分页
+ *
  * @author zjxu97
  * @date 2020/1/19 21:37
  */

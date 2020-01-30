@@ -1,4 +1,4 @@
-package com.zjxu97.costume.controller;
+package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
@@ -6,15 +6,12 @@ import com.zjxu97.costume.commons.InOutEnum;
 import com.zjxu97.costume.commons.Return;
 import com.zjxu97.costume.model.dto.StockDisplayDTO;
 import com.zjxu97.costume.model.dto.StockInOutDTO;
-import com.zjxu97.costume.model.entity.item.Item;
-import com.zjxu97.costume.model.entity.item.ItemDetail;
 import com.zjxu97.costume.model.param.QueryItemDetailParam;
 import com.zjxu97.costume.model.param.QueryStockParam;
 import com.zjxu97.costume.model.param.StockInOutParam;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.StockVo;
 import com.zjxu97.costume.service.item.ItemDetailService;
-import com.zjxu97.costume.service.item.ItemService;
 import com.zjxu97.costume.service.sale.StockService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

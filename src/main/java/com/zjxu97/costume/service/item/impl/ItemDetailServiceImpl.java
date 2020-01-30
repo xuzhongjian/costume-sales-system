@@ -1,6 +1,8 @@
 package com.zjxu97.costume.service.item.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.mapper.item.ItemDetailMapper;
@@ -47,6 +49,8 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
     @Override
     public List<ItemDetailVo> getItemDetailByTypeId(Integer typeId, Integer pageNo, Integer pageSize) {
         List<Integer> itemIdList = itemService.getItemListByTypeId(typeId).stream().map(Item::getId).collect(Collectors.toList());
+        IPage<ItemDetail> item_id = this.page(new Page<>(pageNo, pageSize), qw().in(Common.isUsefulList(itemIdList), "item_id", itemIdList));
+
         return this.list(qw().in(Common.isUsefulList(itemIdList), "item_id", itemIdList)
                 .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize)).stream().map(itemDetail -> {
             ItemDetailVo itemDetailVo = new ItemDetailVo();

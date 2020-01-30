@@ -1,4 +1,4 @@
-package com.zjxu97.costume.controller;
+package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Constants;
