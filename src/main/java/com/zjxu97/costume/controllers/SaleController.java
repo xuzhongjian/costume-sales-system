@@ -22,8 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 已完成
- * 售出退货没有分页
+ * 无需分页
  *
  * @author zjxu97
  * @date 2020/1/19 17:33
@@ -43,7 +42,7 @@ public class SaleController {
     StockRecordService stockRecordService;
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "购买", notes = "参数是所购买商品的list 返回值是购买的总价")
     @PostMapping(value = "sale")
@@ -65,7 +64,7 @@ public class SaleController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "退货", notes = "参数是所退货商品的list 返回值是退货的总价")
     @PostMapping(value = "return")

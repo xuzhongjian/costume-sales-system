@@ -18,6 +18,9 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
+ * 需要分页
+ * TODO
+ *
  * @author zjxu97
  * @date 2019/12/29 22:25
  */
@@ -31,7 +34,7 @@ public class StoreController {
     private StoreService storeService;
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "列出区县的所有店铺")
     @GetMapping(value = "list-stores-by-district")
@@ -43,7 +46,7 @@ public class StoreController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "列出城市的所有店铺")
     @GetMapping(value = "list-stores-by-city")
@@ -55,7 +58,7 @@ public class StoreController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "列出省份的所有店铺")
     @GetMapping(value = "list-stores-by-prov")
@@ -67,7 +70,7 @@ public class StoreController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "列出大区的所有店铺")
     @GetMapping(value = "list-stores-by-area")
@@ -79,7 +82,7 @@ public class StoreController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "添加店铺", notes = "不要填id")
     @PostMapping(value = "add-store")
@@ -91,7 +94,7 @@ public class StoreController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "删除店铺")
     @GetMapping(value = "del-store")
@@ -101,7 +104,7 @@ public class StoreController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "更新店铺", notes = "需要填id")
     @PostMapping(value = "update-store")
@@ -113,8 +116,7 @@ public class StoreController {
     }
 
     /**
-     * OK
-     * TODO
+     *
      */
     @ApiOperation(value = "搜索店铺")
     @GetMapping(value = "search-stores")

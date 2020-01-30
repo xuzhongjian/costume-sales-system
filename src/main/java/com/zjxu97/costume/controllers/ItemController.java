@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 需要分页
+ * TODO
+ *
  * @author zjxu97
  * @date 2019/12/29 23:47
  */
@@ -44,7 +47,7 @@ public class ItemController {
     private ItemDetailService itemDetailService;
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "列出某一类商品的详细", notes = "类别的id")
     @GetMapping(value = "type-detail")
@@ -56,7 +59,7 @@ public class ItemController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "查询商品的详细", notes = "关键词、类型、大小")
     @PostMapping(value = "query-detail")
@@ -66,7 +69,7 @@ public class ItemController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "列出商品详细", notes = "使用商品的模糊id")
     @GetMapping(value = "item-detail")
@@ -78,7 +81,7 @@ public class ItemController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "列出品类")
     @GetMapping(value = "list-type")
@@ -94,7 +97,7 @@ public class ItemController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "列出大小")
     @GetMapping(value = "list-size")

@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 需要分页
+ * TODO
+ *
  * @author zjxu97
  * @date 2020/1/19 21:33
  */
@@ -39,7 +42,7 @@ public class StockController {
     private StockService stockService;
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "入库")
     @PostMapping(value = "in")
@@ -55,7 +58,7 @@ public class StockController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "出库")
     @PostMapping(value = "out")
@@ -71,8 +74,7 @@ public class StockController {
     }
 
     /**
-     * OK
-     * TODO
+     *
      */
     @ApiOperation(value = "库存查询", notes = "店铺、关键字、类别、大小")
     @PostMapping(value = "query")
@@ -94,7 +96,7 @@ public class StockController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "店铺库存", notes = "店铺")
     @GetMapping(value = "store")

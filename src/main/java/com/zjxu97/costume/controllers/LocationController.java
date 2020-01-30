@@ -29,8 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 已完成
- * 地理相关没有分页
+ * 无需分页
  *
  * @author zjxu97
  * @date 2019/12/28 01:37
@@ -54,7 +53,7 @@ public class LocationController {
     private DistrictService districtService;
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "列出所有地区")
     @GetMapping(value = "list-areas")
@@ -69,7 +68,7 @@ public class LocationController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "按照地区列出所有省份")
     @GetMapping(value = "list-provs-by-area")
@@ -79,7 +78,7 @@ public class LocationController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "按照省份列出所有城市")
     @GetMapping(value = "list-citys-by-prov")
@@ -89,7 +88,7 @@ public class LocationController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "按照城市列出所有区县")
     @GetMapping(value = "list-dists-by-city")
@@ -99,7 +98,7 @@ public class LocationController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "获取县区所属的城市")
     @GetMapping(value = "get-city-by-dist")
@@ -112,7 +111,7 @@ public class LocationController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "获取城市所属的省份")
     @GetMapping(value = "get-prov-by-city")
@@ -125,7 +124,7 @@ public class LocationController {
     }
 
     /**
-     * OK
+     *
      */
     @ApiOperation(value = "获取省份所属的区域")
     @GetMapping(value = "get-area-by-prov")
