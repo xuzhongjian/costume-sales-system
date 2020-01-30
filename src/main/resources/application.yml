@@ -2,7 +2,7 @@
 spring:
   datasource:
     schema: classpath:sql/costume.sql
-    url: jdbc:mysql://39.97.242.132:3306/costume?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/costume?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false
     username: root
     password: 19970701Xzj.
   thymeleaf:
