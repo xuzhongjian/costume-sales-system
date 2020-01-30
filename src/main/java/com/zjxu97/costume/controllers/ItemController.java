@@ -48,7 +48,7 @@ public class ItemController {
     private ItemDetailService itemDetailService;
 
     /**
-     * TODO-分页
+     * TODO-分页-完成
      */
     @ApiOperation(value = "列出某一类商品的详细", notes = "类别的id")
     @PostMapping(value = "type-detail")
