@@ -58,6 +58,21 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
     }
 
     @Override
+    public List<ItemDetail> queryItemDetailList(QueryItemDetailPageParam param) {
+        Integer itemTypeId = param.getItemTypeId();
+        Integer itemSizeId = param.getItemSizeId();
+        String itemKeyWords = param.getItemKeyWords();
+
+
+        List<Integer> itemIdList = itemService.getItemList(itemTypeId, itemKeyWords).stream().map(Item::getId).collect(Collectors.toList());
+        QueryWrapper<ItemDetail> qw = qw()
+                .in(Common.isUsefulList(itemIdList), "item_id", itemIdList)
+                .eq(Common.isUsefulNum(itemSizeId), "item_size_id", itemSizeId);
+
+        return this.list(qw);
+    }
+
+    @Override
     public IPage<ItemDetail> getItemDetailByTypeId(ItemTypeDetailPageParam param) {
         List<Integer> itemIdList = itemService.getItemListByTypeId(param.getTypeId()).stream().map(Item::getId).collect(Collectors.toList());
         Page<ItemDetail> page = new Page<>();
@@ -72,6 +87,11 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
         Page<ItemDetail> page = new Page<>();
         BeanUtils.copyProperties(param, page);
         return this.page(page, qw);
+    }
+
+    @Override
+    public ItemType getItemTypeByDetailId(Integer detailId) {
+        return itemTypeService.getItemTypeByDetailId(detailId);
     }
 
     @Override
@@ -104,11 +124,6 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
             itemDetailVo.setSexString(CostumeConstants.getString(itemType.getSex()));
             return itemDetailVo;
         }).collect(Collectors.toList());
-    }
-
-    @Override
-    public ItemType getItemTypeByDetailId(Integer detailId) {
-        return itemTypeService.getItemTypeByDetailId(detailId);
     }
 
     private QueryWrapper<ItemDetail> qw() {

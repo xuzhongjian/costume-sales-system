@@ -18,6 +18,8 @@ public interface ItemDetailService extends IService<ItemDetail> {
 
     IPage<ItemDetail> queryItemDetail(QueryItemDetailPageParam param);
 
+    List<ItemDetail> queryItemDetailList(QueryItemDetailPageParam param);
+
     ItemType getItemTypeByDetailId(Integer detailId);
 
     List<ItemDetailVo> getItemDetailVoFromEntityList(List<ItemDetail> itemDetailList);

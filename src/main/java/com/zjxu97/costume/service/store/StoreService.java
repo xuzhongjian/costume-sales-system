@@ -16,4 +16,6 @@ public interface StoreService extends IService<Store> {
     List<StoreVo> listStoresByArea(Integer areaId, Integer pageNo, Integer pageSize);
 
     List<StoreVo> searchStores(String keyWord, Integer pageNo, Integer pageSize);
+
+    List<StoreVo> getStoreVoFromEntityList(List<Store> storeList);
 }

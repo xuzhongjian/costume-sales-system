@@ -1,23 +1,40 @@
 package com.zjxu97.costume.service.sale.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.commons.InOutEnum;
+import com.zjxu97.costume.commons.PageParam;
 import com.zjxu97.costume.mapper.sale.StockMapper;
 import com.zjxu97.costume.model.dto.StockDisplayDTO;
 import com.zjxu97.costume.model.dto.StockIdentifyDTO;
 import com.zjxu97.costume.model.dto.StockInOutDTO;
+import com.zjxu97.costume.model.entity.Store;
+import com.zjxu97.costume.model.entity.item.ItemDetail;
 import com.zjxu97.costume.model.entity.sale.Stock;
+import com.zjxu97.costume.model.vo.ItemDetailVo;
+import com.zjxu97.costume.model.vo.StockVo;
+import com.zjxu97.costume.model.vo.StoreVo;
+import com.zjxu97.costume.service.item.ItemDetailService;
 import com.zjxu97.costume.service.sale.StockService;
+import com.zjxu97.costume.service.store.StoreService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements StockService {
+
+    @Resource
+    ItemDetailService itemDetailService;
+
+    @Resource
+    StoreService storeService;
 
     @Override
     public List<StockDisplayDTO> getStockByStore(Integer storeId, Integer pageNo, Integer pageSize) {
@@ -31,15 +48,12 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     }
 
     @Override
-    public List<StockDisplayDTO> getStockByItemList(List<Integer> itemList, Integer storeId, Integer pageNo, Integer pageSize) {
-        return this.list(qw().eq(Common.isUsefulNum(storeId), "store_id", storeId)
-                .in(Common.isUsefulList(itemList), "item_id", itemList)
-                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize)
-        ).stream().map(stock -> {
-            StockDisplayDTO stockDisplayDTO = new StockDisplayDTO();
-            BeanUtils.copyProperties(stock, stockDisplayDTO);
-            return stockDisplayDTO;
-        }).collect(Collectors.toList());
+    public IPage<Stock> getStockByItemList(List<Integer> itemIdList, Integer storeId, PageParam pageParam) {
+        Page<Stock> page = new Page<>();
+        BeanUtils.copyProperties(pageParam, page);
+        QueryWrapper<Stock> qw = qw().eq(Common.isUsefulNum(storeId), "store_id", storeId)
+                .in(Common.isUsefulList(itemIdList), "item_id", itemIdList);
+        return this.page(page, qw);
     }
 
     @Override
@@ -78,6 +92,33 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
         });
 
         this.saveBatch(needUpdateList);
+    }
+
+    @Override
+    public List<StockVo> getItemDetailVoFromEntityList(List<Stock> stockList) {
+
+        //获取商品详情的map
+        List<Integer> itemDetailIdList = stockList.stream().map(Stock::getItemDetailId).collect(Collectors.toList());
+        List<ItemDetail> itemDetailList = new ArrayList<>(itemDetailService.listByIds(itemDetailIdList));
+        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailVoFromEntityList(itemDetailList);
+        Map<Integer, ItemDetailVo> itemDetailVoMap = new HashMap<>();
+        itemDetailVoList.forEach(itemDetailVo -> itemDetailVoMap.put(itemDetailVo.getId(), itemDetailVo));
+
+
+        //获取商店的map
+        List<Integer> storeIdList = stockList.stream().map(Stock::getStoreId).collect(Collectors.toList());
+        List<Store> storeList = new ArrayList<>(storeService.listByIds(storeIdList));
+        List<StoreVo> storeVoList = storeService.getStoreVoFromEntityList(storeList);
+        Map<Integer, StoreVo> storeVoHashMap = new HashMap<>();
+        storeVoList.forEach(storeVo -> storeVoHashMap.put(storeVo.getId(), storeVo));
+
+        return stockList.stream().map(stock -> {
+            StockVo stockVo = new StockVo();
+            BeanUtils.copyProperties(stock, stockVo);
+            stockVo.setItemDetailVo(itemDetailVoMap.get(stock.getItemDetailId()));
+            stockVo.setStoreVo(storeVoHashMap.get(stock.getStoreId()));
+            return stockVo;
+        }).collect(Collectors.toList());
     }
 
     private QueryWrapper<Stock> qw() {

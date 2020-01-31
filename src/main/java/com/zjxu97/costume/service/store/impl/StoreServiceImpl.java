@@ -73,6 +73,15 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public List<StoreVo> getStoreVoFromEntityList(List<Store> storeList) {
+        return storeList.stream().map(store -> {
+            StoreVo storeVo = new StoreVo();
+            BeanUtils.copyProperties(store, storeVo);
+            return storeVo;
+        }).collect(Collectors.toList());
+    }
+
     private QueryWrapper<Store> qw() {
         return new QueryWrapper<>();
     }

@@ -1,13 +1,15 @@
 package com.zjxu97.costume.controllers;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.commons.CostumeConstants;
-import com.zjxu97.costume.commons.InOutEnum;
-import com.zjxu97.costume.commons.Ans;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zjxu97.costume.commons.*;
 import com.zjxu97.costume.model.dto.StockDisplayDTO;
 import com.zjxu97.costume.model.dto.StockInOutDTO;
+import com.zjxu97.costume.model.entity.item.ItemDetail;
+import com.zjxu97.costume.model.entity.sale.Stock;
 import com.zjxu97.costume.model.param.QueryItemDetailPageParam;
-import com.zjxu97.costume.model.param.QueryStockParam;
+import com.zjxu97.costume.model.param.QueryStockPageParam;
 import com.zjxu97.costume.model.param.StockInOutParam;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.StockVo;
@@ -24,7 +26,6 @@ import java.util.stream.Collectors;
 
 /**
  * 需要分页
- * TODO
  *
  * @author zjxu97
  * @date 2020/1/19 21:33
@@ -74,29 +75,29 @@ public class StockController {
     }
 
     /**
-     *TODO-分页
+     * TODO-分页
      */
     @ApiOperation(value = "库存查询", notes = "店铺、关键字、类别、大小")
     @PostMapping(value = "query")
-    public R<List<StockVo>> queryStock(@RequestBody QueryStockParam queryStockParam) {
-        Integer pageNo = queryStockParam.getPageNo();
-        Integer pageSize = queryStockParam.getPageSize();
+    public R<PageList<StockVo>> queryStock(@RequestBody QueryStockPageParam param) {
         QueryItemDetailPageParam queryItemDetailPageParam = new QueryItemDetailPageParam();
-        BeanUtils.copyProperties(queryStockParam, queryItemDetailPageParam);
-        List<Integer> itemIdList = itemDetailService.queryItemDetail(queryItemDetailPageParam).stream().map(ItemDetailVo::getId).collect(Collectors.toList());
-        Integer storeId = queryStockParam.getStoreId();
-        List<StockVo> stockVoList = stockService.getStockByItemList(itemIdList, storeId, pageNo, pageSize).
-                stream().map(stockDisplayDTO -> {
-            StockVo stockVo = new StockVo();
-            BeanUtils.copyProperties(stockDisplayDTO, stockVo);
-            return stockVo;
-        }).collect(Collectors.toList());
+        BeanUtils.copyProperties(param, queryItemDetailPageParam);
 
-        return Ans.success(stockVoList);
+        List<Integer> itemDetailIdList = itemDetailService.queryItemDetailList(queryItemDetailPageParam)
+                .stream().map(ItemDetail::getId).collect(Collectors.toList());
+
+        Integer storeId = param.getStoreId();
+        PageParam page = new PageParam();
+        BeanUtils.copyProperties(param, page);
+
+        IPage<Stock> stockIPage = stockService.getStockByItemList(itemDetailIdList, storeId, page);
+
+        PageList<StockVo> stockVoPageList = this.getStockVoPageList(stockIPage);
+        return Ans.success(stockVoPageList);
     }
 
     /**
-     *TODO-分页
+     * TODO-分页
      */
     @ApiOperation(value = "店铺库存", notes = "店铺")
     @GetMapping(value = "store")
@@ -108,5 +109,14 @@ public class StockController {
             return stockVo;
         }).collect(Collectors.toList());
         return Ans.success(stockVoList);
+    }
+
+    private PageList<StockVo> getStockVoPageList(IPage<Stock> stockPage) {
+        List<Stock> stockList = stockPage.getRecords();
+        List<StockVo> stockVoList = stockService.getItemDetailVoFromEntityList(stockList);
+        PageList<StockVo> ansData = new PageList<>();
+        BeanUtils.copyProperties(stockPage, ansData);
+        ansData.setRecords(stockVoList);
+        return ansData;
     }
 }

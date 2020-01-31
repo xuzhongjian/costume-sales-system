@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class StockVo {
     private Integer id;
-    private Integer storeId;
-    private Integer itemDetailId;
+    private StoreVo storeVo;
+    private ItemDetailVo itemDetailVo;
     private Integer amount;
 }
