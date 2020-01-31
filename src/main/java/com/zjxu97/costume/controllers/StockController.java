@@ -11,6 +11,7 @@ import com.zjxu97.costume.model.entity.sale.Stock;
 import com.zjxu97.costume.model.param.QueryItemDetailPageParam;
 import com.zjxu97.costume.model.param.QueryStockPageParam;
 import com.zjxu97.costume.model.param.StockInOutParam;
+import com.zjxu97.costume.model.param.StoreStockPageParam;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.StockVo;
 import com.zjxu97.costume.service.item.ItemDetailService;
@@ -75,7 +76,7 @@ public class StockController {
     }
 
     /**
-     * TODO-分页
+     * 分页-完成
      */
     @ApiOperation(value = "库存查询", notes = "店铺、关键字、类别、大小")
     @PostMapping(value = "query")
@@ -97,18 +98,14 @@ public class StockController {
     }
 
     /**
-     * TODO-分页
+     * 分页-完成
      */
     @ApiOperation(value = "店铺库存", notes = "店铺")
-    @GetMapping(value = "store")
-    public R<List<StockVo>> getItemComByStore(@RequestParam Integer storeId, Integer pageNo, Integer pageSize) {
-        List<StockDisplayDTO> stockDisplayDTOList = stockService.getStockByStore(storeId, pageNo, pageSize);
-        List<StockVo> stockVoList = stockDisplayDTOList.stream().map(stockDisplayDTO -> {
-            StockVo stockVo = new StockVo();
-            BeanUtils.copyProperties(stockDisplayDTO, stockVo);
-            return stockVo;
-        }).collect(Collectors.toList());
-        return Ans.success(stockVoList);
+    @PostMapping(value = "store")
+    public R<PageList<StockVo>> getStoreStock(@RequestBody StoreStockPageParam param) {
+        IPage<Stock> stockIPage = stockService.getStockByStore(param);
+        PageList<StockVo> stockVoPageList = this.getStockVoPageList(stockIPage);
+        return Ans.success(stockVoPageList);
     }
 
     private PageList<StockVo> getStockVoPageList(IPage<Stock> stockPage) {

@@ -1,21 +1,25 @@
 package com.zjxu97.costume.service.store;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zjxu97.costume.model.entity.Store;
+import com.zjxu97.costume.model.param.KeyWordsPageParam;
+import com.zjxu97.costume.model.param.LocationIdPageParam;
 import com.zjxu97.costume.model.vo.StoreVo;
 
 import java.util.List;
 
 public interface StoreService extends IService<Store> {
-    List<StoreVo> listStoresByDist(Integer districtId, Integer pageNo, Integer pageSize);
+    IPage<Store> listStoresByDist(LocationIdPageParam locationIdPageParam);
 
-    List<StoreVo> listStoresByCity(Integer cityId, Integer pageNo, Integer pageSize);
+    IPage<Store> listStoresByCity(LocationIdPageParam locationIdPageParam);
 
-    List<StoreVo> listStoresByProv(Integer provId, Integer pageNo, Integer pageSize);
+    IPage<Store> listStoresByProv(LocationIdPageParam locationIdPageParam);
 
-    List<StoreVo> listStoresByArea(Integer areaId, Integer pageNo, Integer pageSize);
+    IPage<Store> listStoresByArea(LocationIdPageParam locationIdPageParam);
 
-    List<StoreVo> searchStores(String keyWord, Integer pageNo, Integer pageSize);
+
+    IPage<Store> searchStores(KeyWordsPageParam keyWordsPageParam);
 
     List<StoreVo> getStoreVoFromEntityList(List<Store> storeList);
 }

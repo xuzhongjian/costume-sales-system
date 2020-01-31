@@ -1,9 +1,13 @@
 package com.zjxu97.costume.controllers;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.Ans;
+import com.zjxu97.costume.commons.PageList;
 import com.zjxu97.costume.model.entity.Store;
+import com.zjxu97.costume.model.param.KeyWordsPageParam;
+import com.zjxu97.costume.model.param.LocationIdPageParam;
 import com.zjxu97.costume.model.param.StoreParam;
 import com.zjxu97.costume.service.store.StoreService;
 import com.zjxu97.costume.model.vo.StoreVo;
@@ -12,10 +16,13 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 需要分页
@@ -33,51 +40,58 @@ public class StoreController {
     private StoreService storeService;
 
     /**
-     * TODO-分页
+     * 分页-完成
      */
     @ApiOperation(value = "列出区县的所有店铺")
-    @GetMapping(value = "list-stores-by-district")
-    public R<List<StoreVo>> listStoresByDist(@RequestParam Integer districtId,
-                                             @RequestParam Integer pageNo,
-                                             @RequestParam Integer pageSize) {
-        List<StoreVo> storeVos = storeService.listStoresByDist(districtId, pageNo, pageSize);
-        return Ans.success(storeVos);
+    @PostMapping(value = "list-stores-by-district")
+    public R<PageList<StoreVo>> listStoresByDist(@RequestBody LocationIdPageParam locationIdPageParam) {
+        IPage<Store> storeIPage = storeService.listStoresByDist(locationIdPageParam);
+        PageList<StoreVo> storeVoPageList = this.getStoreVoPageList(storeIPage);
+        return Ans.success(storeVoPageList);
     }
 
     /**
-     * TODO-分页
+     * 分页-完成
      */
     @ApiOperation(value = "列出城市的所有店铺")
-    @GetMapping(value = "list-stores-by-city")
-    public R<List<StoreVo>> listStoresByCity(@RequestParam Integer cityId,
-                                             @RequestParam Integer pageNo,
-                                             @RequestParam Integer pageSize) {
-        List<StoreVo> storeVos = storeService.listStoresByCity(cityId, pageNo, pageSize);
-        return Ans.success(storeVos);
+    @PostMapping(value = "list-stores-by-city")
+    public R<PageList<StoreVo>> listStoresByCity(@RequestBody LocationIdPageParam locationIdPageParam) {
+        IPage<Store> storeIPage = storeService.listStoresByCity(locationIdPageParam);
+        PageList<StoreVo> storeVoPageList = this.getStoreVoPageList(storeIPage);
+        return Ans.success(storeVoPageList);
     }
 
     /**
-     * TODO-分页
+     * 分页-完成
      */
     @ApiOperation(value = "列出省份的所有店铺")
-    @GetMapping(value = "list-stores-by-prov")
-    public R<List<StoreVo>> listStoresByProv(@RequestParam Integer provId,
-                                             @RequestParam Integer pageNo,
-                                             @RequestParam Integer pageSize) {
-        List<StoreVo> storeVos = storeService.listStoresByProv(provId, pageNo, pageSize);
-        return Ans.success(storeVos);
+    @PostMapping(value = "list-stores-by-prov")
+    public R<PageList<StoreVo>> listStoresByProv(@RequestBody LocationIdPageParam locationIdPageParam) {
+        IPage<Store> storeIPage = storeService.listStoresByProv(locationIdPageParam);
+        PageList<StoreVo> storeVoPageList = this.getStoreVoPageList(storeIPage);
+        return Ans.success(storeVoPageList);
     }
 
     /**
-     * TODO-分页
+     * 分页-完成
      */
     @ApiOperation(value = "列出大区的所有店铺")
-    @GetMapping(value = "list-stores-by-area")
-    public R<List<StoreVo>> listStoresByArea(@RequestParam Integer area,
-                                             @RequestParam Integer pageNo,
-                                             @RequestParam Integer pageSize) {
-        List<StoreVo> storeVos = storeService.listStoresByArea(area, pageNo, pageSize);
-        return Ans.success(storeVos);
+    @PostMapping(value = "list-stores-by-area")
+    public R<PageList<StoreVo>> listStoresByArea(@RequestBody LocationIdPageParam locationIdPageParam) {
+        IPage<Store> storeIPage = storeService.listStoresByArea(locationIdPageParam);
+        PageList<StoreVo> storeVoPageList = this.getStoreVoPageList(storeIPage);
+        return Ans.success(storeVoPageList);
+    }
+
+    /**
+     * 分页-完成
+     */
+    @ApiOperation(value = "搜索店铺")
+    @PostMapping(value = "search-stores")
+    public R<PageList<StoreVo>> searchStores(@RequestBody KeyWordsPageParam keyWordsPageParam) {
+        IPage<Store> storeIPage = storeService.searchStores(keyWordsPageParam);
+        PageList<StoreVo> storeVoPageList = this.getStoreVoPageList(storeIPage);
+        return Ans.success(storeVoPageList);
     }
 
     /**
@@ -114,16 +128,17 @@ public class StoreController {
         return isSave ? Ans.success("更新成功") : Ans.failure(new Exception("更新失败！"));
     }
 
-    /**
-     * TODO-分页
-     */
-    @ApiOperation(value = "搜索店铺")
-    @GetMapping(value = "search-stores")
-    public R<List<StoreVo>> searchStores(@RequestParam String keyWord,
-                                         @RequestParam Integer pageNo,
-                                         @RequestParam Integer pageSize) {
-        List<StoreVo> storeVos = storeService.searchStores(keyWord, pageNo, pageSize);
-        return Ans.success(storeVos);
+    private PageList<StoreVo> getStoreVoPageList(IPage<Store> storeIPage) {
+        PageList<StoreVo> storeVoPageList = new PageList<>();
+        BeanUtils.copyProperties(storeIPage, storeVoPageList);
+        List<Store> storeList = storeIPage.getRecords();
+        List<StoreVo> storeVoList = storeList.stream().map(store -> {
+            StoreVo storeVo = new StoreVo();
+            BeanUtils.copyProperties(store, storeVo);
+            return storeVo;
+        }).collect(Collectors.toList());
+        storeVoPageList.setRecords(storeVoList);
+        return storeVoPageList;
     }
 
 }

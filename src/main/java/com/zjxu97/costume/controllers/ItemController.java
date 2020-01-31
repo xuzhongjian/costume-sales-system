@@ -50,7 +50,7 @@ public class ItemController {
     private ItemDetailService itemDetailService;
 
     /**
-     * TODO-分页-完成
+     * 分页-完成
      */
     @ApiOperation(value = "列出某一类商品的详细", notes = "类别的id")
     @PostMapping(value = "type-detail")
@@ -61,7 +61,7 @@ public class ItemController {
     }
 
     /**
-     * TODO-分页-完成
+     * 分页-完成
      */
     @ApiOperation(value = "查询商品的详细", notes = "关键词、类型、大小")
     @PostMapping(value = "query-detail")
@@ -72,7 +72,7 @@ public class ItemController {
     }
 
     /**
-     * TODO-分页-完成
+     * 分页-完成
      */
     @ApiOperation(value = "列出商品详细", notes = "使用商品的模糊id,不带有size")
     @PostMapping(value = "item-detail")

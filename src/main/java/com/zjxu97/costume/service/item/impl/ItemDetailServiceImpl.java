@@ -114,7 +114,7 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
         return itemDetailList.stream().map(itemDetail -> {
             Integer itemSizeId = itemDetail.getItemSizeId();
             Integer itemId = itemDetail.getItemId();
-            ItemType itemType = itemTypeService.getItemTypeByDetailId(itemDetail.getItemId());
+            ItemType itemType = itemTypeService.getItemTypeByDetailId(itemDetail.getId());
 
             ItemDetailVo itemDetailVo = new ItemDetailVo();
             BeanUtils.copyProperties(itemDetail, itemDetailVo);

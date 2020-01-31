@@ -14,6 +14,7 @@ import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.entity.Store;
 import com.zjxu97.costume.model.entity.item.ItemDetail;
 import com.zjxu97.costume.model.entity.sale.Stock;
+import com.zjxu97.costume.model.param.StoreStockPageParam;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.StockVo;
 import com.zjxu97.costume.model.vo.StoreVo;
@@ -37,14 +38,12 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     StoreService storeService;
 
     @Override
-    public List<StockDisplayDTO> getStockByStore(Integer storeId, Integer pageNo, Integer pageSize) {
-        return this.list(qw().eq(Common.isUsefulNum(storeId), "store_id", storeId)
-                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize)
-        ).stream().sorted(Comparator.comparing(Stock::getItemDetailId)).map(stock -> {
-            StockDisplayDTO stockDisplayDTO = new StockDisplayDTO();
-            BeanUtils.copyProperties(stock, stockDisplayDTO);
-            return stockDisplayDTO;
-        }).collect(Collectors.toList());
+    public IPage<Stock> getStockByStore(StoreStockPageParam param) {
+        Integer storeId = param.getStoreId();
+        QueryWrapper<Stock> qw = qw().eq(Common.isUsefulNum(storeId), "store_id", storeId);
+        Page<Stock> page = new Page<>();
+        BeanUtils.copyProperties(param, page);
+        return this.page(page, qw);
     }
 
     @Override
