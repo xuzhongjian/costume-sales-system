@@ -6,7 +6,7 @@ import com.zjxu97.costume.commons.InOutEnum;
 import com.zjxu97.costume.commons.Ans;
 import com.zjxu97.costume.model.dto.StockDisplayDTO;
 import com.zjxu97.costume.model.dto.StockInOutDTO;
-import com.zjxu97.costume.model.param.QueryItemDetailParam;
+import com.zjxu97.costume.model.param.QueryItemDetailPageParam;
 import com.zjxu97.costume.model.param.QueryStockParam;
 import com.zjxu97.costume.model.param.StockInOutParam;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
@@ -81,9 +81,9 @@ public class StockController {
     public R<List<StockVo>> queryStock(@RequestBody QueryStockParam queryStockParam) {
         Integer pageNo = queryStockParam.getPageNo();
         Integer pageSize = queryStockParam.getPageSize();
-        QueryItemDetailParam queryItemDetailParam = new QueryItemDetailParam();
-        BeanUtils.copyProperties(queryStockParam, queryItemDetailParam);
-        List<Integer> itemIdList = itemDetailService.queryItemDetail(queryItemDetailParam).stream().map(ItemDetailVo::getId).collect(Collectors.toList());
+        QueryItemDetailPageParam queryItemDetailPageParam = new QueryItemDetailPageParam();
+        BeanUtils.copyProperties(queryStockParam, queryItemDetailPageParam);
+        List<Integer> itemIdList = itemDetailService.queryItemDetail(queryItemDetailPageParam).stream().map(ItemDetailVo::getId).collect(Collectors.toList());
         Integer storeId = queryStockParam.getStoreId();
         List<StockVo> stockVoList = stockService.getStockByItemList(itemIdList, storeId, pageNo, pageSize).
                 stream().map(stockDisplayDTO -> {

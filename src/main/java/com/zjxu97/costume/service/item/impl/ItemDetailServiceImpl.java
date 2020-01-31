@@ -11,8 +11,9 @@ import com.zjxu97.costume.model.entity.item.Item;
 import com.zjxu97.costume.model.entity.item.ItemDetail;
 import com.zjxu97.costume.model.entity.item.ItemSize;
 import com.zjxu97.costume.model.entity.item.ItemType;
+import com.zjxu97.costume.model.param.ItemDetailPageParam;
 import com.zjxu97.costume.model.param.ItemTypeDetailPageParam;
-import com.zjxu97.costume.model.param.QueryItemDetailParam;
+import com.zjxu97.costume.model.param.QueryItemDetailPageParam;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.service.item.ItemDetailService;
 import com.zjxu97.costume.service.item.ItemService;
@@ -41,23 +42,19 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
 
 
     @Override
-    public List<ItemDetailVo> queryItemDetail(QueryItemDetailParam queryItemDetailParam) {
-        Integer itemTypeId = queryItemDetailParam.getItemTypeId();
-        Integer itemSizeId = queryItemDetailParam.getItemSizeId();
-        String itemKeyWords = queryItemDetailParam.getItemKeyWords();
-        Integer pageNo = queryItemDetailParam.getPageNo();
-        Integer pageSize = queryItemDetailParam.getPageSize();
+    public IPage<ItemDetail> queryItemDetail(QueryItemDetailPageParam param) {
+        Integer itemTypeId = param.getItemTypeId();
+        Integer itemSizeId = param.getItemSizeId();
+        String itemKeyWords = param.getItemKeyWords();
+
+        Page<ItemDetail> page = new Page<>();
+        BeanUtils.copyProperties(param, page);
 
         List<Integer> itemIdList = itemService.getItemList(itemTypeId, itemKeyWords).stream().map(Item::getId).collect(Collectors.toList());
-        return this.list(qw()
+        QueryWrapper<ItemDetail> qw = qw()
                 .in(Common.isUsefulList(itemIdList), "item_id", itemIdList)
-                .eq(Common.isUsefulNum(itemSizeId), "item_size_id", itemSizeId)
-                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize))
-                .stream().map(itemDetail -> {
-                    ItemDetailVo itemDetailVo = new ItemDetailVo();
-                    BeanUtils.copyProperties(itemDetail, itemDetailVo);
-                    return itemDetailVo;
-                }).collect(Collectors.toList());
+                .eq(Common.isUsefulNum(itemSizeId), "item_size_id", itemSizeId);
+        return this.page(page, qw);
     }
 
     @Override
@@ -69,18 +66,16 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
     }
 
     @Override
-    public List<ItemDetailVo> getItemDetailByItemId(Integer itemId, Integer pageNo, Integer pageSize) {
-        List<ItemDetail> itemDetailList = this.list(qw().eq(Common.isUsefulNum(itemId), "item_id", itemId)
-                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize));
-        return itemDetailList.stream().map(itemDetail -> {
-            ItemDetailVo itemDetailVo = new ItemDetailVo();
-            BeanUtils.copyProperties(itemDetail, itemDetailVo);
-            return itemDetailVo;
-        }).collect(Collectors.toList());
+    public IPage<ItemDetail> getItemDetailByItemId(ItemDetailPageParam param) {
+        Integer itemId = param.getItemId();
+        QueryWrapper<ItemDetail> qw = qw().eq(Common.isUsefulNum(itemId), "item_id", itemId);
+        Page<ItemDetail> page = new Page<>();
+        BeanUtils.copyProperties(param, page);
+        return this.page(page, qw);
     }
 
     @Override
-    public List<ItemDetailVo> getItemDetailVoFromList(List<ItemDetail> itemDetailList) {
+    public List<ItemDetailVo> getItemDetailVoFromEntityList(List<ItemDetail> itemDetailList) {
 
         //获取size的map
         Set<Integer> itemSizeIdSet = itemDetailList.stream().map(ItemDetail::getItemSizeId).collect(Collectors.toSet());

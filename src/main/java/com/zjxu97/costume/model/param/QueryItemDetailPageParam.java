@@ -6,16 +6,18 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
 /**
  * @author zjxu97
- * @date 2020/1/30 13:08
+ * @date 2020/1/27 12:09
  */
 @Data
 @ApiModel
 @EqualsAndHashCode(callSuper = true)
-public class ItemTypeDetailPageParam extends PageParam {
+public class QueryItemDetailPageParam extends PageParam {
+    @ApiModelProperty(value = "关键字")
+    private String itemKeyWords;
     @ApiModelProperty(value = "类别的id")
-    private Integer typeId;
+    private Integer itemTypeId;
+    @ApiModelProperty(value = "大小")
+    private Integer itemSizeId;
 }
-
