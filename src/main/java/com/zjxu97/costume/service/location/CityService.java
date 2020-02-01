@@ -2,7 +2,9 @@ package com.zjxu97.costume.service.location;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zjxu97.costume.model.entity.location.City;
+import com.zjxu97.costume.model.param.LocationParam;
 import com.zjxu97.costume.model.vo.CityVo;
+import com.zjxu97.costume.model.vo.LocationVo;
 
 import java.util.List;
 
@@ -14,5 +16,7 @@ import java.util.List;
  */
 
 public interface CityService extends IService<City> {
-    List<CityVo> listCityByProv(Integer provId);
+    List<City> listCityByProv(Integer provId);
+
+    List<LocationVo> listParent(LocationParam locationParam);
 }

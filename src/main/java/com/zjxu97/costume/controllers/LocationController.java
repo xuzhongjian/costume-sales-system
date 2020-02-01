@@ -3,17 +3,17 @@ package com.zjxu97.costume.controllers;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.Ans;
+import com.zjxu97.costume.commons.LocationClassConstants;
 import com.zjxu97.costume.model.entity.location.Area;
 import com.zjxu97.costume.model.entity.location.City;
+import com.zjxu97.costume.model.entity.location.District;
 import com.zjxu97.costume.model.entity.location.Province;
+import com.zjxu97.costume.model.param.LocationParam;
+import com.zjxu97.costume.model.vo.*;
 import com.zjxu97.costume.service.location.AreaService;
 import com.zjxu97.costume.service.location.CityService;
 import com.zjxu97.costume.service.location.DistrictService;
 import com.zjxu97.costume.service.location.ProvinceService;
-import com.zjxu97.costume.model.vo.AreaVo;
-import com.zjxu97.costume.model.vo.CityVo;
-import com.zjxu97.costume.model.vo.DistrictVo;
-import com.zjxu97.costume.model.vo.ProvinceVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,87 +53,85 @@ public class LocationController {
     @Resource
     private DistrictService districtService;
 
-    /**
-     *
-     */
-    @ApiOperation(value = "列出所有地区")
-    @GetMapping(value = "list-areas")
-    public R<List<AreaVo>> listArea() {
-        List<Area> areas = areaService.list(null);
-        List<AreaVo> areaVos = areas.stream().map(area -> {
-            AreaVo areaVo = new AreaVo();
-            BeanUtils.copyProperties(area, areaVo);
-            return areaVo;
-        }).collect(Collectors.toList());
-        return Ans.success(areaVos);
+    @ApiOperation(value = "列出地区")
+    @GetMapping(value = "list-location")
+    public R<List<LocationVo>> listLocation(LocationParam locationParam) {
+        Byte locationClass = locationParam.getLocationClass();
+        Integer locationId = locationParam.getLocationId();
+        List<LocationVo> locationVoList = null;
+        switch (locationClass) {
+            case LocationClassConstants.AREA:
+                List<Area> areas = areaService.list(null);
+                locationVoList = areas.stream().map(area -> {
+                    LocationVo locationVo = new LocationVo();
+                    locationVo.setLocationId(area.getId());
+                    locationVo.setLocationName(area.getAreaName());
+                    locationVo.setParentId(0);
+                    return locationVo;
+                }).collect(Collectors.toList());
+                break;
+            case LocationClassConstants.PROVINCE:
+                List<Province> provinceList = provinceService.listProvsByArea(locationId);
+                locationVoList = provinceList.stream().map(province -> {
+                    LocationVo locationVo = new LocationVo();
+                    locationVo.setLocationId(province.getId());
+                    locationVo.setLocationName(province.getProvinceName());
+                    locationVo.setParentId(locationId);
+                    return locationVo;
+                }).collect(Collectors.toList());
+                break;
+            case LocationClassConstants.CITY:
+                List<City> cityList = cityService.listCityByProv(locationId);
+                locationVoList = cityList.stream().map(province -> {
+                    LocationVo locationVo = new LocationVo();
+                    locationVo.setLocationId(province.getId());
+                    locationVo.setLocationName(province.getCityName());
+                    locationVo.setParentId(locationId);
+                    return locationVo;
+                }).collect(Collectors.toList());
+                break;
+            case LocationClassConstants.DISTRICT:
+                List<District> districtList = districtService.listDistsByCity(locationId);
+                locationVoList = districtList.stream().map(province -> {
+                    LocationVo locationVo = new LocationVo();
+                    locationVo.setLocationId(province.getId());
+                    locationVo.setLocationName(province.getDistrictName());
+                    locationVo.setParentId(locationId);
+                    return locationVo;
+                }).collect(Collectors.toList());
+                break;
+            default:
+                log.error("参数输入错误{}", locationParam);
+                break;
+
+        }
+        return Ans.success(locationVoList);
     }
 
-    /**
-     *
-     */
-    @ApiOperation(value = "按照地区列出所有省份")
-    @GetMapping(value = "list-provs-by-area")
-    public R<List<ProvinceVo>> listProvsByArea(@RequestParam Integer areaId) {
-        List<ProvinceVo> provinceVos = provinceService.listProvsByArea(areaId);
-        return Ans.success(provinceVos);
-    }
 
-    /**
-     *
-     */
-    @ApiOperation(value = "按照省份列出所有城市")
-    @GetMapping(value = "list-citys-by-prov")
-    public R<List<CityVo>> listCitysByProv(@RequestParam Integer provId) {
-        List<CityVo> cityVos = cityService.listCityByProv(provId);
-        return Ans.success(cityVos);
-    }
-
-    /**
-     *
-     */
-    @ApiOperation(value = "按照城市列出所有区县")
-    @GetMapping(value = "list-dists-by-city")
-    public R<List<DistrictVo>> listDistsByCity(@RequestParam Integer cityId) {
-        List<DistrictVo> districtVos = districtService.listDistsByCity(cityId);
-        return Ans.success(districtVos);
-    }
-
-    /**
-     *
-     */
-    @ApiOperation(value = "获取县区所属的城市")
-    @GetMapping(value = "get-city-by-dist")
-    public R<CityVo> getCityByDist(@RequestParam Integer distId) {
-        Integer cityId = districtService.getById(distId).getCityId();
-        City city = cityService.getById(cityId);
-        CityVo cityVo = new CityVo();
-        BeanUtils.copyProperties(city, cityVo);
-        return Ans.success(cityVo);
-    }
-
-    /**
-     *
-     */
-    @ApiOperation(value = "获取城市所属的省份")
-    @GetMapping(value = "get-prov-by-city")
-    public R<ProvinceVo> getProvByCity(@RequestParam Integer cityId) {
-        Integer provinceId = cityService.getById(cityId).getProvinceId();
-        Province province = provinceService.getById(provinceId);
-        ProvinceVo provinceVo = new ProvinceVo();
-        BeanUtils.copyProperties(province, provinceVo);
-        return Ans.success(provinceVo);
-    }
-
-    /**
-     *
-     */
-    @ApiOperation(value = "获取省份所属的区域")
-    @GetMapping(value = "get-area-by-prov")
-    public R<AreaVo> getAreaByProv(@RequestParam Integer provId) {
-        Integer areaId = provinceService.getById(provId).getAreaId();
-        Area area = areaService.getById(areaId);
-        AreaVo areaVo = new AreaVo();
-        BeanUtils.copyProperties(area, areaVo);
-        return Ans.success(areaVo);
+    @ApiOperation(value = "获取上级")
+    @GetMapping(value = "list-parent")
+    public R<List<LocationVo>> listParent(LocationParam locationParam) {
+        Byte locationClass = locationParam.getLocationClass();
+        List<LocationVo> locationVoList = new ArrayList<>();
+        switch (locationClass) {
+            case LocationClassConstants.AREA:
+                locationVoList = areaService.listParent(locationParam);
+                log.error("本级别没有上级{}", locationParam);
+                break;
+            case LocationClassConstants.PROVINCE:
+                locationVoList = provinceService.listParent(locationParam);
+                break;
+            case LocationClassConstants.CITY:
+                locationVoList = cityService.listParent(locationParam);
+                break;
+            case LocationClassConstants.DISTRICT:
+                locationVoList = districtService.listParent(locationParam);
+                break;
+            default:
+                log.error("参数输入错误{}", locationParam);
+                break;
+        }
+        return Ans.success(locationVoList);
     }
 }
