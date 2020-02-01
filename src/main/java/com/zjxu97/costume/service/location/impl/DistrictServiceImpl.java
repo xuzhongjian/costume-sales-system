@@ -3,19 +3,16 @@ package com.zjxu97.costume.service.location.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.commons.LocationClassConstants;
-import com.zjxu97.costume.model.entity.location.District;
 import com.zjxu97.costume.mapper.location.DistrictMapper;
+import com.zjxu97.costume.model.entity.location.District;
 import com.zjxu97.costume.model.param.LocationParam;
 import com.zjxu97.costume.model.vo.LocationVo;
 import com.zjxu97.costume.service.location.CityService;
 import com.zjxu97.costume.service.location.DistrictService;
-import com.zjxu97.costume.model.vo.DistrictVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DistrictServiceImpl extends ServiceImpl<DistrictMapper, District> implements DistrictService {

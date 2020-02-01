@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2020/1/27 11:07
  */
 @Data
-@ApiModel
+@ApiModel(value = "商品详细")
 public class ItemDetailVo {
 
     @ApiModelProperty(value = "商品id")

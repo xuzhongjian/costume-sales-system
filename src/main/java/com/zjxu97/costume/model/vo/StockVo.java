@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@ApiModel
+@ApiModel(value = "库存")
 public class StockVo {
 
     @ApiModelProperty(value = "库存的id")
