@@ -1,1 +1,0 @@
-INSERT INTO costume.sale_record (id, is_deleted, create_at, update_at, store_id, item_detail_id, sale_type, age) VALUES (1, 0, '2020-01-26 21:18:18', '2020-01-26 21:18:18', 10, 10, 0, 10);

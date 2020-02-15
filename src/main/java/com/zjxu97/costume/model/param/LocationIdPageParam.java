@@ -15,6 +15,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class LocationIdPageParam extends PageParam {
 
-    @ApiModelProperty("位置的id")
-    private Integer locationId;
+    @ApiModelProperty("地区id的等级分别为1234")
+    Byte locationClass;
+
+    @ApiModelProperty("地区的id")
+    Integer locationId;
 }
