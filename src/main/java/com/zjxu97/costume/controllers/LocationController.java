@@ -16,6 +16,7 @@ import com.zjxu97.costume.service.location.DistrictService;
 import com.zjxu97.costume.service.location.ProvinceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,11 +34,11 @@ import java.util.stream.Collectors;
  * @author zjxu97
  * @date 2019/12/28 01:37
  */
+@Slf4j
 @RestController
 @Api(tags = "位置相关")
 @RequestMapping(CostumeConstants.API_PREFIX + "/location")
 public class LocationController {
-    private final static Logger log = LoggerFactory.getLogger(LocationController.class);
 
     @Resource
     private AreaService areaService;
