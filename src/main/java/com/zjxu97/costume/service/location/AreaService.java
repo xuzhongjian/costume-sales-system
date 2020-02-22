@@ -16,6 +16,12 @@ import java.util.List;
 
 
 public interface AreaService extends IService<Area> {
+    /**
+     * 根据地区的等级和地区的id查询它的上级
+     *
+     * @param locationParam 地区参数
+     * @return 返回位置的列表
+     */
     List<LocationVo> listParent(LocationParam locationParam);
 }
 

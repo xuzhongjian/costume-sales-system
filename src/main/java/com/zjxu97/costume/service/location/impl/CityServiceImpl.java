@@ -50,10 +50,7 @@ public class CityServiceImpl extends ServiceImpl<CityMapper, City> implements Ci
         List<LocationVo> locationVoList = provinceService.listParent(parentParam);
 
         //添加本级别的locationVo
-        LocationVo locationVo = new LocationVo();
-        locationVo.setLocationId(city.getId());
-        locationVo.setLocationName(city.getCityName());
-        locationVo.setParentId(provinceId);
+        LocationVo locationVo = new LocationVo(provinceId, city.getCityName(), city.getId());
 
         //添加进返回的list中
         locationVoList.add(locationVo);

@@ -4,8 +4,10 @@ package com.zjxu97.costume.commons;
  * @author zjxu97
  * @date 2020/1/19 18:16
  */
-
 public enum InOutEnum {
+    /**
+     *
+     */
     IN((byte) 1),
     OUT((byte) 2);
 

@@ -15,7 +15,20 @@ import java.util.List;
  */
 
 public interface CityService extends IService<City> {
+
+    /**
+     * 根据省份的id获取下面的城市
+     *
+     * @param provId 省份ID
+     * @return 下属城市
+     */
     List<City> listCityByProv(Integer provId);
 
+    /**
+     * 根据地区的等级和地区的id查询它的上级
+     *
+     * @param locationParam 地区参数
+     * @return 返回位置的列表
+     */
     List<LocationVo> listParent(LocationParam locationParam);
 }

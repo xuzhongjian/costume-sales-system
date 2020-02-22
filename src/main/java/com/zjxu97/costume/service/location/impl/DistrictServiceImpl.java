@@ -14,12 +14,17 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author zjxu97
+ * @date 2020/1/19 18:16
+ */
 @Service
 public class DistrictServiceImpl extends ServiceImpl<DistrictMapper, District> implements DistrictService {
 
     @Resource
     CityService cityService;
 
+    @Override
     public List<District> listDistsByCity(Integer cityId) {
         return this.baseMapper.selectList(qw().eq("city_id", cityId));
     }
@@ -41,10 +46,7 @@ public class DistrictServiceImpl extends ServiceImpl<DistrictMapper, District> i
         List<LocationVo> locationVoList = cityService.listParent(parentParam);
 
         //添加本级别的locationVo
-        LocationVo locationVo = new LocationVo();
-        locationVo.setLocationId(district.getId());
-        locationVo.setLocationName(district.getDistrictName());
-        locationVo.setParentId(cityId);
+        LocationVo locationVo = new LocationVo(cityId, district.getDistrictName(), district.getId());
 
         //添加进返回的list中
         locationVoList.add(locationVo);

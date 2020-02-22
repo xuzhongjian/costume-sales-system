@@ -14,12 +14,17 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author zjxu97
+ * @date 2020/1/19 18:16
+ */
 @Service
 public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> implements ProvinceService {
 
     @Resource
     AreaService areaService;
 
+    @Override
     public List<Province> listProvsByArea(Integer areaId) {
         return this.baseMapper.selectList(qw().eq("area_id", areaId));
     }
@@ -41,10 +46,7 @@ public class ProvinceServiceImpl extends ServiceImpl<ProvinceMapper, Province> i
         List<LocationVo> parentVoList = areaService.listParent(parentParam);
 
         //添加本级别的locationVo
-        LocationVo locationVo = new LocationVo();
-        locationVo.setLocationId(province.getId());
-        locationVo.setLocationName(province.getProvinceName());
-        locationVo.setParentId(areaId);
+        LocationVo locationVo = new LocationVo(areaId, province.getProvinceName(), province.getId());
 
         //添加进返回的list中
         parentVoList.add(locationVo);

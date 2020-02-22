@@ -1,6 +1,5 @@
 package com.zjxu97.costume.service.user.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.mapper.UserMapper;
 import com.zjxu97.costume.model.entity.User;
@@ -13,12 +12,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-    @Override
-    public User getUserForSecurity(String userName) {
-        return this.getOne(qw().eq("user_name", userName));
-    }
 
-    private QueryWrapper<User> qw() {
-        return new QueryWrapper<>();
-    }
 }

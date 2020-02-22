@@ -4,6 +4,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * @author zjxu97
+ * @date 2020/1/19 18:16
+ */
 @Data
 @ApiModel(value = "店铺信息")
 public class StoreVo {

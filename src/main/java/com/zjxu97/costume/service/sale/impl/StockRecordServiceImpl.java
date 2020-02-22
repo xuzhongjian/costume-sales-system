@@ -12,13 +12,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author zjxu97
+ * @date 2020/1/19 18:16
+ */
 @Service
 public class StockRecordServiceImpl extends ServiceImpl<StockRecordMapper, StockRecord> implements StockRecordService {
 
+    @Override
     public void stockRecord(List<StockInOutDTO> stockInOutDTOList) {
         List<StockRecord> stockRecordList = stockInOutDTOList.stream().map(stockRecordDTO -> {
             StockRecord stockRecord = new StockRecord();
-            BeanUtils.copyProperties(stockRecordDTO,stockRecord);
+            BeanUtils.copyProperties(stockRecordDTO, stockRecord);
             return stockRecord;
         }).collect(Collectors.toList());
         this.saveBatch(stockRecordList);

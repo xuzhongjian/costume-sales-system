@@ -8,7 +8,6 @@ import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.commons.InOutEnum;
 import com.zjxu97.costume.commons.PageParam;
 import com.zjxu97.costume.mapper.sale.StockMapper;
-import com.zjxu97.costume.model.dto.StockDisplayDTO;
 import com.zjxu97.costume.model.dto.StockIdentifyDTO;
 import com.zjxu97.costume.model.dto.StockInOutDTO;
 import com.zjxu97.costume.model.entity.Store;
@@ -28,6 +27,10 @@ import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author zjxu97
+ * @date 2020/1/19 18:16
+ */
 @Service
 public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements StockService {
 
@@ -94,12 +97,12 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     }
 
     @Override
-    public List<StockVo> getItemDetailVoFromEntityList(List<Stock> stockList) {
+    public List<StockVo> getStockVoFromModelList(List<Stock> stockList) {
 
         //获取商品详情的map
         List<Integer> itemDetailIdList = stockList.stream().map(Stock::getItemDetailId).collect(Collectors.toList());
         List<ItemDetail> itemDetailList = new ArrayList<>(itemDetailService.listByIds(itemDetailIdList));
-        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailVoFromEntityList(itemDetailList);
+        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailVoFromModelList(itemDetailList);
         Map<Integer, ItemDetailVo> itemDetailVoMap = new HashMap<>();
         itemDetailVoList.forEach(itemDetailVo -> itemDetailVoMap.put(itemDetailVo.getId(), itemDetailVo));
 
@@ -107,7 +110,7 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
         //获取商店的map
         List<Integer> storeIdList = stockList.stream().map(Stock::getStoreId).collect(Collectors.toList());
         List<Store> storeList = new ArrayList<>(storeService.listByIds(storeIdList));
-        List<StoreVo> storeVoList = storeService.getStoreVoFromEntityList(storeList);
+        List<StoreVo> storeVoList = storeService.getStoreVoFromModelList(storeList);
         Map<Integer, StoreVo> storeVoHashMap = new HashMap<>();
         storeVoList.forEach(storeVo -> storeVoHashMap.put(storeVo.getId(), storeVo));
 

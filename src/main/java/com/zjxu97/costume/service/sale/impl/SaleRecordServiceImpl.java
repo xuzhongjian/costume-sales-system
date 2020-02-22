@@ -1,6 +1,5 @@
 package com.zjxu97.costume.service.sale.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.mapper.sale.SaleRecordMapper;
 import com.zjxu97.costume.model.entity.item.ItemDetail;
@@ -15,6 +14,10 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author zjxu97
+ * @date 2020/1/19 18:16
+ */
 @Service
 public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRecord> implements SaleRecordService {
 
@@ -34,9 +37,5 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
         List<Integer> itemDetailIdList = goodParamList.stream().map(GoodParam::getItemDetailId).collect(Collectors.toList());
         long count = itemDetailService.listByIds(itemDetailIdList).stream().map(ItemDetail::getPrice).count();
         return (int) count;
-    }
-
-    private QueryWrapper<SaleRecord> qw() {
-        return new QueryWrapper<>();
     }
 }

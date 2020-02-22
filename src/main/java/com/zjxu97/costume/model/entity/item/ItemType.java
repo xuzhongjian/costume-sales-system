@@ -7,7 +7,10 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
-
+/**
+ * @author zjxu97
+ * @date 2020/1/19 18:16
+ */
 @Data
 @TableName("item_type")
 @EqualsAndHashCode(callSuper = false)

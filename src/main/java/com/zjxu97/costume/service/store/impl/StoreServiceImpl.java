@@ -16,8 +16,15 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author zjxu97
+ * @date 2019/12/30 18:19
+ */
 @Service
 public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements StoreService {
+    private static final int MAX_AREA_DIST_NUM = 99999;
+    private static final int MAX_PROV_DIST_NUM = 9999;
+    private static final int MAX_CITY_DIST_NUM = 99;
 
     @Override
     public IPage<Store> listStoresByDist(LocationIdPageParam locationIdPageParam) {
@@ -29,19 +36,16 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements
 
     @Override
     public IPage<Store> listStoresByCity(LocationIdPageParam locationIdPageParam) {
-        int MAX_CITY_DIST_NUM = 99;
         return this.getStoreVos(MAX_CITY_DIST_NUM, locationIdPageParam);
     }
 
     @Override
     public IPage<Store> listStoresByProv(LocationIdPageParam locationIdPageParam) {
-        int MAX_PROV_DIST_NUM = 9999;
         return this.getStoreVos(MAX_PROV_DIST_NUM, locationIdPageParam);
     }
 
     @Override
     public IPage<Store> listStoresByArea(LocationIdPageParam locationIdPageParam) {
-        int MAX_AREA_DIST_NUM = 99999;
         return this.getStoreVos(MAX_AREA_DIST_NUM, locationIdPageParam);
     }
 
@@ -53,24 +57,20 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements
 
         QueryWrapper<Store> qw = qw().like("store_name", keyWords).or().like("store_address", keyWords);
 
-        // 两次搜索
-//        List<Store> storesByName = this.list(qw().like("store_name", keyWords));
-//        List<Store> storesByAddress = this.list(qw().like("store_address", keyWords));
-
         return this.page(page, qw);
     }
 
-    private IPage<Store> getStoreVos(int max_area_dist_num, LocationIdPageParam locationIdPageParam) {
+    private IPage<Store> getStoreVos(int maxAreaDistNum, LocationIdPageParam locationIdPageParam) {
         Page<Store> page = new Page<>();
         BeanUtils.copyProperties(locationIdPageParam, page);
         Integer locationId = locationIdPageParam.getLocationId();
-        QueryWrapper<Store> qw = qw().between("district_id", locationId, locationId + max_area_dist_num);
+        QueryWrapper<Store> qw = qw().between("district_id", locationId, locationId + maxAreaDistNum);
 
         return this.page(page, qw);
     }
 
     @Override
-    public List<StoreVo> getStoreVoFromEntityList(List<Store> storeList) {
+    public List<StoreVo> getStoreVoFromModelList(List<Store> storeList) {
         return storeList.stream().map(store -> {
             StoreVo storeVo = new StoreVo();
             BeanUtils.copyProperties(store, storeVo);

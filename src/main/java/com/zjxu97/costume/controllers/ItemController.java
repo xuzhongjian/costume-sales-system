@@ -20,9 +20,8 @@ import com.zjxu97.costume.service.item.ItemSizeService;
 import com.zjxu97.costume.service.item.ItemTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,11 +33,11 @@ import java.util.stream.Collectors;
  * @author zjxu97
  * @date 2019/12/29 23:47
  */
+@Slf4j
 @RestController
 @Api(tags = "商品相关")
 @RequestMapping(CostumeConstants.API_PREFIX + "/items")
 public class ItemController {
-    private final static Logger log = LoggerFactory.getLogger(ItemController.class);
 
     @Resource
     private ItemTypeService itemTypeService;
@@ -53,10 +52,9 @@ public class ItemController {
      * 分页-完成
      */
     @ApiOperation(value = "列出某一类商品的详细", notes = "类别的id")
-    @PostMapping(value = "type-detail")
-    public R<PageList<ItemDetailVo>> itemTypeDetail(@RequestBody ItemTypeDetailPageParam param) {
-        IPage<ItemDetail> itemDetailIPage = itemDetailService.getItemDetailByTypeId(param);
-        PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailIPage);
+    @GetMapping(value = "type-detail")
+    public R<PageList<ItemDetailVo>> itemTypeDetail(@RequestParam ItemTypeDetailPageParam param) {
+        PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailService.getItemDetailByTypeId(param));
         return Ans.success(pageList);
     }
 
@@ -64,10 +62,9 @@ public class ItemController {
      * 分页-完成
      */
     @ApiOperation(value = "查询商品的详细", notes = "关键词、类型、大小")
-    @PostMapping(value = "query-detail")
-    public R<PageList<ItemDetailVo>> queryItemDetail(@RequestBody QueryItemDetailPageParam param) {
-        IPage<ItemDetail> itemDetailIPage = itemDetailService.queryItemDetail(param);
-        PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailIPage);
+    @GetMapping(value = "query-detail")
+    public R<PageList<ItemDetailVo>> queryItemDetail(@RequestParam QueryItemDetailPageParam param) {
+        PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailService.queryItemDetail(param));
         return Ans.success(pageList);
     }
 
@@ -75,20 +72,19 @@ public class ItemController {
      * 分页-完成
      */
     @ApiOperation(value = "列出商品详细", notes = "使用商品的模糊id,不带有size")
-    @PostMapping(value = "item-detail")
-    public R<PageList<ItemDetailVo>> itemDetail(@RequestBody ItemDetailPageParam param) {
-        IPage<ItemDetail> itemDetailIPage = itemDetailService.getItemDetailByItemId(param);
-        PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailIPage);
+    @GetMapping(value = "item-detail")
+    public R<PageList<ItemDetailVo>> itemDetail(@RequestParam ItemDetailPageParam param) {
+        PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailService.getItemDetailByItemId(param));
         return Ans.success(pageList);
     }
 
     @NotNull
-    private PageList<ItemDetailVo> getItemDetailVoPageList(IPage<ItemDetail> itemDetailIPage) {
-        List<ItemDetail> itemDetailList = itemDetailIPage.getRecords();
+    private PageList<ItemDetailVo> getItemDetailVoPageList(IPage<ItemDetail> itemDetailPage) {
+        List<ItemDetail> itemDetailList = itemDetailPage.getRecords();
 
-        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailVoFromEntityList(itemDetailList);
+        List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailVoFromModelList(itemDetailList);
         PageList<ItemDetailVo> ansData = new PageList<>();
-        BeanUtils.copyProperties(itemDetailIPage, ansData);
+        BeanUtils.copyProperties(itemDetailPage, ansData);
         ansData.setRecords(itemDetailVoList);
         return ansData;
     }

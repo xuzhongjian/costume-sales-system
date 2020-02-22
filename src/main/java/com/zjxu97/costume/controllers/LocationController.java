@@ -18,10 +18,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -62,43 +60,24 @@ public class LocationController {
         switch (locationClass) {
             case LocationClassConstants.AREA:
                 List<Area> areas = areaService.list(null);
-                locationVoList = areas.stream().map(area -> {
-                    LocationVo locationVo = new LocationVo();
-                    locationVo.setLocationId(area.getId());
-                    locationVo.setLocationName(area.getAreaName());
-                    locationVo.setParentId(0);
-                    return locationVo;
-                }).collect(Collectors.toList());
+                locationVoList = areas.stream().map(
+                        area -> new LocationVo(0, area.getAreaName(), area.getId())
+                ).collect(Collectors.toList());
                 break;
             case LocationClassConstants.PROVINCE:
-                List<Province> provinceList = provinceService.listProvsByArea(locationId);
-                locationVoList = provinceList.stream().map(province -> {
-                    LocationVo locationVo = new LocationVo();
-                    locationVo.setLocationId(province.getId());
-                    locationVo.setLocationName(province.getProvinceName());
-                    locationVo.setParentId(locationId);
-                    return locationVo;
-                }).collect(Collectors.toList());
+                locationVoList = provinceService.listProvsByArea(locationId).stream().map(
+                        province -> new LocationVo(locationId, province.getProvinceName(), province.getId())
+                ).collect(Collectors.toList());
                 break;
             case LocationClassConstants.CITY:
-                List<City> cityList = cityService.listCityByProv(locationId);
-                locationVoList = cityList.stream().map(province -> {
-                    LocationVo locationVo = new LocationVo();
-                    locationVo.setLocationId(province.getId());
-                    locationVo.setLocationName(province.getCityName());
-                    locationVo.setParentId(locationId);
-                    return locationVo;
-                }).collect(Collectors.toList());
+                locationVoList = cityService.listCityByProv(locationId).stream().map(
+                        province -> new LocationVo(locationId, province.getCityName(), province.getId())
+                ).collect(Collectors.toList());
                 break;
             case LocationClassConstants.DISTRICT:
-                List<District> districtList = districtService.listDistsByCity(locationId);
-                locationVoList = districtList.stream().map(province -> {
-                    LocationVo locationVo = new LocationVo();
-                    locationVo.setLocationId(province.getId());
-                    locationVo.setLocationName(province.getDistrictName());
-                    locationVo.setParentId(locationId);
-                    return locationVo;
-                }).collect(Collectors.toList());
+                locationVoList = districtService.listDistsByCity(locationId).stream().map(
+                        province -> new LocationVo(locationId, province.getDistrictName(), province.getId())
+                ).collect(Collectors.toList());
                 break;
             default:
                 log.error("参数输入错误{}", locationParam);
