@@ -1,15 +1,12 @@
 package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.Ans;
+import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.LocationClassConstants;
 import com.zjxu97.costume.model.entity.location.Area;
-import com.zjxu97.costume.model.entity.location.City;
-import com.zjxu97.costume.model.entity.location.District;
-import com.zjxu97.costume.model.entity.location.Province;
 import com.zjxu97.costume.model.param.LocationParam;
-import com.zjxu97.costume.model.vo.*;
+import com.zjxu97.costume.model.vo.LocationVo;
 import com.zjxu97.costume.service.location.AreaService;
 import com.zjxu97.costume.service.location.CityService;
 import com.zjxu97.costume.service.location.DistrictService;
@@ -17,8 +14,6 @@ import com.zjxu97.costume.service.location.ProvinceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
