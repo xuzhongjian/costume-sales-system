@@ -115,7 +115,7 @@ public class StoreController {
 
     @ApiOperation(value = "删除店铺")
     @GetMapping(value = "del-store")
-    public R<String> delStore(@ApiParam(value = "店铺id") Integer storeId) {
+    public R<String> delStore(@ApiParam(value = "店铺id") @RequestParam Integer storeId) {
         boolean isRemove = storeService.removeById(storeId);
         return isRemove ? Ans.success("删除成功") : Ans.failure(new Exception("删除失败！"));
     }

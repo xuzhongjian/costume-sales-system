@@ -111,8 +111,8 @@ public class ItemController {
      */
     @ApiOperation(value = "列出大小")
     @GetMapping(value = "list-size")
-    public R<List<ItemSizeVo>> listSize(@ApiParam(value = "页号", defaultValue = "1") Integer pageNo,
-                                        @ApiParam(value = "页容", defaultValue = "10") Integer pageSize) {
+    public R<List<ItemSizeVo>> listSize(@ApiParam(value = "页号", defaultValue = "1") @RequestParam Integer pageNo,
+                                        @ApiParam(value = "页容", defaultValue = "10") @RequestParam Integer pageSize) {
         List<ItemSize> listSizeList = itemSizeService.list(new QueryWrapper<ItemSize>()
                 .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize));
 
