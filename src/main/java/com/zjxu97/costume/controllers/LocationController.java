@@ -13,6 +13,7 @@ import com.zjxu97.costume.service.location.DistrictService;
 import com.zjxu97.costume.service.location.ProvinceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +50,7 @@ public class LocationController {
 
     @ApiOperation(value = "列出地区")
     @GetMapping(value = "list-location")
-    public R<List<LocationVo>> listLocation(LocationParam locationParam) {
+    public R<List<LocationVo>> listLocation(@ApiParam(value = "地区等级 + 地区id") LocationParam locationParam) {
         Byte locationClass = locationParam.getLocationClass();
         Integer locationId = locationParam.getLocationId();
         List<LocationVo> locationVoList = null;
@@ -86,7 +87,7 @@ public class LocationController {
 
     @ApiOperation(value = "获取上级")
     @GetMapping(value = "list-parent")
-    public R<List<LocationVo>> listParent(LocationParam locationParam) {
+    public R<List<LocationVo>> listParent(@ApiParam(value = "地区等级 + 地区id") LocationParam locationParam) {
         Byte locationClass = locationParam.getLocationClass();
         List<LocationVo> locationVoList = new ArrayList<>();
         switch (locationClass) {

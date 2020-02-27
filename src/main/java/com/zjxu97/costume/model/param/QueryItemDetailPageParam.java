@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  * @date 2020/1/27 12:09
  */
 @Data
-@ApiModel
+@ApiModel(value = "关键词、类型、大小")
 @EqualsAndHashCode(callSuper = true)
 public class QueryItemDetailPageParam extends PageParam {
     @ApiModelProperty(value = "关键字")

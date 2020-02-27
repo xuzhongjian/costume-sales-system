@@ -20,6 +20,7 @@ import com.zjxu97.costume.service.item.ItemSizeService;
 import com.zjxu97.costume.service.item.ItemTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
@@ -53,7 +54,7 @@ public class ItemController {
      */
     @ApiOperation(value = "列出某一类商品的详细", notes = "类别的id")
     @GetMapping(value = "type-detail")
-    public R<PageList<ItemDetailVo>> itemTypeDetail(@RequestParam ItemTypeDetailPageParam param) {
+    public R<PageList<ItemDetailVo>> itemTypeDetail(@ApiParam(value = "类别的id + 分页") ItemTypeDetailPageParam param) {
         PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailService.getItemDetailByTypeId(param));
         return Ans.success(pageList);
     }
@@ -63,7 +64,7 @@ public class ItemController {
      */
     @ApiOperation(value = "查询商品的详细", notes = "关键词、类型、大小")
     @GetMapping(value = "query-detail")
-    public R<PageList<ItemDetailVo>> queryItemDetail(@RequestParam QueryItemDetailPageParam param) {
+    public R<PageList<ItemDetailVo>> queryItemDetail(@ApiParam(value = "关键词、类型、大小") QueryItemDetailPageParam param) {
         PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailService.queryItemDetail(param));
         return Ans.success(pageList);
     }
@@ -73,8 +74,8 @@ public class ItemController {
      */
     @ApiOperation(value = "列出商品详细", notes = "使用商品的模糊id,不带有size")
     @GetMapping(value = "item-detail")
-    public R<PageList<ItemDetailVo>> itemDetail(@RequestParam ItemDetailPageParam param) {
-        PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailService.getItemDetailByItemId(param));
+    public R<PageList<ItemDetailVo>> itemDetail(@ApiParam(value = "商品的模糊id + 分页") ItemDetailPageParam itemDetailPageParam) {
+        PageList<ItemDetailVo> pageList = this.getItemDetailVoPageList(itemDetailService.getItemDetailByItemId(itemDetailPageParam));
         return Ans.success(pageList);
     }
 
@@ -110,9 +111,8 @@ public class ItemController {
      */
     @ApiOperation(value = "列出大小")
     @GetMapping(value = "list-size")
-    public R<List<ItemSizeVo>> listSize(
-            @RequestParam(name = "页号", defaultValue = "1") Integer pageNo,
-            @RequestParam(name = "页容", defaultValue = "10") Integer pageSize) {
+    public R<List<ItemSizeVo>> listSize(@ApiParam(value = "页号", defaultValue = "1") Integer pageNo,
+                                        @ApiParam(value = "页容", defaultValue = "10") Integer pageSize) {
         List<ItemSize> listSizeList = itemSizeService.list(new QueryWrapper<ItemSize>()
                 .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize));
 

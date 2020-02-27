@@ -15,6 +15,7 @@ import com.zjxu97.costume.service.item.ItemDetailService;
 import com.zjxu97.costume.service.sale.StockService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,7 +62,8 @@ public class StockController {
      */
     @ApiOperation(value = "出库")
     @PostMapping(value = "out")
-    public R<Boolean> out(@RequestBody List<StockInOutParam> stockInOutParamList) {
+
+    public R<Boolean> out(@ApiParam(value = "店铺、关键字、类别、大小 + 分页参数") List<StockInOutParam> stockInOutParamList) {
         List<StockInOutDTO> stockInOutDTOList = stockInOutParamList.stream().map(stockInOutParam -> {
             StockInOutDTO stockInOutDTO = new StockInOutDTO();
             BeanUtils.copyProperties(stockInOutParam, stockInOutDTO);
@@ -77,7 +79,7 @@ public class StockController {
      */
     @ApiOperation(value = "库存查询", notes = "店铺、关键字、类别、大小")
     @GetMapping(value = "query")
-    public R<PageList<StockVo>> queryStock(@RequestParam QueryStockPageParam param) {
+    public R<PageList<StockVo>> queryStock(@ApiParam(value = "店铺、关键字、类别、大小 + 分页参数") QueryStockPageParam param) {
         QueryItemDetailPageParam queryItemDetailPageParam = new QueryItemDetailPageParam();
         BeanUtils.copyProperties(param, queryItemDetailPageParam);
 

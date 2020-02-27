@@ -40,6 +40,8 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
     @Resource
     StoreService storeService;
 
+
+
     @Override
     public IPage<Stock> getStockByStore(StoreStockPageParam param) {
         Integer storeId = param.getStoreId();

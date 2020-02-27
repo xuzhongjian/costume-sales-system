@@ -13,6 +13,7 @@ import com.zjxu97.costume.model.vo.StoreVo;
 import com.zjxu97.costume.service.store.StoreService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
@@ -114,7 +115,7 @@ public class StoreController {
 
     @ApiOperation(value = "删除店铺")
     @GetMapping(value = "del-store")
-    public R<String> delStore(@RequestParam Integer storeId) {
+    public R<String> delStore(@ApiParam(value = "店铺id") Integer storeId) {
         boolean isRemove = storeService.removeById(storeId);
         return isRemove ? Ans.success("删除成功") : Ans.failure(new Exception("删除失败！"));
     }
