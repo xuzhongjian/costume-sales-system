@@ -10,3 +10,7 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: true
+    db-config:
+      id-type: assign_id
