@@ -24,6 +24,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
 
     @Override
     public List<Item> getItemList(Integer itemTypeId, String keyWords) {
+
         return this.list(qw().like(Common.isUsefulString(keyWords), "item_name", keyWords)
                 .eq(Common.isUsefulNum(itemTypeId), "item_type_id", itemTypeId));
     }

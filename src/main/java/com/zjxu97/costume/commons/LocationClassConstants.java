@@ -6,6 +6,7 @@ package com.zjxu97.costume.commons;
  */
 
 public class LocationClassConstants {
+    public static final byte ROOT = (byte) 0;
     public static final byte AREA = (byte) 1;
     public static final byte PROVINCE = (byte) 2;
     public static final byte CITY = (byte) 3;

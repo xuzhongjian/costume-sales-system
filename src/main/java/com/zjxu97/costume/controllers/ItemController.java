@@ -1,11 +1,10 @@
 package com.zjxu97.costume.controllers;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.zjxu97.costume.commons.Ans;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.PageList;
-import com.zjxu97.costume.commons.Ans;
 import com.zjxu97.costume.model.entity.item.ItemDetail;
 import com.zjxu97.costume.model.entity.item.ItemSize;
 import com.zjxu97.costume.model.entity.item.ItemType;
@@ -24,7 +23,9 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -94,7 +95,7 @@ public class ItemController {
      *
      */
     @ApiOperation(value = "列出品类")
-    @GetMapping(value = "list-type")
+    @GetMapping(value = "types")
     public R<List<ItemTypeVo>> listType() {
         List<ItemType> itemTypeList = itemTypeService.list(null);
         List<ItemTypeVo> itemTypeVoList = itemTypeList.stream()
@@ -110,11 +111,9 @@ public class ItemController {
      *
      */
     @ApiOperation(value = "列出大小")
-    @GetMapping(value = "list-size")
-    public R<List<ItemSizeVo>> listSize(@ApiParam(value = "页号", defaultValue = "1") @RequestParam Integer pageNo,
-                                        @ApiParam(value = "页容", defaultValue = "10") @RequestParam Integer pageSize) {
-        List<ItemSize> listSizeList = itemSizeService.list(new QueryWrapper<ItemSize>()
-                .last("limit " + (pageNo - 1) * pageSize + " , " + pageSize));
+    @GetMapping(value = "sizes")
+    public R<List<ItemSizeVo>> listSize() {
+        List<ItemSize> listSizeList = itemSizeService.list(null);
 
         List<ItemSizeVo> itemTypeVoList = listSizeList.stream()
                 .map(itemSize -> {

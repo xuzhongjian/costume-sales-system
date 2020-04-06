@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.zjxu97.costume.commons.Ans;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.LocationClassConstants;
-import com.zjxu97.costume.model.entity.location.Area;
 import com.zjxu97.costume.model.param.LocationParam;
 import com.zjxu97.costume.model.vo.LocationVo;
 import com.zjxu97.costume.service.location.AreaService;
@@ -48,32 +47,31 @@ public class LocationController {
     @Resource
     private DistrictService districtService;
 
-    @ApiOperation(value = "列出地区")
+    @ApiOperation(value = "列出下辖地区")
     @GetMapping(value = "list-location")
     public R<List<LocationVo>> listLocation(@ApiParam(value = "地区等级 + 地区id") LocationParam locationParam) {
         Byte locationClass = locationParam.getLocationClass();
         Integer locationId = locationParam.getLocationId();
         List<LocationVo> locationVoList = null;
         switch (locationClass) {
-            case LocationClassConstants.AREA:
-                List<Area> areas = areaService.list(null);
-                locationVoList = areas.stream().map(
+            case LocationClassConstants.ROOT:
+                locationVoList = areaService.list(null).stream().map(
                         area -> new LocationVo(0, area.getAreaName(), area.getId())
                 ).collect(Collectors.toList());
                 break;
-            case LocationClassConstants.PROVINCE:
+            case LocationClassConstants.AREA:
                 locationVoList = provinceService.listProvsByArea(locationId).stream().map(
                         province -> new LocationVo(locationId, province.getProvinceName(), province.getId())
                 ).collect(Collectors.toList());
                 break;
-            case LocationClassConstants.CITY:
+            case LocationClassConstants.PROVINCE:
                 locationVoList = cityService.listCityByProv(locationId).stream().map(
-                        province -> new LocationVo(locationId, province.getCityName(), province.getId())
+                        city -> new LocationVo(locationId, city.getCityName(), city.getId())
                 ).collect(Collectors.toList());
                 break;
-            case LocationClassConstants.DISTRICT:
+            case LocationClassConstants.CITY:
                 locationVoList = districtService.listDistsByCity(locationId).stream().map(
-                        province -> new LocationVo(locationId, province.getDistrictName(), province.getId())
+                        district -> new LocationVo(locationId, district.getDistrictName(), district.getId())
                 ).collect(Collectors.toList());
                 break;
             default:
@@ -85,7 +83,7 @@ public class LocationController {
     }
 
 
-    @ApiOperation(value = "获取上级")
+    @ApiOperation(value = "获取上级地区")
     @GetMapping(value = "list-parent")
     public R<List<LocationVo>> listParent(@ApiParam(value = "地区等级 + 地区id") LocationParam locationParam) {
         Byte locationClass = locationParam.getLocationClass();
@@ -93,7 +91,7 @@ public class LocationController {
         switch (locationClass) {
             case LocationClassConstants.AREA:
                 locationVoList = areaService.listParent(locationParam);
-                log.error("本级别没有上级{}", locationParam);
+                log.debug("本级别没有上级{}", locationParam);
                 break;
             case LocationClassConstants.PROVINCE:
                 locationVoList = provinceService.listParent(locationParam);
@@ -105,7 +103,7 @@ public class LocationController {
                 locationVoList = districtService.listParent(locationParam);
                 break;
             default:
-                log.error("参数输入错误{}", locationParam);
+                log.debug("参数输入错误{}", locationParam);
                 break;
         }
         return Ans.success(locationVoList);
