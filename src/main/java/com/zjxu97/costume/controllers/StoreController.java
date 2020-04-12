@@ -56,4 +56,3 @@ public class StoreController {
         return R.ok(storeVoPageList);
     }
 }
-// int locationClass, int locationId, int size, int current

@@ -11,10 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -35,7 +32,7 @@ public class StockController {
     private StockService stockService;
 
     @ApiOperation(value = "店铺库存")
-    @PostMapping(value = "store")
+    @GetMapping(value = "store")
     public R<PageList<StockVo>> getStoreStock(@ApiParam(value = "页码") @RequestParam(value = "current") int current,
                                               @ApiParam(value = "页容") @RequestParam(value = "size") int size,
                                               @ApiParam(value = "店铺id") @RequestParam(value = "storeId") int storeId) {
