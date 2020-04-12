@@ -6,8 +6,8 @@ package com.zjxu97.costume.commons;
  */
 public enum SplitTypeEnum {
 
-    ITEM_TYPE("ItemType"),
-    ITEM_DETAIL("ItemDetail"),
+    TYPE("Type"),
+    ITEM("Item"),
     SIZE("Size"),
     SEX("Sex");
 
@@ -17,3 +17,4 @@ public enum SplitTypeEnum {
         this.value = value;
     }
 }
+// ItemType ItemDetail Size Sex

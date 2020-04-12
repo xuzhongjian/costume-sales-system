@@ -31,7 +31,10 @@ public class DataSaleController {
     @ApiOperation(value = "地区销售件数")
     @GetMapping(value = "location-count")
     public R<String> displayLocationSaleCount(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
-                                              @ApiParam(value = "splitType") @RequestParam(value = "splitType") String splitType) {
+                                              @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,
+                                              @ApiParam(value = "splitType") @RequestParam(value = "splitType") String splitType,
+                                              @ApiParam(value = "开始时间") @RequestParam(value = "from") String from,
+                                              @ApiParam(value = "截止时间") @RequestParam(value = "to") String to) {
         return R.ok("hello world");
     }
 
@@ -39,14 +42,19 @@ public class DataSaleController {
     @GetMapping(value = "store-count")
     public R<String> displayStoreSaleData(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
                                           @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,
-                                          @ApiParam(value = "splitType") @RequestParam(value = "splitType") String splitType) {
+                                          @ApiParam(value = "splitType") @RequestParam(value = "splitType") String splitType,
+                                          @ApiParam(value = "开始时间") @RequestParam(value = "from") String from,
+                                          @ApiParam(value = "截止时间") @RequestParam(value = "to") String to) {
         return R.ok("hello world");
     }
 
     @ApiOperation(value = "地区销售总额")
     @GetMapping(value = "location-amount")
     public R<String> displayLocationSaleAmount(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
-                                               @ApiParam(value = "splitType") @RequestParam(value = "splitType") String splitType) {
+                                               @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,
+                                               @ApiParam(value = "splitType") @RequestParam(value = "splitType") String splitType,
+                                               @ApiParam(value = "开始时间") @RequestParam(value = "from") String from,
+                                               @ApiParam(value = "截止时间") @RequestParam(value = "to") String to) {
         return R.ok("hello world");
     }
 
@@ -54,7 +62,9 @@ public class DataSaleController {
     @GetMapping(value = "store-amount")
     public R<String> displayStoreSaleAmount(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
                                             @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,
-                                            @ApiParam(value = "splitType") @RequestParam(value = "splitType") String splitType) {
+                                            @ApiParam(value = "splitType") @RequestParam(value = "splitType") String splitType,
+                                            @ApiParam(value = "开始时间") @RequestParam(value = "from") String from,
+                                            @ApiParam(value = "截止时间") @RequestParam(value = "to") String to) {
         return R.ok("hello world");
     }
 }
