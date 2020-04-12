@@ -19,6 +19,9 @@ public interface StoreService extends IService<Store> {
      */
     IPage<Store> listStoresByLocation(int locationClass, int locationId, int size, int current);
 
+
+    List<Store> listStoresByLocation(int locationClass, int locationId);
+
     /**
      * model list -> vo list
      *

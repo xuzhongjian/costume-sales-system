@@ -56,6 +56,28 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements
     }
 
     @Override
+    public List<Store> listStoresByLocation(int locationClass, int locationId) {
+        switch (locationClass) {
+            case LocationClassConstants.AREA:
+                return this.getStoreVos(MAX_AREA_DIST_NUM, locationId);
+            case LocationClassConstants.PROVINCE:
+                return this.getStoreVos(MAX_PROV_DIST_NUM, locationId);
+            case LocationClassConstants.CITY:
+                return this.getStoreVos(MAX_CITY_DIST_NUM, locationId);
+            case LocationClassConstants.DISTRICT:
+                return this.list(qw().eq("district_id", locationId));
+            default:
+                return null;
+        }
+
+    }
+
+    private List<Store> getStoreVos(int maxAreaDistNum, int locationId) {
+        QueryWrapper<Store> qw = qw().between("district_id", locationId, locationId + maxAreaDistNum);
+        return this.list(qw);
+    }
+
+    @Override
     public List<StoreVo> getStoreVoFromModelList(List<Store> storeList) {
         return storeList.stream().map(store -> {
             StoreVo storeVo = new StoreVo();
