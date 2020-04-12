@@ -4,11 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.mapper.StockMapper;
-import com.zjxu97.costume.model.entity.Store;
 import com.zjxu97.costume.model.entity.ItemDetail;
 import com.zjxu97.costume.model.entity.Stock;
+import com.zjxu97.costume.model.entity.Store;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.StockVo;
 import com.zjxu97.costume.model.vo.StoreVo;
@@ -50,14 +51,19 @@ public class StockServiceImpl extends ServiceImpl<StockMapper, Stock> implements
 
     @Override
     public List<StockVo> getStockVoFromModelList(List<Stock> stockList) {
+        if (Common.isUselessList(stockList)) {
+            return Lists.newArrayList();
+        }
 
-        //获取商品详情的map
+        // 具体商品的id
         List<Integer> itemDetailIdList = stockList.stream().map(Stock::getItemDetailId).collect(Collectors.toList());
+        // 具体商品的list
         List<ItemDetail> itemDetailList = new ArrayList<>(itemDetailService.listByIds(itemDetailIdList));
+        // 转换成具体商品的vo-list
         List<ItemDetailVo> itemDetailVoList = itemDetailService.getItemDetailVoFromModelList(itemDetailList);
+        // 转换成id的map
         Map<Integer, ItemDetailVo> itemDetailVoMap = new HashMap<>();
         itemDetailVoList.forEach(itemDetailVo -> itemDetailVoMap.put(itemDetailVo.getId(), itemDetailVo));
-
 
         //获取商店的map
         List<Integer> storeIdList = stockList.stream().map(Stock::getStoreId).collect(Collectors.toList());

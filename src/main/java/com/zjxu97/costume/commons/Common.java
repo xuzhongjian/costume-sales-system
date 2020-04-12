@@ -1,5 +1,6 @@
 package com.zjxu97.costume.commons;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -9,5 +10,9 @@ import java.util.Objects;
 public class Common {
     public static boolean isUsefulNum(Number num) {
         return Objects.nonNull(num) && num.intValue() != 0;
+    }
+
+    public static boolean isUselessList(List list) {
+        return Objects.isNull(list) || list.size() == 0;
     }
 }

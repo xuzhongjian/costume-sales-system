@@ -12,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,7 +33,7 @@ public class StoreController {
     @Resource
     private StoreService storeService;
 
-    @PostMapping(value = "stores")
+    @GetMapping(value = "stores")
     @ApiOperation(value = "根据地理位置获取店铺")
     public R<PageList<StoreVo>> listStores(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
                                            @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,

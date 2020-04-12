@@ -11,7 +11,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,16 +40,11 @@ public class StockController {
                                               @ApiParam(value = "页容") @RequestParam(value = "size") int size,
                                               @ApiParam(value = "店铺id") @RequestParam(value = "storeId") int storeId) {
         IPage<Stock> stockPage = stockService.getStockByStore(current, size, storeId);
-        PageList<StockVo> stockVoPageList = this.getStockVoPageList(stockPage);
-        return R.ok(stockVoPageList);
-    }
-
-    private PageList<StockVo> getStockVoPageList(IPage<Stock> stockPage) {
         List<Stock> stockList = stockPage.getRecords();
         List<StockVo> stockVoList = stockService.getStockVoFromModelList(stockList);
-        PageList<StockVo> ansData = new PageList<>();
-        BeanUtils.copyProperties(stockPage, ansData);
-        ansData.setRecords(stockVoList);
-        return ansData;
+        PageList<StockVo> stockVoPageList = new PageList<>();
+        BeanUtils.copyProperties(stockPage, stockVoPageList);
+        stockVoPageList.setRecords(stockVoList);
+        return R.ok(stockVoPageList);
     }
 }
