@@ -1,21 +1,20 @@
 package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.commons.Ans;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.LocationClassConstants;
-import com.zjxu97.costume.model.param.LocationParam;
 import com.zjxu97.costume.model.vo.LocationVo;
-import com.zjxu97.costume.service.location.AreaService;
-import com.zjxu97.costume.service.location.CityService;
-import com.zjxu97.costume.service.location.DistrictService;
-import com.zjxu97.costume.service.location.ProvinceService;
+import com.zjxu97.costume.service.AreaService;
+import com.zjxu97.costume.service.CityService;
+import com.zjxu97.costume.service.DistrictService;
+import com.zjxu97.costume.service.ProvinceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -48,10 +47,9 @@ public class LocationController {
     private DistrictService districtService;
 
     @ApiOperation(value = "列出下辖地区")
-    @GetMapping(value = "list-location")
-    public R<List<LocationVo>> listLocation(@ApiParam(value = "地区等级 + 地区id") LocationParam locationParam) {
-        Byte locationClass = locationParam.getLocationClass();
-        Integer locationId = locationParam.getLocationId();
+    @GetMapping(value = "locations")
+    public R<List<LocationVo>> listLocation(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
+                                            @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId) {
         List<LocationVo> locationVoList = null;
         switch (locationClass) {
             case LocationClassConstants.ROOT:
@@ -75,37 +73,34 @@ public class LocationController {
                 ).collect(Collectors.toList());
                 break;
             default:
-                log.error("参数输入错误{}", locationParam);
+                log.error("参数输入错误, locationId:{}, locationClass:{}", locationId, locationClass);
                 break;
-
         }
-        return Ans.success(locationVoList);
+        return R.ok(locationVoList);
     }
 
-
     @ApiOperation(value = "获取上级地区")
-    @GetMapping(value = "list-parent")
-    public R<List<LocationVo>> listParent(@ApiParam(value = "地区等级 + 地区id") LocationParam locationParam) {
-        Byte locationClass = locationParam.getLocationClass();
+    @GetMapping(value = "parent")
+    public R<List<LocationVo>> listParent(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
+                                          @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId) {
         List<LocationVo> locationVoList = new ArrayList<>();
         switch (locationClass) {
             case LocationClassConstants.AREA:
-                locationVoList = areaService.listParent(locationParam);
-                log.debug("本级别没有上级{}", locationParam);
+                locationVoList = areaService.listParent(locationId);
                 break;
             case LocationClassConstants.PROVINCE:
-                locationVoList = provinceService.listParent(locationParam);
+                locationVoList = provinceService.listParent(locationId);
                 break;
             case LocationClassConstants.CITY:
-                locationVoList = cityService.listParent(locationParam);
+                locationVoList = cityService.listParent(locationId);
                 break;
             case LocationClassConstants.DISTRICT:
-                locationVoList = districtService.listParent(locationParam);
+                locationVoList = districtService.listParent(locationId);
                 break;
             default:
-                log.debug("参数输入错误{}", locationParam);
+                log.error("参数输入错误, locationId:{}, locationClass:{}", locationId, locationClass);
                 break;
         }
-        return Ans.success(locationVoList);
+        return R.ok(locationVoList);
     }
 }

@@ -30,9 +30,7 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                // 文档标题
                 .title("costume-api-doc")
-                // 文档描述
                 .description("https://github.com/xuzhongjian/costume-sales-system")
                 .termsOfServiceUrl("https://github.com/xuzhongjian/costume-sales-system")
                 .version("v1")

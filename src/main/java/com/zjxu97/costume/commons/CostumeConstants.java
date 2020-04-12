@@ -9,7 +9,7 @@ public class CostumeConstants {
 
     private static String[] sexStringArray = {"女款", "男款"};
 
-    public static String getString(byte num) {
+    public static String getSexString(byte num) {
         return sexStringArray[num];
     }
 }

@@ -2,26 +2,22 @@ package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
-import com.zjxu97.costume.commons.*;
-import com.zjxu97.costume.model.dto.StockInOutDTO;
-import com.zjxu97.costume.model.entity.item.ItemDetail;
-import com.zjxu97.costume.model.entity.sale.Stock;
-import com.zjxu97.costume.model.param.QueryItemDetailPageParam;
-import com.zjxu97.costume.model.param.QueryStockPageParam;
-import com.zjxu97.costume.model.param.StockInOutParam;
-import com.zjxu97.costume.model.param.StoreStockPageParam;
+import com.zjxu97.costume.commons.CostumeConstants;
+import com.zjxu97.costume.commons.PageList;
+import com.zjxu97.costume.model.entity.Stock;
 import com.zjxu97.costume.model.vo.StockVo;
-import com.zjxu97.costume.service.item.ItemDetailService;
-import com.zjxu97.costume.service.sale.StockService;
+import com.zjxu97.costume.service.StockService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 需要分页
@@ -32,79 +28,20 @@ import java.util.stream.Collectors;
 
 @RestController
 @Api(tags = "库存相关")
-@RequestMapping(CostumeConstants.API_PREFIX + "/stocks")
+@RequestMapping(CostumeConstants.API_PREFIX + "/stock")
 public class StockController {
-
-    @Resource
-    private ItemDetailService itemDetailService;
 
     @Resource
     private StockService stockService;
 
-    /**
-     *
-     */
-    @ApiOperation(value = "入库")
-    @PostMapping(value = "in")
-    public R<Boolean> in(@RequestBody List<StockInOutParam> stockInOutParamList) {
-        List<StockInOutDTO> stockInOutDTOList = stockInOutParamList.stream().map(stockInOutParam -> {
-            StockInOutDTO stockInOutDTO = new StockInOutDTO();
-            BeanUtils.copyProperties(stockInOutParam, stockInOutDTO);
-            stockInOutDTO.setInoutType(InOutEnum.IN.getValue());
-            return stockInOutDTO;
-        }).collect(Collectors.toList());
-        stockService.updateStockAmount(stockInOutDTOList);
-        return Ans.success(true);
-    }
-
-    /**
-     *
-     */
-    @ApiOperation(value = "出库")
-    @PostMapping(value = "out")
-
-    public R<Boolean> out(@ApiParam(value = "店铺、关键字、类别、大小 + 分页参数") List<StockInOutParam> stockInOutParamList) {
-        List<StockInOutDTO> stockInOutDTOList = stockInOutParamList.stream().map(stockInOutParam -> {
-            StockInOutDTO stockInOutDTO = new StockInOutDTO();
-            BeanUtils.copyProperties(stockInOutParam, stockInOutDTO);
-            stockInOutDTO.setInoutType(InOutEnum.OUT.getValue());
-            return stockInOutDTO;
-        }).collect(Collectors.toList());
-        stockService.updateStockAmount(stockInOutDTOList);
-        return Ans.success(true);
-    }
-
-    /**
-     * 分页-完成
-     */
-    @ApiOperation(value = "库存查询", notes = "店铺、关键字、类别、大小")
-    @GetMapping(value = "query")
-    public R<PageList<StockVo>> queryStock(@ApiParam(value = "店铺、关键字、类别、大小 + 分页参数") QueryStockPageParam param) {
-        QueryItemDetailPageParam queryItemDetailPageParam = new QueryItemDetailPageParam();
-        BeanUtils.copyProperties(param, queryItemDetailPageParam);
-
-        List<Integer> itemDetailIdList = itemDetailService.queryItemDetailList(queryItemDetailPageParam)
-                .stream().map(ItemDetail::getId).collect(Collectors.toList());
-
-        Integer storeId = param.getStoreId();
-        PageParam page = new PageParam();
-        BeanUtils.copyProperties(param, page);
-
-        IPage<Stock> stockPage = stockService.getStockByItemList(itemDetailIdList, storeId, page);
-
-        PageList<StockVo> stockVoPageList = this.getStockVoPageList(stockPage);
-        return Ans.success(stockVoPageList);
-    }
-
-    /**
-     * 分页-完成
-     */
-    @ApiOperation(value = "店铺库存", notes = "店铺")
+    @ApiOperation(value = "店铺库存")
     @PostMapping(value = "store")
-    public R<PageList<StockVo>> getStoreStock(@RequestBody StoreStockPageParam param) {
-        IPage<Stock> stockPage = stockService.getStockByStore(param);
+    public R<PageList<StockVo>> getStoreStock(@ApiParam(value = "页码") @RequestParam(value = "current") int current,
+                                              @ApiParam(value = "页容") @RequestParam(value = "size") int size,
+                                              @ApiParam(value = "店铺id") @RequestParam(value = "storeId") int storeId) {
+        IPage<Stock> stockPage = stockService.getStockByStore(current, size, storeId);
         PageList<StockVo> stockVoPageList = this.getStockVoPageList(stockPage);
-        return Ans.success(stockVoPageList);
+        return R.ok(stockVoPageList);
     }
 
     private PageList<StockVo> getStockVoPageList(IPage<Stock> stockPage) {

@@ -1,8 +1,5 @@
 package com.zjxu97.costume.commons;
 
-import org.springframework.util.StringUtils;
-
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,13 +9,5 @@ import java.util.Objects;
 public class Common {
     public static boolean isUsefulNum(Number num) {
         return Objects.nonNull(num) && num.intValue() != 0;
-    }
-
-    public static boolean isUsefulString(String string) {
-        return !StringUtils.isEmpty(string);
-    }
-
-    public static boolean isUsefulList(List list) {
-        return list != null && list.size() != 0;
     }
 }
