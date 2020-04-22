@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @RestController
 @Api(tags = "销售数据相关")
 @RequestMapping(CostumeConstants.API_PREFIX + "/data")
-public class SaleController {
+public class DataController {
 
     @Resource
     StoreService storeService;
