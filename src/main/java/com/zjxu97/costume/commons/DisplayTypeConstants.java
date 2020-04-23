@@ -17,5 +17,9 @@ public class DisplayTypeConstants {
 
     public static final String SALE_AMOUNT = "sale-amount";
 
-    public static final Set<String> TypeSet = ImmutableSet.of(SALE_COUNT, SALE_AMOUNT);
+    public static final String SALE_PROFIT = "sale-profit";
+
+    public static final String SALE_COST = "sale-cost";
+
+    public static final Set<String> TypeSet = ImmutableSet.of(SALE_COUNT, SALE_AMOUNT, SALE_PROFIT, SALE_COST);
 }

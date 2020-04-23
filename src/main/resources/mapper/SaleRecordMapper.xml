@@ -33,6 +33,12 @@
         <if test="dataType == @com.zjxu97.costume.commons.DisplayTypeConstants@SALE_AMOUNT">
             SUM(item_detail.price) `value`
         </if>
+        <if test="dataType == @com.zjxu97.costume.commons.DisplayTypeConstants@SALE_PROFIT">
+            SUM(item_detail.price - item_detail.cost) `value`
+        </if>
+        <if test="dataType == @com.zjxu97.costume.commons.DisplayTypeConstants@SALE_COST">
+            SUM(item_detail.cost) `value`
+        </if>
     </sql>
     <resultMap id="DataElementMap" type="com.zjxu97.costume.commons.DataElement">
         <result column="key" property="key" jdbcType="VARCHAR"/>
