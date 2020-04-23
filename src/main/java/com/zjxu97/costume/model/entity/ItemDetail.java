@@ -33,4 +33,7 @@ public class ItemDetail {
 
     @TableField(value = "price")
     private Integer price;
+
+    @TableField(value = "cost")
+    private Integer cost;
 }
