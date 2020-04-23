@@ -25,7 +25,7 @@
             COUNT(item_detail.id) `value`
         </if>
         <if test="dataType == @com.zjxu97.costume.commons.DisplayTypeConstants@SALE_AMOUNT">
-            sum(item_detail.price) `value`
+            SUM(item_detail.price) `value`
         </if>
     </sql>
     <resultMap id="DataElementMap" type="com.zjxu97.costume.commons.DataElement">
