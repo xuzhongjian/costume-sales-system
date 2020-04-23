@@ -4,72 +4,122 @@
 
     <sql id="control">
         <if test="control.controlLocation != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND store_id in (select id from store where district_id in(
-            select id from district where id LIKE CONCAT(#{control.controlLocation} , '%')))
+            AND sale_record.store_id in (select store.id from store where store.district_id in(
+            select district.id from district where district.id LIKE CONCAT(#{control.controlLocation} , '%')))
         </if>
         <if test="control.controlItemType != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND item_detail_id in (select item_detail.id from item_detail where item_detail.item_id in(
+            AND sale_record.item_detail_id in (select item_detail.id from item_detail where item_detail.item_id in(
             select item.id from item where item.item_type_id = #{control.controlItemType}))
         </if>
         <if test="control.controlItem != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND item_detail_id in (select item_detail.id from item_detail
+            AND sale_record.item_detail_id in (select item_detail.id from item_detail
             where item_detail.item_id = #{control.controlItem})
         </if>
         <if test="control.controlSize != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND item_detail_id in (select item_detail.id from item_detail
+            AND sale_record.item_detail_id in (select item_detail.id from item_detail
             where item_detail.item_size_id = #{control.controlSize})
         </if>
     </sql>
-
+    <sql id="resultDataType">
+        <if test="dataType == @com.zjxu97.costume.commons.DisplayTypeConstants@SALE_COUNT">
+            COUNT(id) `value`
+        </if>
+        <if test="dataType == @com.zjxu97.costume.commons.DisplayTypeConstants@SALE_AMOUNT">
+            COUNT(item_detail.price) `value`
+        </if>
+    </sql>
     <resultMap id="DataElementMap" type="com.zjxu97.costume.commons.DataElement">
         <result column="key" property="key" jdbcType="VARCHAR"/>
         <result column="value" property="value" jdbcType="TINYINT"/>
     </resultMap>
 
-    <select id="getDateCount" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
+    <select id="getDateData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
         SELECT
         <if test="dateType == @com.zjxu97.costume.commons.DateTypeConstants@YEAR">
-            DATE_FORMAT(create_at, '%Y') `key`,
+            DATE_FORMAT(sale_record.create_at, '%Y') `key`,
         </if>
         <if test="dateType == @com.zjxu97.costume.commons.DateTypeConstants@QUARTER">
-            CONCAT(DATE_FORMAT(create_at, '%Y-%Q'), FLOOR((DATE_FORMAT(create_at, '%m') + 2) / 3)) `key`,
+            CONCAT(DATE_FORMAT(sale_record.create_at, '%Y-%Q'), FLOOR((DATE_FORMAT(sale_record.create_at, '%m') + 2) /
+            3)) `key`,
         </if>
         <if test="dateType == @com.zjxu97.costume.commons.DateTypeConstants@MONTH">
-            DATE_FORMAT(create_at, '%Y-%m') `key`,
+            DATE_FORMAT(sale_record.create_at, '%Y-%m') `key`,
         </if>
         <if test="dateType == @com.zjxu97.costume.commons.DateTypeConstants@WEEK">
-            DATE_FORMAT(create_at, '%Y-%u') `key`,
+            DATE_FORMAT(sale_record.create_at, '%Y-%u') `key`,
         </if>
         <if test="dateType == @com.zjxu97.costume.commons.DateTypeConstants@DAY">
-            DATE_FORMAT(create_at, '%Y-%j') `key`,
+            DATE_FORMAT(sale_record.create_at, '%Y-%j') `key`,
         </if>
-        COUNT(id) `value`
+        <include refid="resultDataType"/>
         FROM sale_record
+        LEFT JOIN item_detail ON item_detail.id = sale_record.item_detail_id
+        WHERE sale_record.create_at BETWEEN #{from} AND #{to}
+        <include refid="control"/>
+        GROUP BY `key`
+    </select>
+
+    <select id="getLocationData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
+        SELECT
+        <if test="locationType == @com.zjxu97.costume.commons.LocationTypeConstants@AREA">
+            FLOOR(store.district_id / 100000) `key`,
+        </if>
+        <if test="locationType == @com.zjxu97.costume.commons.LocationTypeConstants@PROVINCE">
+            FLOOR(store.district_id / 10000) `key`,
+        </if>
+        <if test="locationType == @com.zjxu97.costume.commons.LocationTypeConstants@CITY">
+            FLOOR(store.district_id / 100) `key`,
+        </if>
+        <if test="locationType == @com.zjxu97.costume.commons.LocationTypeConstants@DISTRICT">
+            store.district_id `key`,
+        </if>
+        <include refid="resultDataType"/>
+        FROM sale_record LEFT JOIN store ON sale_record.store_id = store.id
+        LEFT JOIN item_detail ON item_detail.id = sale_record.item_detail_id
         WHERE create_at BETWEEN #{from} AND #{to}
         <include refid="control"/>
         GROUP BY `key`;
     </select>
 
-    <select id="getDateAmount" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
-        SELECT
-        <if test="dateType=com.zjxu97.costume.commons.DateTypeConstants.YEAR">
-            DATE_FORMAT(create_at, '%Y') `key`,
-        </if>
-        <if test="dateType=com.zjxu97.costume.commons.DateTypeConstants.QUARTER">
-            CONCAT(DATE_FORMAT(create_at, '%Y-%Q'), FLOOR((DATE_FORMAT(create_at, '%m') + 2) / 3)) `key`,
-        </if>
-        <if test="dateType=com.zjxu97.costume.commons.DateTypeConstants.MONTH">
-            DATE_FORMAT(create_at, '%Y-%m') `key`,
-        </if>
-        <if test="dateType=com.zjxu97.costume.commons.DateTypeConstants.WEEK">
-            DATE_FORMAT(create_at, '%Y-%u') `key`,
-        </if>
-        <if test="dateType=com.zjxu97.costume.commons.DateTypeConstants.DAY">
-            DATE_FORMAT(create_at, '%Y-%j') `key`,
-        </if>
-        COUNT(item_detail.price) `value`
-        FROM sale_record LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
+    <select id="getItemTypeData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
+        SELECT item.item_type_id `key`,
+        <include refid="resultDataType"/>
+        FROM sale_record
+        LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
+        LEFT JOIN item ON item.id = item_detail.item_id
+        WHERE sale_record.create_at BETWEEN #{from} AND #{to}
+        <include refid="control"/>
+        GROUP BY `key`;
+    </select>
+
+    <select id="getItemData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
+        SELECT item_detail.item_id `key`,
+        <include refid="resultDataType"/>
+        FROM sale_record
+        LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
         WHERE create_at BETWEEN #{from} AND #{to}
+        <include refid="control"/>
+        GROUP BY `key`;
+    </select>
+
+    <select id="getSizeData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
+        SELECT item_detail.item_size_id `key`, COUNT(sale_record.id) `value`
+        FROM sale_record
+        LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
+        WHERE create_at BETWEEN #{from} AND #{to}
+        <include refid="control"/>
+        GROUP BY `key`;
+    </select>
+
+
+    <select id="getSexData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
+        SELECT item_type.sex `key`,
+        <include refid="resultDataType"/>
+        FROM sale_record
+        LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
+        LEFT JOIN item ON item.id = item_detail.item_id
+        LEFT JOIN item_type ON item_type.id = item.item_type_id
+        WHERE sale_record.create_at BETWEEN #{from} AND #{to}
         <include refid="control"/>
         GROUP BY `key`;
     </select>

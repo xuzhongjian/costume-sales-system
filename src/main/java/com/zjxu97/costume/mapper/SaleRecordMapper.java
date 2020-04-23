@@ -17,8 +17,35 @@ import java.util.List;
  */
 @Mapper
 public interface SaleRecordMapper extends BaseMapper<SaleRecord> {
-    List<DataElement> getDateCount(@Param("control") Control control, @Param("from") String from, @Param("to") String to, @Param("dateType") String dateType);
+    List<DataElement> getDateData(@Param("control") Control control,
+                                  @Param("from") String from,
+                                  @Param("to") String to,
+                                  @Param("dateType") String dateType,
+                                  @Param("dataType") String dataType);
 
+    List<DataElement> getLocationData(@Param("control") Control control,
+                                      @Param("from") String from,
+                                      @Param("to") String to,
+                                      @Param("locationType") String locationType,
+                                      @Param("dataType") String dataType);
 
-    List<DataElement> getDateAmount(@Param("control") Control control, @Param("from") String from, @Param("to") String to, @Param("dateType") String dateType);
+    List<DataElement> getItemTypeData(@Param("control") Control control,
+                                      @Param("from") String from,
+                                      @Param("to") String to,
+                                      @Param("dataType") String dataType);
+
+    List<DataElement> getItemData(@Param("control") Control control,
+                                  @Param("from") String from,
+                                  @Param("to") String to,
+                                  @Param("dataType") String dataType);
+
+    List<DataElement> getSizeData(@Param("control") Control control,
+                                  @Param("from") String from,
+                                  @Param("to") String to,
+                                  @Param("dataType") String dataType);
+
+    List<DataElement> getSexData(@Param("control") Control control,
+                                 @Param("from") String from,
+                                 @Param("to") String to,
+                                 @Param("dataType") String dataType);
 }

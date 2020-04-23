@@ -38,5 +38,12 @@ public class Control {
      */
     @ApiModelProperty(value = "控制-大小")
     private String controlSize;
+
+
+    /**
+     * @see ItemType#getSex()
+     */
+    @ApiModelProperty(value = "控制-性别")
+    private String controlSex;
 }
 

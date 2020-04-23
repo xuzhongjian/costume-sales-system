@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.commons.Control;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.DataElement;
-import com.zjxu97.costume.commons.DisplayTypeConstants;
 import com.zjxu97.costume.mapper.SaleRecordMapper;
 import com.zjxu97.costume.model.entity.SaleRecord;
 import com.zjxu97.costume.service.SaleRecordService;
@@ -22,28 +21,22 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
 
     @Override
     public List<DataElement> getDataList(Control control, String from, String to, String xType, String xValue, String yValue) {
-
-        if (yValue.equals(DisplayTypeConstants.SALE_COUNT)) {
-            return this.getCountDataList(control, from, to, xType, xValue);
-        } else if (yValue.equals(DisplayTypeConstants.SALE_AMOUNT)) {
-            return this.getAmountDataList(control, from, to, xType, xValue);
+        switch (xType) {
+            case CostumeConstants.DATE:
+                return this.getBaseMapper().getDateData(control, from, to, xValue, yValue);
+            case CostumeConstants.LOCATION:
+                return this.getBaseMapper().getLocationData(control, from, to, xValue, yValue);
+            case CostumeConstants.ITEM_TYPE:
+                return this.getBaseMapper().getItemTypeData(control, from, to, yValue);
+            case CostumeConstants.ITEM:
+                return this.getBaseMapper().getItemData(control, from, to, yValue);
+            case CostumeConstants.SIZE:
+                return this.getBaseMapper().getSizeData(control, from, to, yValue);
+            case CostumeConstants.SEX:
+                return this.getBaseMapper().getSexData(control, from, to, yValue);
+            default:
+                return null;
         }
-
-        return null;
-    }
-
-    private List<DataElement> getCountDataList(Control control, String from, String to, String xType, String xValue) {
-        if (xType.equals(CostumeConstants.DATE)) {
-            return this.getBaseMapper().getDateCount(control, from, to, xValue);
-        }
-        return null;
-    }
-
-    private List<DataElement> getAmountDataList(Control control, String from, String to, String xType, String xValue) {
-        if (xType.equals(CostumeConstants.DATE)) {
-            return this.getBaseMapper().getDateAmount(control, from, to, xValue);
-        }
-        return null;
     }
 
     private QueryWrapper<SaleRecord> qw() {
