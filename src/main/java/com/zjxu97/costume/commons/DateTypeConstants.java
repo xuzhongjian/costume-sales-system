@@ -20,5 +20,9 @@ public class DateTypeConstants {
 
     public static final String DAY = "day";
 
-    public static final Set<String> TypeSet = ImmutableSet.of(YEAR, MONTH, QUARTER, WEEK, DAY);
+    public static final String HOUR = "hour";
+
+    public static final String WEEK_DAY = "week-day";
+
+    public static final Set<String> TypeSet = ImmutableSet.of(YEAR, MONTH, QUARTER, WEEK, DAY, HOUR, WEEK_DAY);
 }

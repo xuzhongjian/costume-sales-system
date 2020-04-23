@@ -33,6 +33,9 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
     private CityService cityService;
 
     @Resource
+    private StoreService storeService;
+
+    @Resource
     private ProvinceService provinceService;
 
     @Resource
@@ -72,6 +75,18 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
                     }
                 }
                 return locationData;
+            case CostumeConstants.STORE:
+                List<DataElement> storeData = this.getBaseMapper().getStoreData(control, from, to, yValue);
+                Map<String, String> storeMap = new HashMap<>();
+                storeService.listByIds(storeData.stream().map(DataElement::getKey).map(Integer::parseInt).collect(Collectors.toList()))
+                        .forEach(itemType -> storeMap.put(String.valueOf(itemType.getId()), itemType.getStoreAddress()));
+                for (DataElement size : storeData) {
+                    String key = size.getKey();
+                    if (Strings.isNotBlank(key)) {
+                        size.setKey(storeMap.get(key.trim()));
+                    }
+                }
+                return storeData;
             case CostumeConstants.ITEM_TYPE:
                 List<DataElement> itemTypeData = this.getBaseMapper().getItemTypeData(control, from, to, yValue);
                 Map<String, String> itemTypeMap = new HashMap<>();

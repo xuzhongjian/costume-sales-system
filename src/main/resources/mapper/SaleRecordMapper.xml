@@ -63,6 +63,13 @@
         <if test="dateType == @com.zjxu97.costume.commons.DateTypeConstants@DAY">
             DATE_FORMAT(sale_record.create_at, '%Y-%j') `key`,
         </if>
+        <if test="dateType == @com.zjxu97.costume.commons.DateTypeConstants@HOUR">
+            DATE_FORMAT(sale_record.create_at, '%k') `key`,
+        </if>
+
+        <if test="dateType == @com.zjxu97.costume.commons.DateTypeConstants@WEEK_DAY">
+            DATE_FORMAT(sale_record.create_at, '%w') `key`,
+        </if>
         <include refid="resultDataType"/>
         FROM sale_record
         LEFT JOIN item_detail ON item_detail.id = sale_record.item_detail_id
@@ -95,6 +102,17 @@
 
     <select id="getItemTypeData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
         SELECT item.item_type_id `key`,
+        <include refid="resultDataType"/>
+        FROM sale_record
+        LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
+        LEFT JOIN item ON item.id = item_detail.item_id
+        WHERE sale_record.create_at BETWEEN #{from} AND #{to}
+        <include refid="control"/>
+        GROUP BY `key`;
+    </select>
+
+    <select id="getStoreData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
+        SELECT sale_record.store_id `key`,
         <include refid="resultDataType"/>
         FROM sale_record
         LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id

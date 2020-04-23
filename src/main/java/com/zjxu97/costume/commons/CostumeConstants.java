@@ -17,6 +17,8 @@ public class CostumeConstants {
 
     public final static String LOCATION = "location";
 
+    public final static String STORE = "store";
+
     public final static String ITEM_TYPE = "itemType";
 
     public final static String SEX = "sex";
