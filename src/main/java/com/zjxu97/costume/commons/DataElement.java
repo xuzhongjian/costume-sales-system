@@ -9,6 +9,5 @@ import lombok.Data;
 @Data
 public class DataElement {
     private String key;
-
     private long value;
 }

@@ -1,10 +1,5 @@
 package com.zjxu97.costume.commons;
 
-import org.apache.logging.log4j.util.Strings;
-
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,15 +16,11 @@ public class Common {
         return Objects.isNull(list) || list.size() == 0;
     }
 
-    public static Date strToDate(String strDate) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        ParsePosition pos = new ParsePosition(0);
-        Date strtodate = formatter.parse(strDate, pos);
-        return strtodate;
+    private static String[] sexStringArray = {"女款", "男款", "不区分大小"};
+
+    public static String getSexString(byte num) {
+        return sexStringArray[num];
     }
 
-    public static boolean controlValueNotEmpty(String value) {
-        return Strings.isNotBlank(value) && !CostumeConstants.EMPTY.equals(value);
-    }
 
 }

@@ -20,19 +20,6 @@ CREATE TABLE `city`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='市级单位';
 
-CREATE TABLE `commodity_stock`
-(
-    `id`         int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
-    `is_deleted` tinyint(4)       NOT NULL DEFAULT '0' COMMENT '是否删除,1删除，0未删除',
-    `create_at`  datetime                  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_at`  datetime         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-    `store_id`   int(11) unsigned NOT NULL DEFAULT '0' COMMENT '店铺id',
-    `item_id`    int(11) unsigned NOT NULL DEFAULT '0' COMMENT '商品id',
-    `amount`     int(11)          NOT NULL DEFAULT '0' COMMENT '剩余库存',
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8 COMMENT ='库存记录';
-
 CREATE TABLE `costume_type`
 (
     `id`         int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',

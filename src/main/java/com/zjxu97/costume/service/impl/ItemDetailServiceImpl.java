@@ -2,6 +2,7 @@ package com.zjxu97.costume.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.mapper.ItemDetailMapper;
 import com.zjxu97.costume.model.entity.Item;
@@ -66,7 +67,7 @@ public class ItemDetailServiceImpl extends ServiceImpl<ItemDetailMapper, ItemDet
             itemDetailVo.setItemName(itemMap.get(itemId).getItemName());
             itemDetailVo.setItemSize(sizeMap.get(itemSizeId).getDisplayName());
             itemDetailVo.setItemTypeName(itemType.getTypeName());
-            itemDetailVo.setSexString(CostumeConstants.getSexString(itemType.getSex()));
+            itemDetailVo.setSexString(Common.getSexString(itemType.getSex()));
             return itemDetailVo;
         }).collect(Collectors.toList());
     }

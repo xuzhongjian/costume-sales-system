@@ -4,20 +4,26 @@
 
     <sql id="control">
         <if test="control.controlLocation != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND sale_record.store_id in (select store.id from store where store.district_id in(
-            select district.id from district where district.id LIKE CONCAT(#{control.controlLocation} , '%')))
+            AND sale_record.store_id IN (SELECT store.id FROM store WHERE store.district_id IN(
+            SELECT district.id FROM district WHERE district.id LIKE CONCAT(#{control.controlLocation} , '%')))
         </if>
         <if test="control.controlItemType != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND sale_record.item_detail_id in (select item_detail.id from item_detail where item_detail.item_id in(
-            select item.id from item where item.item_type_id = #{control.controlItemType}))
+            AND sale_record.item_detail_id IN (SELECT item_detail.id FROM item_detail WHERE item_detail.item_id IN(
+            SELECT item.id FROM item WHERE item.item_type_id = #{control.controlItemType}))
         </if>
         <if test="control.controlItem != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND sale_record.item_detail_id in (select item_detail.id from item_detail
-            where item_detail.item_id = #{control.controlItem})
+            AND sale_record.item_detail_id IN (SELECT item_detail.id FROM item_detail
+            WHERE item_detail.item_id = #{control.controlItem})
         </if>
         <if test="control.controlSize != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND sale_record.item_detail_id in (select item_detail.id from item_detail
-            where item_detail.item_size_id = #{control.controlSize})
+            AND sale_record.item_detail_id IN (SELECT item_detail.id FROM item_detail
+            WHERE item_detail.item_size_id = #{control.controlSize})
+        </if>
+        <if test="control.controlSex != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
+            AND sale_record.item_detail_id IN (
+            SELECT item_detail.id FROM item_detail WHERE item_detail.item_id IN(
+            SELECT item.id FROM item WHERE item.item_type_id IN(
+            SELECT item_type.id FROM item_type WHERE item_type.sex = #{control.controlSex})))
         </if>
     </sql>
     <sql id="resultDataType">
@@ -97,16 +103,17 @@
         <include refid="resultDataType"/>
         FROM sale_record
         LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
-        WHERE create_at BETWEEN #{from} AND #{to}
+        WHERE sale_record.create_at BETWEEN #{from} AND #{to}
         <include refid="control"/>
         GROUP BY `key`;
     </select>
 
     <select id="getSizeData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
-        SELECT item_detail.item_size_id `key`, COUNT(sale_record.id) `value`
+        SELECT item_detail.item_size_id `key`
+        <include refid="resultDataType"/>
         FROM sale_record
         LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
-        WHERE create_at BETWEEN #{from} AND #{to}
+        WHERE sale_record.create_at BETWEEN #{from} AND #{to}
         <include refid="control"/>
         GROUP BY `key`;
     </select>

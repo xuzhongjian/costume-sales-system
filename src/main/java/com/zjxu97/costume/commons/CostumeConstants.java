@@ -9,12 +9,6 @@ public class CostumeConstants {
 
     public final static String EMPTY = "empty";
 
-    private static String[] sexStringArray = {"女款", "男款"};
-
-    public static String getSexString(byte num) {
-        return sexStringArray[num];
-    }
-
 
     /**
      * @see Control
