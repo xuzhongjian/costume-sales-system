@@ -1,7 +1,7 @@
 package com.zjxu97.costume.controllers;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.commons.PageList;
 import com.zjxu97.costume.model.entity.Store;
@@ -38,20 +38,19 @@ public class StoreController {
 
     @GetMapping(value = "stores")
     @ApiOperation(value = "根据地理位置获取店铺")
-    public R<PageList<StoreVo>> listStores(@ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,
-                                           @ApiParam(value = "页容") @RequestParam(value = "size") int size,
-                                           @ApiParam(value = "页码") @RequestParam(value = "current") int current) {
-        IPage<Store> storeIPage = storeService.listStoresByLocation(locationId, size, current);
-        PageList<StoreVo> storeVoPageList = new PageList<>();
-        BeanUtils.copyProperties(storeIPage, storeVoPageList);
-        List<Store> storeList = storeIPage.getRecords();
-        List<StoreVo> storeVoList = storeList.stream().map(store -> {
+    public R<Page<StoreVo>> listStores(@ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,
+                                       @ApiParam(value = "页容") @RequestParam(value = "size") int size,
+                                       @ApiParam(value = "页码") @RequestParam(value = "current") int current) {
+        Page<Store> storeIPage = storeService.listStoresByLocation(locationId, size, current);
+        List<StoreVo> storeVoList = storeIPage.getRecords().stream().map(store -> {
             StoreVo storeVo = new StoreVo();
             BeanUtils.copyProperties(store, storeVo);
             return storeVo;
         }).collect(Collectors.toList());
-        storeVoPageList.setRecords(storeVoList);
 
-        return R.ok(storeVoPageList);
+        Page<StoreVo> page = new Page<>();
+        BeanUtils.copyProperties(storeIPage, page);
+        page.setRecords(storeVoList);
+        return R.ok(page);
     }
 }

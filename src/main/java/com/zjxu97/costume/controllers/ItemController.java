@@ -1,6 +1,7 @@
 package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.model.entity.Item;
 import com.zjxu97.costume.model.entity.ItemSize;
@@ -8,6 +9,7 @@ import com.zjxu97.costume.model.entity.ItemType;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.ItemSizeVo;
 import com.zjxu97.costume.model.vo.ItemTypeVo;
+import com.zjxu97.costume.model.vo.ItemVo;
 import com.zjxu97.costume.service.ItemDetailService;
 import com.zjxu97.costume.service.ItemService;
 import com.zjxu97.costume.service.ItemSizeService;
@@ -50,11 +52,20 @@ public class ItemController {
 
     @ApiOperation(value = "列出种类的产品")
     @GetMapping(value = "items")
-    public R<List<Item>> listItem(@ApiParam(value = "种类id") @RequestParam(value = "itemTypeId") int typeId,
-                                  @ApiParam(value = "页容") @RequestParam(value = "size") int size,
-                                  @ApiParam(value = "页码") @RequestParam(value = "current") int current) {
-        List<Item> items = itemService.itemList(typeId, size, current);
-        return R.ok(items);
+    public R<Page<ItemVo>> listItem(@ApiParam(value = "种类id") @RequestParam(value = "itemTypeId") int typeId,
+                                    @ApiParam(value = "页容") @RequestParam(value = "size") int size,
+                                    @ApiParam(value = "页码") @RequestParam(value = "current") int current) {
+        Page<Item> itemPage = itemService.itemList(typeId, size, current);
+        List<ItemVo> itemVoList = itemPage.getRecords().stream().map(item -> {
+            ItemVo itemVo = new ItemVo();
+            BeanUtils.copyProperties(item, itemVo);
+            return itemVo;
+        }).collect(Collectors.toList());
+
+        Page<ItemVo> page = new Page<>();
+        BeanUtils.copyProperties(itemPage, page);
+        page.setRecords(itemVoList);
+        return R.ok(page);
     }
 
     @ApiOperation(value = "列出产品的详细")

@@ -109,7 +109,7 @@
     </select>
 
     <select id="getSizeData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
-        SELECT item_detail.item_size_id `key`
+        SELECT item_detail.item_size_id `key`,
         <include refid="resultDataType"/>
         FROM sale_record
         LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id

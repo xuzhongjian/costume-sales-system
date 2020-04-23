@@ -3,14 +3,10 @@ package com.zjxu97.costume.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zjxu97.costume.commons.Common;
 import com.zjxu97.costume.mapper.ItemMapper;
 import com.zjxu97.costume.model.entity.Item;
 import com.zjxu97.costume.service.ItemService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 /**
  * @author zjxu97
@@ -19,26 +15,14 @@ import java.util.List;
 @Service
 public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements ItemService {
 
-    @Override
-    public List<Item> getItemListByTypeId(Integer itemTypeId) {
-        return this.list(qw().eq(Common.isUsefulNum(itemTypeId), "item_type_id", itemTypeId));
-    }
 
     @Override
-    public List<Item> getItemList(Integer itemTypeId, String keyWords) {
-
-        return this.list(qw().like(!StringUtils.isEmpty(keyWords), "item_name", keyWords)
-                .eq(Common.isUsefulNum(itemTypeId), "item_type_id", itemTypeId));
-    }
-
-    @Override
-    public List<Item> itemList(int itemTypeId, int size, int current) {
+    public Page<Item> itemList(int itemTypeId, int size, int current) {
         QueryWrapper<Item> queryWrapper = new QueryWrapper<Item>().eq("item_type_id", itemTypeId);
         Page<Item> page = new Page<>();
         page.setCurrent(current);
         page.setSize(size);
-        Page<Item> itemPage = this.page(page, queryWrapper);
-        return itemPage.getRecords();
+        return this.page(page, queryWrapper);
     }
 
     private QueryWrapper<Item> qw() {
