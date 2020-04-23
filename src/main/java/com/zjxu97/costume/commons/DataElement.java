@@ -10,5 +10,5 @@ import lombok.Data;
 public class DataElement {
     private String key;
 
-    private int value;
+    private long value;
 }

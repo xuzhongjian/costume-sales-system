@@ -22,15 +22,15 @@
     </sql>
     <sql id="resultDataType">
         <if test="dataType == @com.zjxu97.costume.commons.DisplayTypeConstants@SALE_COUNT">
-            COUNT(id) `value`
+            COUNT(item_detail.id) `value`
         </if>
         <if test="dataType == @com.zjxu97.costume.commons.DisplayTypeConstants@SALE_AMOUNT">
-            COUNT(item_detail.price) `value`
+            sum(item_detail.price) `value`
         </if>
     </sql>
     <resultMap id="DataElementMap" type="com.zjxu97.costume.commons.DataElement">
         <result column="key" property="key" jdbcType="VARCHAR"/>
-        <result column="value" property="value" jdbcType="TINYINT"/>
+        <result column="value" property="value" jdbcType="BIGINT"/>
     </resultMap>
 
     <select id="getDateData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
@@ -76,7 +76,7 @@
         <include refid="resultDataType"/>
         FROM sale_record LEFT JOIN store ON sale_record.store_id = store.id
         LEFT JOIN item_detail ON item_detail.id = sale_record.item_detail_id
-        WHERE create_at BETWEEN #{from} AND #{to}
+        WHERE sale_record.create_at BETWEEN #{from} AND #{to}
         <include refid="control"/>
         GROUP BY `key`;
     </select>
