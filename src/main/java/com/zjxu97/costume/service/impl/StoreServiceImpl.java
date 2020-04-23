@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zjxu97.costume.commons.LocationClassConstants;
 import com.zjxu97.costume.mapper.StoreMapper;
 import com.zjxu97.costume.model.entity.Store;
 import com.zjxu97.costume.model.vo.StoreVo;
@@ -26,55 +25,13 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, Store> implements
     private static final int MAX_CITY_DIST_NUM = 99;
 
     @Override
-    public IPage<Store> listStoresByLocation(int locationClass, int locationId, int size, int current) {
-        switch (locationClass) {
-            case LocationClassConstants.AREA:
-                return this.getStoreVos(MAX_AREA_DIST_NUM, locationId, size, current);
-            case LocationClassConstants.PROVINCE:
-                return this.getStoreVos(MAX_PROV_DIST_NUM, locationId, size, current);
-            case LocationClassConstants.CITY:
-                return this.getStoreVos(MAX_CITY_DIST_NUM, locationId, size, current);
-            case LocationClassConstants.DISTRICT:
-                QueryWrapper<Store> qw = qw().eq("district_id", locationId);
-                Page<Store> page = new Page<>();
-                page.setCurrent(current);
-                page.setSize(size);
-                return this.page(page, qw);
-            default:
-                return null;
-        }
-
-    }
-
-    private IPage<Store> getStoreVos(int maxAreaDistNum, int locationId, int size, int current) {
+    public IPage<Store> listStoresByLocation(int locationId, int size, int current) {
         Page<Store> page = new Page<>();
         page.setCurrent(current);
         page.setSize(size);
-        QueryWrapper<Store> qw = qw().between("district_id", locationId, locationId + maxAreaDistNum);
+        QueryWrapper<Store> qw = qw().likeRight("district_id", locationId);
 
         return this.page(page, qw);
-    }
-
-    @Override
-    public List<Store> listStoresByLocation(int locationClass, int locationId) {
-        switch (locationClass) {
-            case LocationClassConstants.AREA:
-                return this.getStoreVos(MAX_AREA_DIST_NUM, locationId);
-            case LocationClassConstants.PROVINCE:
-                return this.getStoreVos(MAX_PROV_DIST_NUM, locationId);
-            case LocationClassConstants.CITY:
-                return this.getStoreVos(MAX_CITY_DIST_NUM, locationId);
-            case LocationClassConstants.DISTRICT:
-                return this.list(qw().eq("district_id", locationId));
-            default:
-                return null;
-        }
-
-    }
-
-    private List<Store> getStoreVos(int maxAreaDistNum, int locationId) {
-        QueryWrapper<Store> qw = qw().between("district_id", locationId, locationId + maxAreaDistNum);
-        return this.list(qw);
     }
 
     @Override

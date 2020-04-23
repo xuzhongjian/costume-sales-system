@@ -1,8 +1,9 @@
 package com.zjxu97.costume.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zjxu97.costume.commons.Control;
+import com.zjxu97.costume.commons.DataElement;
 import com.zjxu97.costume.model.entity.SaleRecord;
-import com.zjxu97.costume.model.param.GoodParam;
 
 import java.util.List;
 
@@ -11,11 +12,6 @@ import java.util.List;
  * @date 2020/1/19 18:16
  */
 public interface SaleRecordService extends IService<SaleRecord> {
-    /**
-     * 销售商品列表，商品售出或退回
-     *
-     * @param goodParamList 商品列表
-     * @return 涉及到的总价格
-     */
-    Integer recordSales(List<GoodParam> goodParamList);
+
+    List<DataElement> getDataList(Control control, String from, String to, String xType, String xValue, String yValue);
 }

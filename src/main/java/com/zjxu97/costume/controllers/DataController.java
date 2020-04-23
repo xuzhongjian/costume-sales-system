@@ -1,9 +1,10 @@
 package com.zjxu97.costume.controllers;
 
 import com.baomidou.mybatisplus.extension.api.R;
+import com.zjxu97.costume.commons.Control;
 import com.zjxu97.costume.commons.CostumeConstants;
-import com.zjxu97.costume.model.entity.Store;
-import com.zjxu97.costume.service.StoreService;
+import com.zjxu97.costume.commons.DataElement;
+import com.zjxu97.costume.service.SaleRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Y - 仅限一个 - [销售件数 销售额]
@@ -40,22 +39,34 @@ import java.util.stream.Collectors;
  * @date 2020/1/19 21:37
  */
 @RestController
-@Api(tags = "销售数据相关")
+@Api(tags = "数据相关")
 @RequestMapping(CostumeConstants.API_PREFIX + "/data")
 public class DataController {
 
     @Resource
-    StoreService storeService;
+    SaleRecordService saleRecordService;
 
-    @ApiOperation(value = "地区销售件数")
+
+    /**
+     * @param yValue  DisplayTypeConstants
+     * @param xType   Control
+     * @param xValue  Control
+     * @param control Control
+     * @param from    yyyy-MM-dd
+     * @param to      yyyy-MM-dd
+     * @return json
+     * @see Control
+     */
+    @ApiOperation(value = "数据")
     @GetMapping(value = "sales")
-    public R<Map<Integer, Integer>> displayLocationSaleCount(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
-                                                             @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,
-                                                             @ApiParam(value = "splitType") @RequestParam(value = "splitType") String splitType,
-                                                             @ApiParam(value = "开始时间") @RequestParam(value = "from") String from,
-                                                             @ApiParam(value = "截止时间") @RequestParam(value = "to") String to) {
-        List<Integer> storeList = storeService.listStoresByLocation(locationClass, locationId).stream().map(Store::getId).collect(Collectors.toList());
+    public R<List<DataElement>> displayLocationSaleCount(@ApiParam(value = "Y_VALUE") @RequestParam(value = "yValue") String yValue,
+                                                         @ApiParam(value = "X_TYPE") @RequestParam(value = "xType") String xType,
+                                                         @ApiParam(value = "X_VALUE") @RequestParam(value = "xValue") String xValue,
+                                                         @ApiParam(value = "开始时间") @RequestParam(value = "from") String from,
+                                                         @ApiParam(value = "截止时间") @RequestParam(value = "to") String to,
+                                                         Control control) {
 
-        return R.ok(null);
+        List<DataElement> dataList = saleRecordService.getDataList(control, from, to, xType, xValue, yValue);
+        return R.ok(dataList);
     }
 }

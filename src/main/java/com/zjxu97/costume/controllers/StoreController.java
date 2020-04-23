@@ -12,7 +12,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -35,11 +38,10 @@ public class StoreController {
 
     @GetMapping(value = "stores")
     @ApiOperation(value = "根据地理位置获取店铺")
-    public R<PageList<StoreVo>> listStores(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
-                                           @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,
+    public R<PageList<StoreVo>> listStores(@ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId,
                                            @ApiParam(value = "页容") @RequestParam(value = "size") int size,
                                            @ApiParam(value = "页码") @RequestParam(value = "current") int current) {
-        IPage<Store> storeIPage = storeService.listStoresByLocation(locationClass, locationId, size, current);
+        IPage<Store> storeIPage = storeService.listStoresByLocation(locationId, size, current);
         PageList<StoreVo> storeVoPageList = new PageList<>();
         BeanUtils.copyProperties(storeIPage, storeVoPageList);
         List<Store> storeList = storeIPage.getRecords();

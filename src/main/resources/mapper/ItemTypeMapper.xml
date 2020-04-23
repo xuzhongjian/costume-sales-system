@@ -17,7 +17,7 @@
         select
         <include refid="ItemTypeColumn"/>
         from
-        item_detail
+        costume.item_detail
         left join item on item_detail.item_id = item.id
         left join item_type on item.item_type_id = item_type.id
         where item_detail.id = #{item_detail_id}

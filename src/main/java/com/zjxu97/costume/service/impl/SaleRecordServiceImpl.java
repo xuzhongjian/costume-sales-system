@@ -1,18 +1,17 @@
 package com.zjxu97.costume.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zjxu97.costume.commons.Control;
+import com.zjxu97.costume.commons.CostumeConstants;
+import com.zjxu97.costume.commons.DataElement;
+import com.zjxu97.costume.commons.DisplayTypeConstants;
 import com.zjxu97.costume.mapper.SaleRecordMapper;
-import com.zjxu97.costume.model.entity.ItemDetail;
 import com.zjxu97.costume.model.entity.SaleRecord;
-import com.zjxu97.costume.model.param.GoodParam;
-import com.zjxu97.costume.service.ItemDetailService;
 import com.zjxu97.costume.service.SaleRecordService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author zjxu97
@@ -21,21 +20,33 @@ import java.util.stream.Collectors;
 @Service
 public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRecord> implements SaleRecordService {
 
-    @Resource
-    ItemDetailService itemDetailService;
-
     @Override
-    public Integer recordSales(List<GoodParam> goodParamList) {
-        List<SaleRecord> saleRecords = goodParamList.stream().map(goodParam -> {
-            SaleRecord saleRecord = new SaleRecord();
-            BeanUtils.copyProperties(goodParam, saleRecord);
-            return saleRecord;
-        }).collect(Collectors.toList());
-        this.saveBatch(saleRecords);
+    public List<DataElement> getDataList(Control control, String from, String to, String xType, String xValue, String yValue) {
 
-        //计算涉及到的总价格
-        List<Integer> itemDetailIdList = goodParamList.stream().map(GoodParam::getItemDetailId).collect(Collectors.toList());
-        long count = itemDetailService.listByIds(itemDetailIdList).stream().map(ItemDetail::getPrice).count();
-        return (int) count;
+        if (yValue.equals(DisplayTypeConstants.SALE_COUNT)) {
+            return this.getCountDataList(control, from, to, xType, xValue);
+        } else if (yValue.equals(DisplayTypeConstants.SALE_AMOUNT)) {
+            return this.getAmountDataList(control, from, to, xType, xValue);
+        }
+
+        return null;
+    }
+
+    private List<DataElement> getCountDataList(Control control, String from, String to, String xType, String xValue) {
+        if (xType.equals(CostumeConstants.DATE)) {
+            return this.getBaseMapper().getDateCount(control, from, to, xValue);
+        }
+        return null;
+    }
+
+    private List<DataElement> getAmountDataList(Control control, String from, String to, String xType, String xValue) {
+        if (xType.equals(CostumeConstants.DATE)) {
+            return this.getBaseMapper().getDateAmount(control, from, to, xValue);
+        }
+        return null;
+    }
+
+    private QueryWrapper<SaleRecord> qw() {
+        return new QueryWrapper<>();
     }
 }

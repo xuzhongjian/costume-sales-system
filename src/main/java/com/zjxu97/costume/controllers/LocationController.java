@@ -48,8 +48,8 @@ public class LocationController {
 
     @ApiOperation(value = "列出下辖地区")
     @GetMapping(value = "locations")
-    public R<List<LocationVo>> listLocation(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
-                                            @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId) {
+    public R<List<LocationVo>> listLocation(@ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId) {
+        byte locationClass = LocationClassConstants.getLocationClass(locationId);
         List<LocationVo> locationVoList = null;
         switch (locationClass) {
             case LocationClassConstants.ROOT:
@@ -81,8 +81,8 @@ public class LocationController {
 
     @ApiOperation(value = "获取上级地区")
     @GetMapping(value = "parent")
-    public R<List<LocationVo>> listParent(@ApiParam(value = "地区等级") @RequestParam(value = "locationClass") int locationClass,
-                                          @ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId) {
+    public R<List<LocationVo>> listParent(@ApiParam(value = "locationId") @RequestParam(value = "locationId") int locationId) {
+        byte locationClass = LocationClassConstants.getLocationClass(locationId);
         List<LocationVo> locationVoList = new ArrayList<>();
         switch (locationClass) {
             case LocationClassConstants.AREA:

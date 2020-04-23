@@ -17,10 +17,7 @@ public interface StoreService extends IService<Store> {
      *
      * @return 店铺的分页信息
      */
-    IPage<Store> listStoresByLocation(int locationClass, int locationId, int size, int current);
-
-
-    List<Store> listStoresByLocation(int locationClass, int locationId);
+    IPage<Store> listStoresByLocation(int locationId, int size, int current);
 
     /**
      * model list -> vo list
