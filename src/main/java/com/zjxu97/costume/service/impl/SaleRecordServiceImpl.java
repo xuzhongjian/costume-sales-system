@@ -1,6 +1,5 @@
 package com.zjxu97.costume.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zjxu97.costume.commons.*;
 import com.zjxu97.costume.mapper.SaleRecordMapper;
@@ -44,6 +43,9 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
 
     @Resource
     private ItemTypeService itemTypeService;
+
+    @Resource
+    private ItemBigTypeService itemBigTypeService;
 
     @Override
     public List<DataElement> getDataList(Control control, String from, String to, String xType, String xValue, String yValue) {
@@ -99,6 +101,18 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
                     }
                 }
                 return itemTypeData;
+            case CostumeConstants.ITEM_BIG_TYPE:
+                List<DataElement> itemBigTypeData = this.getBaseMapper().getItemBigTypeData(control, from, to, yValue);
+                Map<String, String> itemBigTypeMap = new HashMap<>();
+                itemBigTypeService.listByIds(itemBigTypeData.stream().map(DataElement::getKey).map(Integer::parseInt).collect(Collectors.toList()))
+                        .forEach(itemType -> itemBigTypeMap.put(String.valueOf(itemType.getId()), itemType.getTypeName()));
+                for (DataElement size : itemBigTypeData) {
+                    String key = size.getKey();
+                    if (Strings.isNotBlank(key)) {
+                        size.setKey(itemBigTypeMap.get(key.trim()));
+                    }
+                }
+                return itemBigTypeData;
             case CostumeConstants.ITEM:
                 List<DataElement> itemData = this.getBaseMapper().getItemData(control, from, to, yValue);
                 Map<String, String> itemMap = new HashMap<>();
@@ -138,9 +152,5 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
             default:
                 return null;
         }
-    }
-
-    private QueryWrapper<SaleRecord> qw() {
-        return new QueryWrapper<>();
     }
 }

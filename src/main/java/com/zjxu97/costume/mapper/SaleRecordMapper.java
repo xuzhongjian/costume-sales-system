@@ -39,6 +39,11 @@ public interface SaleRecordMapper extends BaseMapper<SaleRecord> {
                                       @Param("to") String to,
                                       @Param("dataType") String dataType);
 
+    List<DataElement> getItemBigTypeData(@Param("control") Control control,
+                                      @Param("from") String from,
+                                      @Param("to") String to,
+                                      @Param("dataType") String dataType);
+
     List<DataElement> getItemData(@Param("control") Control control,
                                   @Param("from") String from,
                                   @Param("to") String to,

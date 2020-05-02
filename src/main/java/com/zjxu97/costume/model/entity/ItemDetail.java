@@ -36,4 +36,7 @@ public class ItemDetail {
 
     @TableField(value = "cost")
     private Integer cost;
+
+    @TableField(value = "sex")
+    private Byte sex;
 }

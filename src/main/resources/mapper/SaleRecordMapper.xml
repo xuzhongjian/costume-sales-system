@@ -8,8 +8,9 @@
             SELECT district.id FROM district WHERE district.id LIKE CONCAT(#{control.controlLocation} , '%')))
         </if>
         <if test="control.controlItemType != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND sale_record.item_detail_id IN (SELECT item_detail.id FROM item_detail WHERE item_detail.item_id IN(
-            SELECT item.id FROM item WHERE item.item_type_id = #{control.controlItemType}))
+            AND sale_record.item_detail_id IN (SELECT item_detail.id FROM item_detail
+            WHERE item_detail.item_id IN(SELECT item.id FROM item
+            WHERE item.item_type_id = #{control.controlItemType}))
         </if>
         <if test="control.controlItem != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
             AND sale_record.item_detail_id IN (SELECT item_detail.id FROM item_detail
@@ -20,10 +21,14 @@
             WHERE item_detail.item_size_id = #{control.controlSize})
         </if>
         <if test="control.controlSex != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
-            AND sale_record.item_detail_id IN (
-            SELECT item_detail.id FROM item_detail WHERE item_detail.item_id IN(
-            SELECT item.id FROM item WHERE item.item_type_id IN(
-            SELECT item_type.id FROM item_type WHERE item_type.sex = #{control.controlSex})))
+            AND sale_record.item_detail_id IN (SELECT item_detail.id FROM item_detail
+            WHERE item_detail.sex = #{control.controlSex})
+        </if>
+        <if test="control.controlItemBigType != @com.zjxu97.costume.commons.CostumeConstants@EMPTY">
+            AND sale_record.item_detail_id IN (SELECT item_detail.id FROM item_detail
+            WHERE item_detail.item_id IN(SELECT item.id FROM item
+            WHERE item.item_type_id IN (SElECT item_type.id FROM item_type
+            WHERE item_type.item_big_type_id = #{control.controlItemBigType})))
         </if>
     </sql>
     <sql id="resultDataType">
@@ -111,6 +116,18 @@
         GROUP BY `key`;
     </select>
 
+    <select id="getItemBigTypeData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
+        SELECT item_type.item_big_type_id `key`,
+        <include refid="resultDataType"/>
+        FROM sale_record
+        LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
+        LEFT JOIN item ON item.id = item_detail.item_id
+        LEFT JOIN item_type ON item_type.id = item.item_type_id
+        WHERE sale_record.create_at BETWEEN #{from} AND #{to}
+        <include refid="control"/>
+        GROUP BY `key`;
+    </select>
+
     <select id="getStoreData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
         SELECT sale_record.store_id `key`,
         <include refid="resultDataType"/>
@@ -144,12 +161,10 @@
 
 
     <select id="getSexData" parameterType="com.zjxu97.costume.commons.Control" resultMap="DataElementMap">
-        SELECT item_type.sex `key`,
+        SELECT item_detail.sex `key`,
         <include refid="resultDataType"/>
         FROM sale_record
         LEFT JOIN item_detail ON sale_record.item_detail_id = item_detail.id
-        LEFT JOIN item ON item.id = item_detail.item_id
-        LEFT JOIN item_type ON item_type.id = item.item_type_id
         WHERE sale_record.create_at BETWEEN #{from} AND #{to}
         <include refid="control"/>
         GROUP BY `key`;

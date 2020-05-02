@@ -1,6 +1,7 @@
 package com.zjxu97.costume.commons;
 
 import com.zjxu97.costume.model.entity.Item;
+import com.zjxu97.costume.model.entity.ItemDetail;
 import com.zjxu97.costume.model.entity.ItemSize;
 import com.zjxu97.costume.model.entity.ItemType;
 import io.swagger.annotations.ApiModel;
@@ -28,6 +29,12 @@ public class Control {
     private String controlItemType;
 
     /**
+     * @see ItemType
+     */
+    @ApiModelProperty(value = "控制-商品大类别")
+    private String controlItemBigType;
+
+    /**
      * @see Item
      */
     @ApiModelProperty(value = "控制-商品")
@@ -41,7 +48,7 @@ public class Control {
 
 
     /**
-     * @see ItemType#getSex()
+     * @see ItemDetail#getSex()
      */
     @ApiModelProperty(value = "控制-性别")
     private String controlSex;

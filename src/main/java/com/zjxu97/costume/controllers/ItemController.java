@@ -1,19 +1,18 @@
 package com.zjxu97.costume.controllers;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zjxu97.costume.commons.CostumeConstants;
 import com.zjxu97.costume.model.entity.Item;
+import com.zjxu97.costume.model.entity.ItemBigType;
 import com.zjxu97.costume.model.entity.ItemSize;
 import com.zjxu97.costume.model.entity.ItemType;
 import com.zjxu97.costume.model.vo.ItemDetailVo;
 import com.zjxu97.costume.model.vo.ItemSizeVo;
 import com.zjxu97.costume.model.vo.ItemTypeVo;
 import com.zjxu97.costume.model.vo.ItemVo;
-import com.zjxu97.costume.service.ItemDetailService;
-import com.zjxu97.costume.service.ItemService;
-import com.zjxu97.costume.service.ItemSizeService;
-import com.zjxu97.costume.service.ItemTypeService;
+import com.zjxu97.costume.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -42,6 +41,9 @@ public class ItemController {
     private ItemTypeService itemTypeService;
 
     @Resource
+    private ItemBigTypeService itemBigTypeService;
+
+    @Resource
     private ItemService itemService;
 
     @Resource
@@ -50,7 +52,7 @@ public class ItemController {
     @Resource
     private ItemDetailService itemDetailService;
 
-    @ApiOperation(value = "列出种类的产品")
+    @ApiOperation(value = "列出小种类下的产品")
     @GetMapping(value = "items")
     public R<Page<ItemVo>> listItem(@ApiParam(value = "种类id") @RequestParam(value = "itemTypeId") int typeId,
                                     @ApiParam(value = "页容") @RequestParam(value = "size") int size,
@@ -74,10 +76,23 @@ public class ItemController {
         return R.ok(itemDetailService.getDetailListByItemList(itemId));
     }
 
-    @ApiOperation(value = "列出种类")
+    @ApiOperation(value = "列出大种类")
+    @GetMapping(value = "big-types")
+    public R<List<ItemTypeVo>> listBigType() {
+        List<ItemBigType> itemTypeList = itemBigTypeService.list(null);
+        List<ItemTypeVo> itemTypeVoList = itemTypeList.stream()
+                .map(itemType -> {
+                    ItemTypeVo itemTypeVo = new ItemTypeVo();
+                    BeanUtils.copyProperties(itemType, itemTypeVo);
+                    return itemTypeVo;
+                }).collect(Collectors.toList());
+        return R.ok(itemTypeVoList);
+    }
+
+    @ApiOperation(value = "列出大种类下的小种类")
     @GetMapping(value = "types")
-    public R<List<ItemTypeVo>> listType() {
-        List<ItemType> itemTypeList = itemTypeService.list(null);
+    public R<List<ItemTypeVo>> listType(@ApiParam(value = "大种类id") @RequestParam(value = "bigTypeId") int bigTypeId) {
+        List<ItemType> itemTypeList = itemTypeService.list(new QueryWrapper<ItemType>().eq(bigTypeId > 0, "item_big_type_id", bigTypeId));
         List<ItemTypeVo> itemTypeVoList = itemTypeList.stream()
                 .map(itemType -> {
                     ItemTypeVo itemTypeVo = new ItemTypeVo();

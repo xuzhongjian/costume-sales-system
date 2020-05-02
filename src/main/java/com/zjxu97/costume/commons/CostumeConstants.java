@@ -21,6 +21,8 @@ public class CostumeConstants {
 
     public final static String ITEM_TYPE = "itemType";
 
+    public final static String ITEM_BIG_TYPE = "itemBigType";
+
     public final static String SEX = "sex";
 
     public final static String ITEM = "item";

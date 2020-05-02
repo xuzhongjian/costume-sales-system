@@ -17,7 +17,4 @@ public class ItemTypeVo {
 
     @ApiModelProperty(value = "类别的名称")
     private String typeName;
-
-    @ApiModelProperty(value = "性别")
-    private Byte sex;
 }

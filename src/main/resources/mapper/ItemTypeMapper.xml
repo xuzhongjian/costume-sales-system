@@ -6,16 +6,13 @@
         <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
         <result column="create_at" property="createAt" jdbcType="TIMESTAMP"/>
         <result column="update_at" property="updateAt" jdbcType="TIMESTAMP"/>
-        <result column="sex" property="sex" jdbcType="TINYINT"/>
         <result column="type_name" property="typeName" jdbcType="VARCHAR"/>
+        <result column="item_big_type_id" property="itemBigTypeId" jdbcType="INTEGER"/>
     </resultMap>
-    <sql id="ItemTypeColumn">
-        item_type.id, item_type.is_deleted, item_type.create_at, item_type.update_at, item_type.sex, item_type.type_name
-    </sql>
 
     <select id="getItemTypeByItemDetailId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
-        <include refid="ItemTypeColumn"/>
+        *
         from
         costume.item_detail
         left join item on item_detail.item_id = item.id

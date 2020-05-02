@@ -12,9 +12,9 @@ import java.util.Date;
  * @date 2020/1/19 18:16
  */
 @Data
-@TableName("item_type")
+@TableName("item_big_type")
 @EqualsAndHashCode(callSuper = false)
-public class ItemType extends Model<ItemType> {
+public class ItemBigType extends Model<ItemBigType> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -31,7 +31,4 @@ public class ItemType extends Model<ItemType> {
 
     @TableField(value = "type_name")
     private String typeName;
-
-    @TableField(value = "item_big_type_id")
-    private Integer itemBigTypeId;
 }
