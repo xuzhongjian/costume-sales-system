@@ -26,6 +26,9 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
     private ItemSizeService itemSizeService;
 
     @Resource
+    private ItemService itemService;
+
+    @Resource
     private AreaService areaService;
 
     @Resource
@@ -116,8 +119,8 @@ public class SaleRecordServiceImpl extends ServiceImpl<SaleRecordMapper, SaleRec
             case CostumeConstants.ITEM:
                 List<DataElement> itemData = this.getBaseMapper().getItemData(control, from, to, yValue);
                 Map<String, String> itemMap = new HashMap<>();
-                itemTypeService.listByIds(itemData.stream().map(DataElement::getKey).map(Integer::parseInt).collect(Collectors.toList()))
-                        .forEach(itemType -> itemMap.put(String.valueOf(itemType.getId()), itemType.getTypeName()));
+                itemService.listByIds(itemData.stream().map(DataElement::getKey).map(Integer::parseInt).collect(Collectors.toList()))
+                        .forEach(item -> itemMap.put(String.valueOf(item.getId()), item.getItemName()));
                 for (DataElement size : itemData) {
                     String key = size.getKey();
                     if (Strings.isNotBlank(key)) {
