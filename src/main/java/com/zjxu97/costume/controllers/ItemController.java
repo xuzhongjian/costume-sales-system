@@ -80,12 +80,11 @@ public class ItemController {
     @GetMapping(value = "big-types")
     public R<List<ItemTypeVo>> listBigType() {
         List<ItemBigType> itemTypeList = itemBigTypeService.list(null);
-        List<ItemTypeVo> itemTypeVoList = itemTypeList.stream()
-                .map(itemType -> {
-                    ItemTypeVo itemTypeVo = new ItemTypeVo();
-                    BeanUtils.copyProperties(itemType, itemTypeVo);
-                    return itemTypeVo;
-                }).collect(Collectors.toList());
+        List<ItemTypeVo> itemTypeVoList = itemTypeList.stream().map(itemType -> {
+            ItemTypeVo itemTypeVo = new ItemTypeVo();
+            BeanUtils.copyProperties(itemType, itemTypeVo);
+            return itemTypeVo;
+        }).collect(Collectors.toList());
         return R.ok(itemTypeVoList);
     }
 
@@ -93,12 +92,11 @@ public class ItemController {
     @GetMapping(value = "types")
     public R<List<ItemTypeVo>> listType(@ApiParam(value = "大种类id") @RequestParam(value = "bigTypeId") int bigTypeId) {
         List<ItemType> itemTypeList = itemTypeService.list(new QueryWrapper<ItemType>().eq(bigTypeId > 0, "item_big_type_id", bigTypeId));
-        List<ItemTypeVo> itemTypeVoList = itemTypeList.stream()
-                .map(itemType -> {
-                    ItemTypeVo itemTypeVo = new ItemTypeVo();
-                    BeanUtils.copyProperties(itemType, itemTypeVo);
-                    return itemTypeVo;
-                }).collect(Collectors.toList());
+        List<ItemTypeVo> itemTypeVoList = itemTypeList.stream().map(itemType -> {
+            ItemTypeVo itemTypeVo = new ItemTypeVo();
+            BeanUtils.copyProperties(itemType, itemTypeVo);
+            return itemTypeVo;
+        }).collect(Collectors.toList());
         return R.ok(itemTypeVoList);
     }
 
@@ -107,12 +105,11 @@ public class ItemController {
     public R<List<ItemSizeVo>> listSize() {
         List<ItemSize> listSizeList = itemSizeService.list(null);
 
-        List<ItemSizeVo> itemTypeVoList = listSizeList.stream()
-                .map(itemSize -> {
-                    ItemSizeVo itemSizeVo = new ItemSizeVo();
-                    BeanUtils.copyProperties(itemSize, itemSizeVo);
-                    return itemSizeVo;
-                }).collect(Collectors.toList());
+        List<ItemSizeVo> itemTypeVoList = listSizeList.stream().map(itemSize -> {
+            ItemSizeVo itemSizeVo = new ItemSizeVo();
+            BeanUtils.copyProperties(itemSize, itemSizeVo);
+            return itemSizeVo;
+        }).collect(Collectors.toList());
         return R.ok(itemTypeVoList);
     }
 
