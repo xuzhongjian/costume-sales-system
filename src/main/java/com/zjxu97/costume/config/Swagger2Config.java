@@ -31,8 +31,6 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("costume-api-doc")
-                .description("https://github.com/xuzhongjian/costume-sales-system")
-                .termsOfServiceUrl("https://github.com/xuzhongjian/costume-sales-system")
                 .version("v1")
                 .build();
     }
