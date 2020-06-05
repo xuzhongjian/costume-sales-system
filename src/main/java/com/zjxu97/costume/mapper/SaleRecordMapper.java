@@ -11,6 +11,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
+ * http -> controller -> service -> mapper.java -> mapper.xml -> database -> 原路返回 -> http (json)
+ *
+ * mybatis
+ *
  * @author zjxu97
  * @date 2020/1/19 18:16
  * @see DisplayTypeConstants
@@ -30,9 +34,9 @@ public interface SaleRecordMapper extends BaseMapper<SaleRecord> {
                                       @Param("dataType") String dataType);
 
     List<DataElement> getStoreData(@Param("control") Control control,
-                                      @Param("from") String from,
-                                      @Param("to") String to,
-                                      @Param("dataType") String dataType);
+                                   @Param("from") String from,
+                                   @Param("to") String to,
+                                   @Param("dataType") String dataType);
 
     List<DataElement> getItemTypeData(@Param("control") Control control,
                                       @Param("from") String from,
@@ -40,9 +44,9 @@ public interface SaleRecordMapper extends BaseMapper<SaleRecord> {
                                       @Param("dataType") String dataType);
 
     List<DataElement> getItemBigTypeData(@Param("control") Control control,
-                                      @Param("from") String from,
-                                      @Param("to") String to,
-                                      @Param("dataType") String dataType);
+                                         @Param("from") String from,
+                                         @Param("to") String to,
+                                         @Param("dataType") String dataType);
 
     List<DataElement> getItemData(@Param("control") Control control,
                                   @Param("from") String from,
